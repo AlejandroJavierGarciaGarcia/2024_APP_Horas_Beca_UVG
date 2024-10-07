@@ -157,8 +157,8 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
 
         IconButton(
             onClick = {
-                if (currentRoute != "notifications") {
-                    navController.navigate("notifications")
+                if (currentRoute != "AssignedActivitiesScreen") {
+                    navController.navigate("AssignedActivitiesScreen")
                 }
             }
         ) {

@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.navigation
 
+import AssignedActivitiesScreen
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
@@ -62,6 +63,9 @@ fun Navigation(
             }
             composable(route = NavigationState.UserController.route) {
                 UserView(navController = navController)
+            }
+            composable(route = NavigationState.AssignedActivitiesScreen.route) {
+                AssignedActivitiesScreen(navController = navController)
             }
         }
     }

@@ -45,7 +45,7 @@ val activities = listOf(
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AssignedActivitiesScreen() {
+fun AssignedActivitiesScreen(navController : NavController) {
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
@@ -119,9 +119,3 @@ fun CustomCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewAssignedActivitiesScreen() {
-//    val navController = rememberNavController()
-    AssignedActivitiesScreen()
-}

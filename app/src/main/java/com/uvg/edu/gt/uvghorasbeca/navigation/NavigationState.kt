@@ -6,4 +6,6 @@ package com.uvg.edu.gt.uvghorasbeca.navigation
      object  HistoryScreen : NavigationState("HistoryScreen")
      object AdminController : NavigationState("AdminController")
      object UserController : NavigationState("UserController")
+     object AssignedActivitiesScreen : NavigationState("AssignedActivitiesScreen")
+
  }
