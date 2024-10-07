@@ -15,6 +15,7 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.AdminController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.HistoryView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.UserView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
 
 @Composable
@@ -57,6 +58,9 @@ fun Navigation(
             }
             composable(route = NavigationState.AdminController.route) {
                 AdminController(navController = navController)
+            }
+            composable(route = NavigationState.UserController.route) {
+                UserView(navController = navController)
             }
         }
     }

@@ -1,17 +1,20 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.*
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material3.FloatingActionButton
@@ -32,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Popup
 import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
 import androidx.navigation.NavController
+import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCardAdmin
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,8 +57,8 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
             }                    },
         content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding)) {
-                CustomCard(
-                    title = "Tutorías 1",
+                CustomCardAdmin(
+                    title = "Tutorías 5",
                     location = "CIT - 126",
                     date = "16 / 06 / 2024",
                     timeRange = null,
@@ -62,6 +66,7 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
                     backgroundColor = Color.LightGray,
                     showRating = false,
                 )
+
             }
         }
     )
@@ -154,20 +159,49 @@ fun ActivityModal(onDismiss: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = {
                     // Manejar la acción de confirmación aquí
                     onDismiss() // Cerrar el modal después de agregar
-                }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Verde
             ) {
-                Text("Agregar")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Check,  // Ícono de confirmar
+                        contentDescription = "Agregar",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.White  // Color del ícono
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Text(
+                        "Agregar",
+                        color = Color.White  // Texto en blanco
+                    )
+                }
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+            Button(
+                onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Rojo
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Close,  // Ícono de cancelar
+                        contentDescription = "Cancelar",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.White  // Color del ícono
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Text(
+                        "Cancelar",
+                        color = Color.White  // Texto en blanco
+                    )
+                }
             }
         }
+
     )
 }
 
@@ -182,18 +216,49 @@ fun DatePickerModalInput(
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(onClick = {
-                onDateSelected(datePickerState.selectedDateMillis)
-                onDismiss()
-            }) {
-                Text("Confirmar")
+            Button(
+                onClick = {
+                    // Manejar la acción de confirmación aquí
+                    onDismiss() // Cerrar el modal después de agregar
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Verde
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Check,  // Ícono de confirmar
+                        contentDescription = "Agregar",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.White  // Color del ícono
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Text(
+                        "Agregar",
+                        color = Color.White  // Texto en blanco
+                    )
+                }
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text("Cancelar")
+            Button(
+                onClick = onDismiss,
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Rojo
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Close,  // Ícono de cancelar
+                        contentDescription = "Cancelar",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.White  // Color del ícono
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Text(
+                        "Cancelar",
+                        color = Color.White  // Texto en blanco
+                    )
+                }
             }
-        },
+        }
+,
         text = {
             DatePicker(state = datePickerState)
         }
