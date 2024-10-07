@@ -99,7 +99,7 @@ fun TopAppBar(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun BottomNavigationBar(navController: NavController) {
+fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavController) {
     val currentRoute = navController.currentBackStackEntryAsState()?.value?.destination?.route
 
     Row(

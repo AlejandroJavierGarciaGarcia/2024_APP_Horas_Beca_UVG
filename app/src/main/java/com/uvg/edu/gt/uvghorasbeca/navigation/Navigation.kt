@@ -1,6 +1,7 @@
 package com.uvg.edu.gt.uvghorasbeca.navigation
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,11 +35,11 @@ fun Navigation(
         topBar = {
 
             if (currentScreen != NavigationState.WelcomeScreen.route && currentScreen != NavigationState.LoginScreen.route) {
-                TopAppBar()
+                TopAppBar(modifier = Modifier.statusBarsPadding())
             } },
         bottomBar = {
             if (currentScreen != NavigationState.WelcomeScreen.route && currentScreen != NavigationState.LoginScreen.route) {
-                BottomNavigationBar(navController = navController)
+                BottomNavigationBar(modifier = Modifier.statusBarsPadding(),navController = navController)
             }
         }
     ) { innerPadding ->
