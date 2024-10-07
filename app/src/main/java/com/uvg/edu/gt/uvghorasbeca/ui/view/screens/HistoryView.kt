@@ -2,13 +2,14 @@ package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCard
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.PaginatedList
 
 
 @Composable
-fun HistoryView() {
+fun HistoryView(navController : NavController) {
     val items = List(100) { index ->
         CustomCardData(
             title = "Tutorías $index",

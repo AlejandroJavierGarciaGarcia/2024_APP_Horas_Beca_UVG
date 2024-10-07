@@ -31,11 +31,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Popup
 import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
+import androidx.navigation.NavController
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun AdminController(modifier: Modifier = Modifier) {
+fun AdminController(modifier: Modifier = Modifier, navController : NavController ) {
     var showDialog by remember { mutableStateOf(false) }
     Scaffold(
         floatingActionButton = {
