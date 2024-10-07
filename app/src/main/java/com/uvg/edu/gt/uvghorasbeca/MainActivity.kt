@@ -10,12 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHost
 import androidx.navigation.compose.*
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.AdminController
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.HistoryView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +34,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MyApp() {
     val navController = rememberNavController()
+
     Scaffold(
         topBar = { TopAppBar() },
         bottomBar = { BottomNavigationBar(navController) }
@@ -43,7 +46,7 @@ fun MyApp() {
         ) {
             composable("home") { HomeScreen() }
             composable("search") { SearchScreen() }
-            composable("profile") { AdminController() }
+            composable("profile") { HistoryView() }
             composable("notifications") { NotificationsScreen() }  // Nueva pantalla
         }
     }
