@@ -127,8 +127,8 @@ fun BottomNavigationBar(navController: NavController) {
 
         IconButton(
             onClick = {
-                if (currentRoute != "search") {
-                    navController.navigate("search")
+                if (currentRoute != "AdminController") {
+                    navController.navigate("AdminController")
                 }
             }
         ) {
@@ -142,8 +142,8 @@ fun BottomNavigationBar(navController: NavController) {
 
         IconButton(
             onClick = {
-                if (currentRoute != "profile") {
-                    navController.navigate("profile")
+                if (currentRoute != "HistoryScreen") {
+                    navController.navigate("HistoryScreen")
                 }
             }
         ) {

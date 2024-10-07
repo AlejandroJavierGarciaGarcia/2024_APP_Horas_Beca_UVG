@@ -24,6 +24,7 @@ import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
 fun PaginatedList(
     items: List<CustomCardData>,
     itemsPerPage: Int = 10
+
 ) {
     var currentPage by remember { mutableStateOf(0) }
     val totalPages = (items.size + itemsPerPage - 1) / itemsPerPage
