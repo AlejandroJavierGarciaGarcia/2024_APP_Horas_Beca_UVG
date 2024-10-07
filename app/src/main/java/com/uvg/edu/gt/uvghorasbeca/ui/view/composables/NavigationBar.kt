@@ -38,53 +38,70 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uvg.edu.gt.uvghorasbeca.R
-import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 
-    @Composable
-    fun TopAppBar(modifier: Modifier = Modifier) {
-        Row(
-            modifier = modifier
-                .background(color = Color(0xFF27C24C))
-                .fillMaxWidth()
-                .height(56.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = { /* Acción al hacer clic en el ícono */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menú",
-                    modifier = Modifier.size(40.dp),
-                    tint = Color.White
-                )
-            }
 
-            Spacer(modifier = Modifier.weight(2f))
-            Text(
-                text = stringResource(id = R.string.logoUVG),
-                color = Color.White,
-                fontSize = 40.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(start = 8.dp)
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.compose.foundation.layout.*
+
+
+
+@Composable
+fun TopAppBar(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .background(color = Color(0xFF27C24C))
+            .fillMaxWidth()
+            .height(56.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = { /* Acción al hacer clic en el ícono */ }) {
+            Icon(
+                imageVector = Icons.Filled.Menu,
+                contentDescription = "Menú",
+                modifier = Modifier.size(40.dp),
+                tint = Color.White
             )
-            /*Image(
-                painter = painterResource(id = R.drawable.logouvg),
-                contentDescription = "Logo UVG",
-                modifier = Modifier
-                    .size(80.dp)
-            )*/
         }
-        Row (
-            modifier = modifier
+
+        Spacer(modifier = Modifier.weight(2f))
+        Text(
+            text = stringResource(id = R.string.logoUVG),
+            color = Color.White,
+            fontSize = 40.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+        /*Image(
+            painter = painterResource(id = R.drawable.logouvg),
+            contentDescription = "Logo UVG",
+            modifier = Modifier
+                .size(80.dp)
+        )*/
+    }
+    Row (
+        modifier = modifier
             .background(color = Color(0xFF7DFF9C))
             .fillMaxWidth()
             .height(5.dp),
-            verticalAlignment = Alignment.CenterVertically)
-        {
-        }
+        verticalAlignment = Alignment.CenterVertically)
+    {
     }
+}
+
 
 @Composable
-fun BottomNavigationBar(modifier: Modifier = Modifier) {
+fun BottomNavigationBar(navController: NavController) {
+    val currentRoute = navController.currentBackStackEntryAsState()?.value?.destination?.route
+
     Row(
         modifier = Modifier
             .background(color = Color(0xFF27C24C))
@@ -93,31 +110,58 @@ fun BottomNavigationBar(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        IconButton(onClick = { /* Acción al hacer clic en el ícono del documento */ }) {
+        IconButton(
+            onClick = {
+                if (currentRoute != "home") {
+                    navController.navigate("home")
+                }
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Document",
+                contentDescription = "Home",
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
         }
-        IconButton(onClick = { /* Acción al hacer clic en el ícono del calendario */ }) {
+
+        IconButton(
+            onClick = {
+                if (currentRoute != "search") {
+                    navController.navigate("search")
+                }
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.DateRange,
-                contentDescription = "Calendar",
+                contentDescription = "Search",
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
         }
-        IconButton(onClick = { /* Acción al hacer clic en el ícono de tareas */ }) {
+
+        IconButton(
+            onClick = {
+                if (currentRoute != "profile") {
+                    navController.navigate("profile")
+                }
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
-                contentDescription = "Tasks",
+                contentDescription = "Profile",
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
         }
-        IconButton(onClick = { /* Acción al hacer clic en el ícono de notificaciones */ }) {
+
+        IconButton(
+            onClick = {
+                if (currentRoute != "notifications") {
+                    navController.navigate("notifications")
+                }
+            }
+        ) {
             Icon(
                 imageVector = Icons.Filled.Notifications,
                 contentDescription = "Notifications",
