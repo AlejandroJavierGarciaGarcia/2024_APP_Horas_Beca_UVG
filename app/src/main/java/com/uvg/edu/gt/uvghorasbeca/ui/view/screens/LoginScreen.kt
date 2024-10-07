@@ -39,6 +39,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.R
 
 /**
@@ -46,7 +47,7 @@ import com.uvg.edu.gt.uvghorasbeca.R
  * before being able to navigate to next screen via login button.
  */
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController : NavController) {
     // Text field values
     var userText by remember { mutableStateOf(TextFieldValue("")) }
     var passwordText by remember { mutableStateOf(TextFieldValue("")) }

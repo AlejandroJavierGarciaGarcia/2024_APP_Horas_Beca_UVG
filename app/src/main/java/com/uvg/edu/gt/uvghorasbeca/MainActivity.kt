@@ -32,10 +32,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.uvg.edu.gt.uvghorasbeca.navigation.Navigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             UVGHorasBecaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    LoginScreen()
+                    Navigation()
                 }
             }
         }

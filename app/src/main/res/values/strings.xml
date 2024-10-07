@@ -4,5 +4,6 @@
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="login">Iniciar sesión</string>
+    <string name="horas_beca">HORAS BECA</string>
 
 </resources>
