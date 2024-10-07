@@ -9,7 +9,7 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.PaginatedList
 
 @Composable
 fun UserView(navController : NavController) {
-    val items = List(100) { index ->
+    val items = List(1) { index ->
         AlertDialogUser(
             title = "Tutorías",
             location = "CIT-126",
