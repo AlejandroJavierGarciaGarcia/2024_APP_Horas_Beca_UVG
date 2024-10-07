@@ -18,6 +18,7 @@ import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.HistoryView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.AdminController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ fun MyApp() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable("home") { HomeScreen() }
-            composable("search") { SearchScreen() }
+            composable("search") { AdminController() }
             composable("profile") { HistoryView() }
             composable("notifications") { NotificationsScreen() }  // Nueva pantalla
         }

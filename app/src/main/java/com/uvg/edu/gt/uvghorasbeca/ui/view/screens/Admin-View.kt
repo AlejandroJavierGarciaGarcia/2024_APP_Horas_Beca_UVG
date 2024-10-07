@@ -22,7 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
+import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCard
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.text.input.TextFieldValue
@@ -30,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Popup
+import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,7 +52,15 @@ fun AdminController(modifier: Modifier = Modifier) {
             }                    },
         content = { innerPadding ->
             Column(modifier = Modifier.padding(innerPadding)) {
-                //AdminController()
+                CustomCard(
+                    title = "Tutorías 1",
+                    location = "CIT - 126",
+                    date = "16 / 06 / 2024",
+                    timeRange = null,
+                    totalHours = "3.5",
+                    backgroundColor = Color.LightGray,
+                    showRating = false,
+                )
             }
         }
     )
