@@ -32,9 +32,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.uvg.edu.gt.uvghorasbeca.navigation.Navigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,30 +46,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             UVGHorasBecaTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TopAppBar(
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    Column(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        // Contenido principal de la pantalla
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .fillMaxSize()
-                        ) {
-                            // Aquí va el contenido principal
-                        }
-
-                        BottomNavigationBar(
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                    }
+                    Navigation()
                 }
             }
         }
     }
 }
-
-
-
