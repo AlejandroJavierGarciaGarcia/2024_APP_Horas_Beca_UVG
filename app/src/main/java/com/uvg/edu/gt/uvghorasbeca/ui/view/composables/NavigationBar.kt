@@ -112,8 +112,8 @@ fun BottomNavigationBar(navController: NavController) {
     ) {
         IconButton(
             onClick = {
-                if (currentRoute != "home") {
-                    navController.navigate("home")
+                if (currentRoute != "UserController") {
+                    navController.navigate("UserController")
                 }
             }
         ) {
