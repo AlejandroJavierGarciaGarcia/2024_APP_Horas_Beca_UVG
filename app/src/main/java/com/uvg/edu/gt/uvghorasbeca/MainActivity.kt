@@ -43,7 +43,7 @@ fun MainScreen() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            SideBarContent(
+                SideBarContent(
                 onCloseDrawer = {
                     scope.launch { drawerState.close() }
                 }
@@ -110,7 +110,7 @@ fun SideBarContent(onCloseDrawer: () -> Unit) {
             progress = hoursCompleted / totalHours.toFloat(),
             color = Color.Green,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWid th()
                 .height(8.dp)
         )
 
