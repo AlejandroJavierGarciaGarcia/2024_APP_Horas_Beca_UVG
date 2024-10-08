@@ -45,6 +45,7 @@
     <string name="start">Start</string>
 
     <string name="options_title">Opciones</string>
+    <string name="menu">Opciones</string>
     <string name="close_description">Cerrar</string>
     <string name="edit">Editar</string>
     <string name="delete">Eliminar</string>
@@ -55,4 +56,55 @@
     <string name="existing_activity_description">Descripción de la actividad existente</string>
     <string name="existing_activity_room">Aula 202</string>
     <string name="existing_activity_participant_count">15</string>
+
+
+    //AlertDialog Composable
+    <string name="dialog_title_success">¡Éxito!</string>
+    <string name="dialog_message_success">Se asignó exitosamente.</string>
+    <string name="assign_button_text">Asignarse</string>
+    <string name="back_button_text">Regresar</string>
+    <string name="info_icon_description">Info Icon</string>
+    <string name="star_icon_description">Star</string>
+    <string name="success_icon_description">Éxito</string>
+
+    //User view
+    <string name="activity_title">Actividad %1$d</string>
+    <string name="classroom_location">CIT - 126</string>
+    <string name="activity_date">16 / 06 / 2024</string>
+    <string name="activity_time_range">14:00 - 17:30</string>
+    <string name="activity_info">Información sobre actividad %1$d...</string>
+    <string name="available_spots">0/10</string>
+
+    //PaginationUser
+    <string name="previous_button">Anterior</string>
+    <string name="next_button">Siguiente</string>
+
+    //Assigned
+    <string name="activity_title_tutoring">Tutorías</string>
+    <string name="activity_location_cit_126">CIT - 126</string>
+    <string name="activity_date_tutoring">16 / 06 / 2024</string>
+    <string name="activity_time_tutoring">14:00 - 17:30</string>
+
+    <string name="activity_title_training">Capacitación</string>
+    <string name="activity_location_dhive">DHIVE</string>
+    <string name="activity_date_training">20 / 06 / 2024</string>
+    <string name="activity_time_training">08:00 - 10:40</string>
+
+    <string name="activity_title_staff">Staff de delvas</string>
+    <string name="activity_location_cit_336">CIT - 336</string>
+    <string name="activity_date_staff">27 / 06 / 2024</string>
+    <string name="activity_time_staff">13:00 - 14:00</string>
+    <string name="search">Buscar</string>
+
+    <!-- Labels for CustomCard -->
+    <string name="location_label">Lugar</string>
+    <string name="date_label">Fecha</string>
+    <string name="time_label">Hora</string>
+
+    <string name="usernameExmple">Francisco Anzueto</string>
+    <string name="email">franzuerto@uvg.edu.gt</string>
+    <string name="student_id">Número de Carné: 2009588</string>
+    <string name="home">Cerrar Sesión</string>
+    <string name="history">Historial</string>
+    <string name="admin">Asignación</string>
 </resources>

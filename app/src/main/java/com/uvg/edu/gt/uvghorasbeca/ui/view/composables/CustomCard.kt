@@ -1,6 +1,5 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -171,7 +170,7 @@ fun CustomCardAdmin(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(8.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -202,7 +201,7 @@ fun CustomCardAdmin(
                             imageVector = Icons.Default.Info,
                             contentDescription = stringResource(R.string.confirm_icon),
                             tint = Color.Black,
-                            modifier = Modifier.size(30.dp) // Icono más grande
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 }
@@ -215,7 +214,7 @@ fun CustomCardAdmin(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp)
+                    .padding(8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -267,16 +266,15 @@ fun CustomCardAdmin(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(text = stringResource(id = R.string.options_title), fontWeight = FontWeight.Bold)  // Título "Opciones"
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio adicional
+                    Spacer(modifier = Modifier.width(8.dp))
 
-                    // IconButton para cerrar en la parte superior izquierda
                     IconButton(
                         onClick = { showOptionsDialog = false },
                         modifier = Modifier
-                            .size(24.dp)  // Tamaño del botón
+                            .size(24.dp)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Close,  // Ícono de "X" para cerrar
+                            imageVector = Icons.Default.Close,
                             contentDescription = stringResource(id = R.string.close_description),
                             tint = Color.Black
                         )
@@ -302,41 +300,41 @@ fun CustomCardAdmin(
                         // Botón Editar con ícono y texto en negro
                         Button(
                             onClick = { showEditDialog = true; showOptionsDialog = false },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500)) // Naranja
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA500))
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
-                                    imageVector = Icons.Default.Edit,  // Ícono de edición
+                                    imageVector = Icons.Default.Edit,
                                     contentDescription = stringResource(id = R.string.edit),
                                     modifier = Modifier.size(24.dp),
-                                    tint = Color.Black  // Color del ícono
+                                    tint = Color.Black
                                 )
-                                Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     stringResource(id = R.string.edit),
-                                    color = Color.Black  // Texto en negro
+                                    color = Color.Black
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.width(16.dp))  // Espacio entre los dos botones
+                        Spacer(modifier = Modifier.width(16.dp))
 
                         // Botón Eliminar con ícono y texto
                         Button(
                             onClick = { showDeleteConfirmDialog = true; showOptionsDialog = false },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Rojo
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
-                                    imageVector = Icons.Default.Delete,  // Ícono de eliminar
+                                    imageVector = Icons.Default.Delete,
                                     contentDescription = stringResource(id = R.string.delete),
                                     modifier = Modifier.size(24.dp),
-                                    tint = Color.White  // Color del ícono
+                                    tint = Color.White
                                 )
-                                Spacer(modifier = Modifier.width(8.dp))  // Espacio entre el ícono y el texto
+                                Spacer(modifier = Modifier.width(8.dp))
                                 Text(
                                     stringResource(id = R.string.delete),
-                                    color = Color.White  // Texto en blanco
+                                    color = Color.White
                                 )
                             }
                         }
@@ -363,15 +361,15 @@ fun CustomCardAdmin(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Check,  // Ícono de edición
+                            imageVector = Icons.Default.Check,
                             contentDescription = stringResource(id = R.string.confirm),
                             modifier = Modifier.size(14.dp),
-                            tint = Color.White  // Color del ícono
+                            tint = Color.White
                         )
-                        Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             stringResource(id = R.string.confirm),
-                            color = Color.White  // Texto en negro
+                            color = Color.White
                         )
                     }
                 }
@@ -379,19 +377,19 @@ fun CustomCardAdmin(
             dismissButton = {
                 Button(
                     onClick = { showDeleteConfirmDialog = false; showOptionsDialog = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Naranja
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C))
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Close,  // Ícono de edición
+                            imageVector = Icons.Default.Close,
                             contentDescription = stringResource(id = R.string.cancel),
                             modifier = Modifier.size(14.dp),
-                            tint = Color.White  // Color del ícono
+                            tint = Color.White
                         )
-                        Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                        Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             stringResource(id = R.string.cancel),
-                            color = Color.White  // Texto en negro
+                            color = Color.White
                         )
                     }
                 }
@@ -510,16 +508,16 @@ fun EditActivityModal(
                     // Manejar la acción de confirmación aquí
                     onDismiss() // Cerrar el modal después de agregar
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Verde
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C))
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
                         contentDescription = stringResource(R.string.confirm_icon),
                         modifier = Modifier.size(14.dp),
-                        tint = Color.White  // Color del ícono
+                        tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         stringResource(R.string.add_button),
                         color = Color.White  // Texto en blanco
@@ -530,19 +528,19 @@ fun EditActivityModal(
         dismissButton = {
             Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Rojo
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Close,  // Ícono de cancelar
+                        imageVector = Icons.Default.Close,
                         contentDescription = stringResource(R.string.cancel_icon),
                         modifier = Modifier.size(14.dp),
-                        tint = Color.White  // Color del ícono
+                        tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         stringResource(R.string.cancel_button),
-                        color = Color.White  // Texto en blanco
+                        color = Color.White
                     )
                 }
             }
@@ -566,19 +564,19 @@ fun DatePickerModalInput(
                     // Manejar la acción de confirmación aquí
                     onDismiss() // Cerrar el modal después de agregar
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Verde
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C))
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Check,  // Ícono de confirmar
+                        imageVector = Icons.Default.Check,
                         contentDescription = stringResource(R.string.confirm_icon),
                         modifier = Modifier.size(14.dp),
-                        tint = Color.White  // Color del ícono
+                        tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         stringResource(R.string.confirm_button),
-                        color = Color.White  // Texto en blanco
+                        color = Color.White
                     )
                 }
             }
@@ -586,19 +584,19 @@ fun DatePickerModalInput(
         dismissButton = {
             Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red) // Rojo
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
                         contentDescription = stringResource(R.string.cancel_icon),
                         modifier = Modifier.size(14.dp),
-                        tint = Color.White  // Color del ícono
+                        tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         stringResource(R.string.cancel_button),
-                        color = Color.White  // Texto en blanco
+                        color = Color.White
                     )
                 }
             }

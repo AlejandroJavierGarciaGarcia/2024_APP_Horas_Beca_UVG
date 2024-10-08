@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,56 +46,55 @@ fun WelcomeScreen(navController : NavController) {
     ) {
         // Image as background with tint
         Image(
-            painter = painterResource(id = R.drawable.uvg), // Replace with your image drawable
+            painter = painterResource(id = R.drawable.uvg),
             contentDescription = null,
-            contentScale = ContentScale.Crop, // Scale the image to fill the Box
+            contentScale = ContentScale.Crop,
             colorFilter = ColorFilter.tint(color = Color(0xFF008000), blendMode = BlendMode.Modulate),
             modifier = Modifier
-                .matchParentSize() // Match the Box size
+                .matchParentSize()
         )
 
         // Centered content column
         Column(
             modifier = Modifier
-                .fillMaxSize(0.67f) // Take 2/3rds of screen width
+                .fillMaxHeight()
+                .width(350.dp)
                 .align(Alignment.Center),
-            horizontalAlignment = Alignment.CenterHorizontally, // Center horizontally in Box
-            verticalArrangement = Arrangement.Center // Center content vertically in Column
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            // Drawable at the top
             Image(
-                painter = painterResource(id = R.drawable.logouvg), // Replace with drawable
+                painter = painterResource(id = R.drawable.logouvg),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth(0.75f) // Adjust size as needed
-                    .padding(bottom = 16.dp) // Padding below the image
+                    .fillMaxWidth(0.75f)
+                    .padding(bottom = 16.dp)
             )
 
-            // Text in the middle
             Text(
                 text = stringResource(R.string.horas_beca),
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
-                color = Color.White, // Text color
-                modifier = Modifier.padding(bottom = 32.dp)
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 36.dp)
             )
 
-            // Login Button
+
             Button(
                 onClick = {
                     navController.navigate("LoginScreen")
                 },
                 modifier = Modifier
-                    .fillMaxWidth(0.55f)
-                    .height(52.dp),
+                    .fillMaxWidth(0.6f)
+                    .height(58.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White, // Text color\
-                    containerColor = Color(0xFF145DA0)
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = Color.Black,
                 )
             ) {
                 Text(text = stringResource(R.string.login),
-                    fontSize = 18.sp)
+                    fontSize = 22.sp)
             }
         }
     }

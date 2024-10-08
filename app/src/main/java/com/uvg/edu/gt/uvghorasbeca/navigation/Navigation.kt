@@ -1,6 +1,7 @@
 package com.uvg.edu.gt.uvghorasbeca.navigation
 
 import AssignedActivitiesScreen
+import UserView
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.DrawerValue
@@ -9,21 +10,19 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.DrawerContent
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.AdminController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.HistoryView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.UserView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
 import kotlinx.coroutines.launch
 
@@ -38,20 +37,25 @@ fun Navigation(modifier: Modifier = Modifier) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = currentBackStackEntry?.destination?.route ?: NavigationState.WelcomeScreen.route
 
+    // Envuelve el Scaffold dentro del ModalNavigationDrawer
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerContent(navController) {
-                scope.launch { drawerState.close() } // Close drawer after item is clicked
-            }
+            DrawerContent(navController = navController, onClose = {
+                scope.launch { drawerState.close() }
+            })
         }
     ) {
         Scaffold(
             topBar = {
                 if (currentScreen != NavigationState.WelcomeScreen.route && currentScreen != NavigationState.LoginScreen.route) {
                     TopAppBar(
-                        onMenuClick = { scope.launch { drawerState.open() } }, // Open drawer
-                        modifier = Modifier.statusBarsPadding()
+                        modifier = Modifier.statusBarsPadding(),
+                        onMenuClick = {
+                            scope.launch {
+                                drawerState.open() // Abre el Drawer al hacer clic en el ícono del menú
+                            }
+                        }
                     )
                 }
             },
