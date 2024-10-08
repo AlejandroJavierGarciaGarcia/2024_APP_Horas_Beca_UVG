@@ -8,21 +8,27 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.RedImportant
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.YellowMedium
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.NotImportantColor
@@ -80,20 +86,31 @@ fun AssignedActivitiesScreen(navController : NavController) {
     }
 }
 
+
 @Composable
 fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
-    BasicTextField(
-        value = query,
-        onValueChange = onQueryChange,
-        textStyle = TextStyle(fontSize = 18.sp),
-        modifier = Modifier
-            .background(Color.LightGray, MaterialTheme.shapes.small)
-            .padding(16.dp)
-            .fillMaxWidth()
-    )
+    Box(modifier = Modifier.fillMaxWidth()) {
+        BasicTextField(
+            value = query,
+            onValueChange = onQueryChange,
+            textStyle = TextStyle(fontSize = 20.sp),
+            modifier = Modifier
+                .background(Color.LightGray, MaterialTheme.shapes.small)
+                .padding(16.dp)
+                .fillMaxWidth()
+        )
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = stringResource(id = R.string.search)
+            ,
+            modifier = Modifier
+                .padding(end = 15.dp)
+                .size(25.dp),
+            tint = Color.Gray
+        )
+    }
 }
 
-// Componente de CustomCard
 @Composable
 fun CustomCard(
     title: String,
@@ -112,10 +129,9 @@ fun CustomCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = title, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Lugar: $location", fontSize = 16.sp)
-            Text(text = "Fecha: $date", fontSize = 16.sp)
-            Text(text = "Hora: $timeRange", fontSize = 16.sp)
+            Text(text = "${stringResource(R.string.location_label)}: $location", fontSize = 16.sp)
+            Text(text = "${stringResource(R.string.date_label)}: $date", fontSize = 16.sp)
+            Text(text = "${stringResource(R.string.time_label)}: $timeRange", fontSize = 16.sp)
         }
     }
 }
-
