@@ -184,50 +184,40 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    // Estado del panel lateral
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                Text("Drawer Title", modifier = Modifier.padding(16.dp))
-                Divider()
-                NavigationDrawerItem(
-                    label = { Text(text = "Opción 1") },
-                    selected = false,
-                    onClick = { /* Navegar a Opción 1 */ }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Opción 2") },
-                    selected = false,
-                    onClick = { /* Navegar a Opción 2 */ }
-                )
-                // Agrega más elementos según sea necesario
+fun showMessage(message: String, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("OK")
             }
+        },
+        title = {
+            Text(text = "Advertencia")
+        },
+        text = {
+            Text("Presionaste $message")
         }
+    )
+}
+
+@Composable
+fun IconButtonWithText(text: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 20.dp)
+            .background(Color.Gray)
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        // Contenido principal de la pantalla
-        Column {
-            TopAppBar(
-                onMenuClick = {
-                    scope.launch {
-                        if (drawerState.isClosed) {
-                            drawerState.open()
-                        } else {
-                            drawerState.close()
-                        }
-                    }
-                }
-            )
-            // Resto del contenido de la pantalla
-            Text("Contenido Principal", modifier = Modifier.padding(16.dp))
-        }
+        Spacer(modifier = Modifier.width(16.dp))
+        ClickableText(
+            text = AnnotatedString(text),
+            style = MaterialTheme.typography.bodyLarge.copy(color = Black), // Cambiado a negro
+            onClick = { onClick() }
+        )
     }
 }
 
@@ -260,23 +250,95 @@ fun TopAppBar(onMenuClick: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
-
 @Composable
 fun DrawerContent(navController: NavController, onClose: () -> Unit) {
-    // Define your drawer items here
-    Column {
-        Text("Home", modifier = Modifier.clickable {
-            navController.navigate(NavigationState.WelcomeScreen.route)
-            onClose()
-        })
-        Text("History", modifier = Modifier.clickable {
-            navController.navigate(NavigationState.HistoryScreen.route)
-            onClose()
-        })
-        Text("Admin", modifier = Modifier.clickable {
-            navController.navigate(NavigationState.AdminController.route)
-            onClose()
-        })
-        // Add other menu items as needed
+
+    var username by remember { mutableStateOf("Juan Perez") }
+    var hoursCompleted by remember { mutableStateOf(50) }
+    var hoursRemaining by remember { mutableStateOf(10) }
+    var showDialog by remember { mutableStateOf(false) }
+    var dialogMessage by remember { mutableStateOf("") }
+    val totalHours = hoursCompleted + hoursRemaining
+    
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(Color.Gray)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.Top, // Los elementos van hacia arriba
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Añadido un pequeño espaciador para separar el username de la barra de progreso
+        Spacer(modifier = Modifier.height(100.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ){
+
+            Image(
+                painter = painterResource(id = R.drawable.user),
+                contentDescription = "Imagen de usuario",
+                modifier = Modifier.size(100.dp)
+            )
+            Spacer(modifier = Modifier.width(50.dp))
+            Text(text = username, fontSize = 50.sp, color = Black) // Cambiado a negro
+        }
+
+        // Añadido un pequeño espaciador para separar el username de la barra de progreso
+        Spacer(modifier = Modifier.height(100.dp)) // Ajusta el tamaño para bajar la barra ligeramente
+
+        // Barra de progreso
+        LinearProgressIndicator(
+            progress = hoursCompleted / totalHours.toFloat(),
+            color = Color.Green,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(20.dp)
+        )
+
+        // Texto de horas acumuladas y restantes, pegados a la barra de progreso
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "${hoursCompleted} h acumuladas", fontSize = 15.sp, color = Black) // Cambiado a negro
+            Text(text = "${hoursRemaining} h restantes", fontSize = 15.sp, color = Black) // Cambiado a negro
+        }
+
+        Spacer(modifier = Modifier.weight(1f)) // Empuja los botones hacia la parte inferior de la pantalla
+
+        // Botones de ayuda, cambiar usuario y cerrar sesión
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.Start
+        ) {
+            IconButtonWithText(
+                text = "Ayuda",
+                onClick = {
+                    dialogMessage = "Ayuda"
+                    showDialog = true
+                }
+            )
+            IconButtonWithText(
+                text = "Cambiar usuario",
+                onClick = {
+                    dialogMessage = "Cambiar usuario"
+                    showDialog = true
+                }
+            )
+            IconButtonWithText(
+                text = "Cerrar sesión",
+                onClick = {
+                    dialogMessage = "Cerrar sesión"
+                    showDialog = true
+                }
+            )
+        }
+
+        if (showDialog) {
+            showMessage(message = dialogMessage, onDismiss = { showDialog = false })
+        }
     }
 }
