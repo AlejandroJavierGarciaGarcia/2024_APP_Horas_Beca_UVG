@@ -1,5 +1,58 @@
 <resources>
     <string name="app_name">UVGHorasBeca</string>
     <string name="logoUVG">UVG </string>
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Iniciar sesión</string>
+    <string name="horas_beca">HORAS BECA</string>
+    <string name="adding">Agregar</string>
+    <string name="actividad_activa">¿Actividad Activa?</string>
+    <string name="participants">Cantidad de Participantes</string>
+    <string name="description">Descripción</string>
+    <string name="clasroom">Salón</string>
+    <string name="date">Seleccione la fecha</string>
+    <string name="creation"> * Creación: %1$s</string> <!-- Usar format para insertar la fecha -->
+    <string name="dialog_title">Agregar Actividad</string>
+    <string name="name_activity">Agregar Actividad</string>
+    <string name="enable_activity">¿Actividad Activa?</string>
 
+    <string name="cancel">Cancelar</string>
+    <string name="confirmar">Agregar</string>
+    <string name="date_asignation">Fecha de asignación</string>
+    <string name="error_no_participantes">La cantidad de participantes no puede estar vacía.</string>
+    <string name="error_no_nombre">El nombre de la actividad no puede estar vacío.</string>
+    <string name="fecha_error">Selecciona una fecha válida.</string>
+
+    <!-- Labels -->
+    <string name="edit_activity">Editar Actividad</string>
+    <string name="activity_name_label">Nombre de la Actividad</string>
+    <string name="is_active_label">¿Actividad Activa?</string>
+    <string name="participant_count_label">Cantidad de Participantes</string>
+    <string name="description_label">Descripción</string>
+    <string name="room_label">Salón</string>
+    <string name="select_date_label">Seleccione la fecha</string>
+    <string name="created_date">* Creación: %1$s</string>
+
+    <!-- Buttons -->
+    <string name="add_button">Agregar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="confirm_button">Confirmar</string>
+
+    <!-- Content Descriptions -->
+    <string name="confirm_icon">Actualizar</string>
+    <string name="cancel_icon">Cancelar</string>
+    <string name="date_picker_icon">Fecha de asignación</string>
+    <string name="start">Start</string>
+
+    <string name="options_title">Opciones</string>
+    <string name="close_description">Cerrar</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Eliminar</string>
+    <string name="confirm_deletion_title">Confirmar Eliminación</string>
+    <string name="confirm_deletion_message">¿Estás seguro de que deseas eliminar esta actividad?</string>
+    <string name="confirm">Confirmar</string>
+    <string name="existing_activity_name">Nombre Existente</string>
+    <string name="existing_activity_description">Descripción de la actividad existente</string>
+    <string name="existing_activity_room">Aula 202</string>
+    <string name="existing_activity_participant_count">15</string>
 </resources>
