@@ -144,9 +144,9 @@ fun LoginScreen(navController : NavController) {
                         .fillMaxWidth()
                         .padding(bottom = 24.dp),
                     visualTransformation = PasswordVisualTransformation(), // Hide password characters
-                    keyboardOptions = KeyboardOptions.Default.copy(
-                        keyboardType = KeyboardType.Password // Set keyboard type to password
-                    ),
+                    //keyboardOptions = KeyboardOptions.Default.copy(
+                     //   keyboardType = KeyboardType.Password // Set keyboard type to password
+                    //),
                     // Add password leading icon
                     leadingIcon = {
                         Icon(

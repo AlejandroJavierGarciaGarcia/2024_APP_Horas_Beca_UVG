@@ -26,12 +26,12 @@
     <!-- Labels -->
     <string name="edit_activity">Editar Actividad</string>
     <string name="activity_name_label">Nombre de la Actividad</string>
-    <string name="is_active_label">¿Actividad Activa?</string>
+    <string name="is_active_label">¿Disponibilidad?</string>
     <string name="participant_count_label">Cantidad de Participantes</string>
     <string name="description_label">Descripción</string>
     <string name="room_label">Salón</string>
     <string name="select_date_label">Seleccione la fecha</string>
-    <string name="created_date">* Creación: %1$s</string>
+    <string name="created_date"> Creación: </string>
 
     <!-- Buttons -->
     <string name="add_button">Agregar</string>
@@ -103,7 +103,7 @@
 
     <string name="usernameExmple">Francisco Anzueto</string>
     <string name="email">franzuerto@uvg.edu.gt</string>
-    <string name="student_id">Número de Carné: 2009588</string>
+    <string name="student_id">2009588</string>
     <string name="home">Cerrar Sesión</string>
     <string name="history">Historial</string>
     <string name="admin">Asignación</string>
