@@ -59,7 +59,7 @@ fun LoginScreen(navController : NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = MaterialTheme.colorScheme.primary),
+            .background(color = Color(0xFF008000)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Spacer pads out 1/5th of screen from the top

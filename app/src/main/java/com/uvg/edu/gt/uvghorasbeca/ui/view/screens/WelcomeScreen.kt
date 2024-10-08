@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -47,7 +48,7 @@ fun WelcomeScreen(navController : NavController) {
             painter = painterResource(id = R.drawable.uvg), // Replace with your image drawable
             contentDescription = null,
             contentScale = ContentScale.Crop, // Scale the image to fill the Box
-            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary, blendMode = BlendMode.Modulate),
+            colorFilter = ColorFilter.tint(color = Color(0xFF008000), blendMode = BlendMode.Modulate),
             modifier = Modifier
                 .matchParentSize() // Match the Box size
         )
@@ -84,13 +85,16 @@ fun WelcomeScreen(navController : NavController) {
                     navController.navigate("LoginScreen")
                 },
                 modifier = Modifier
-                    .fillMaxWidth(0.5f),
+                    .fillMaxWidth(0.55f)
+                    .height(52.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    contentColor = Color.White // Text color
+                    contentColor = Color.White, // Text color\
+                    containerColor = Color(0xFF145DA0)
                 )
             ) {
-                Text(text = stringResource(R.string.login))
+                Text(text = stringResource(R.string.login),
+                    fontSize = 18.sp)
             }
         }
     }
