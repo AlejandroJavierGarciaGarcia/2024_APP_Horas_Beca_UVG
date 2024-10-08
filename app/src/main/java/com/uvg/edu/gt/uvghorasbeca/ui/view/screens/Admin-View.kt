@@ -242,7 +242,7 @@ fun DatePickerModalInput(
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
                         stringResource(id = R.string.adding),
-                        color = Color.White  // Texto en blanco
+                        color = Color.White
                     )
                 }
             }
