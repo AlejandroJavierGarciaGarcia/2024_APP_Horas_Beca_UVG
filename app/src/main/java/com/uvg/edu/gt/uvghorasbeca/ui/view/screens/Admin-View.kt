@@ -1,21 +1,22 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.*
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -24,24 +25,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCard
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.material3.Text
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.window.Popup
-import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCardAdmin
 import java.text.SimpleDateFormat
 import java.util.*
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdminController(modifier: Modifier = Modifier, navController : NavController ) {
+fun AdminController(modifier: Modifier = Modifier, navController: NavController) {
     var showDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         floatingActionButton = {
             Column {
@@ -50,23 +48,31 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
                     modifier = Modifier.padding(bottom = 16.dp),
                     containerColor = NotImportantColor
                 ) {
-                    Icon(Icons.Filled.Add, contentDescription = "Agregar")
+                    Icon(Icons.Filled.Add, contentDescription = stringResource(id = R.string.adding))
                 }
-
-
-            }                    },
-        content = { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                CustomCardAdmin(
-                    title = "Tutorías 5",
-                    location = "CIT - 126",
-                    date = "16 / 06 / 2024",
-                    timeRange = null,
-                    totalHours = "3.5",
-                    backgroundColor = Color.LightGray,
-                    showRating = false,
-                )
-
+            }
+        },
+        content = { // Aquí envolvemos la Column en LazyColumn
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(listOf( // Usamos items para definir las tarjetas
+                    CustomCardData("Tutorías Cálculo 2", "CIT - 503", "16 / 10 / 2024", "4"),
+                    CustomCardData("Staff de la Cueva UVG", "Cueva - UVG", "20 / 10 / 2024", "5"),
+                    CustomCardData("Ensayo de Música", "Salón de Música - CIT", "21 / 10 / 2024", "3"),
+                    CustomCardData("Cuidado de DHIVE", "DHIVE - UVG", "22 / 10 / 2024", "2"),
+                    CustomCardData("Atención a Vida Estudiantil", "Oficina de Vida Estudiantil", "23 / 10 / 2024", "4"),
+                    CustomCardData("Organización de Evento Deportivo", "Campo Deportivo UVG", "25 / 10 / 2024", "6"),
+                    CustomCardData("Taller de Creatividad", "Aula de Arte - CIT", "27 / 10 / 2024", "3.5")
+                )) { card ->
+                    CustomCardAdmin(
+                        title = card.title,
+                        location = card.location,
+                        date = card.date,
+                        timeRange = null,
+                        totalHours = card.totalHours,
+                        backgroundColor = Color.LightGray,
+                        showRating = false
+                    )
+                }
             }
         }
     )
@@ -75,6 +81,9 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
         ActivityModal(onDismiss = { showDialog = false })
     }
 }
+
+data class CustomCardData(val title: String, val location: String, val date: String, val totalHours: String)
+
 
 @Composable
 fun ActivityModal(onDismiss: () -> Unit) {
@@ -88,13 +97,13 @@ fun ActivityModal(onDismiss: () -> Unit) {
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Agregar Actividad") },
+        title = { Text(text = stringResource(id = R.string.dialog_title)) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = activityName,
                     onValueChange = { activityName = it },
-                    label = { Text("Nombre de la Actividad") },
+                    label = { Text(stringResource(id = R.string.name_activity)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 Row(
@@ -102,7 +111,7 @@ fun ActivityModal(onDismiss: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("¿Actividad Activa?")
+                    Text(stringResource(id = R.string.enable_activity))
                     Switch(
                         checked = isActive,
                         onCheckedChange = { isActive = it },
@@ -117,30 +126,30 @@ fun ActivityModal(onDismiss: () -> Unit) {
                 OutlinedTextField(
                     value = participantCount,
                     onValueChange = { participantCount = it },
-                    label = { Text("Cantidad de Participantes") },
+                    label = { Text(stringResource(id = R.string.participants)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Descripción") },
+                    label = { Text(stringResource(id = R.string.description)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = room,
                     onValueChange = { room = it },
-                    label = { Text("Salón") },
+                    label = { Text(stringResource(id = R.string.clasroom)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = convertMillisToDate(date.time), // Convertimos date a String
                     onValueChange = { /* No se permite editar, solo visualización */ },
-                    label = { Text("Seleccione la fecha") },
+                    label = { Text(stringResource(id = R.string.date)) },
                     trailingIcon = {
                         IconButton(onClick = { showDatePicker = !showDatePicker }) {
                             Icon(
                                 imageVector = Icons.Sharp.DateRange,
-                                contentDescription = "Fecha de asignación"
+                                contentDescription = stringResource(id = R.string.date_asignation)
                             )
                         }
                     },
@@ -155,7 +164,7 @@ fun ActivityModal(onDismiss: () -> Unit) {
                         onDismiss = { showDatePicker = false }
                     )
                 }
-                Text(text = " * Creación: ${convertMillisToDate(date.time)}")
+                Text(text = " * ${stringResource(id = R.string.creation)}: ${convertMillisToDate(date.time)}")
             }
         },
         confirmButton = {
@@ -169,13 +178,13 @@ fun ActivityModal(onDismiss: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Agregar",
+                        contentDescription = stringResource(id = R.string.adding),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Agregar",
+                        stringResource(id = R.string.adding),
                         color = Color.White  // Texto en blanco
                     )
                 }
@@ -189,13 +198,13 @@ fun ActivityModal(onDismiss: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
-                        contentDescription = "Cancelar",
+                        contentDescription = stringResource(id = R.string.cancel),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Cancelar",
+                        stringResource(id = R.string.cancel),
                         color = Color.White  // Texto en blanco
                     )
                 }
@@ -226,14 +235,14 @@ fun DatePickerModalInput(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Agregar",
+                        contentDescription = stringResource(id = R.string.adding),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Agregar",
-                        color = Color.White  // Texto en blanco
+                        stringResource(id = R.string.adding),
+                        color = Color.White
                     )
                 }
             }
@@ -246,13 +255,13 @@ fun DatePickerModalInput(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
-                        contentDescription = "Cancelar",
+                        contentDescription = stringResource(id = R.string.cancel),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Cancelar",
+                        stringResource(id = R.string.cancel),
                         color = Color.White  // Texto en blanco
                     )
                 }

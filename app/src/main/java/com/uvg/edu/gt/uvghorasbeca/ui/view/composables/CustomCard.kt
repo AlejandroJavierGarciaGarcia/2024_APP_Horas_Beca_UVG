@@ -24,7 +24,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.uvg.edu.gt.uvghorasbeca.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -70,7 +72,7 @@ fun CustomCard(
                             repeat(rating) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
-                                    contentDescription = "Star",
+                                    contentDescription = stringResource(R.string.start),
                                     tint = Color.Yellow,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -79,7 +81,7 @@ fun CustomCard(
                     } else {
                         Icon(
                             imageVector = Icons.Default.Info,
-                            contentDescription = "Info Icon",
+                            contentDescription = stringResource(R.string.confirm_icon),
                             tint = Color.Black,
                             modifier = Modifier.size(20.dp)
                         )
@@ -188,7 +190,7 @@ fun CustomCardAdmin(
                             repeat(rating) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
-                                    contentDescription = "Star",
+                                    contentDescription = stringResource(R.string.start),
                                     tint = Color.Yellow,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -198,7 +200,7 @@ fun CustomCardAdmin(
                     IconButton(onClick = { showOptionsDialog = true }) {
                         Icon(
                             imageVector = Icons.Default.Info,
-                            contentDescription = "Info Icon",
+                            contentDescription = stringResource(R.string.confirm_icon),
                             tint = Color.Black,
                             modifier = Modifier.size(30.dp) // Icono más grande
                         )
@@ -264,7 +266,7 @@ fun CustomCardAdmin(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Opciones", fontWeight = FontWeight.Bold)  // Título "Opciones"
+                    Text(text = stringResource(id = R.string.options_title), fontWeight = FontWeight.Bold)  // Título "Opciones"
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio adicional
 
                     // IconButton para cerrar en la parte superior izquierda
@@ -275,7 +277,7 @@ fun CustomCardAdmin(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,  // Ícono de "X" para cerrar
-                            contentDescription = "Cerrar",
+                            contentDescription = stringResource(id = R.string.close_description),
                             tint = Color.Black
                         )
                     }
@@ -305,13 +307,13 @@ fun CustomCardAdmin(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,  // Ícono de edición
-                                    contentDescription = "Editar",
+                                    contentDescription = stringResource(id = R.string.edit),
                                     modifier = Modifier.size(24.dp),
                                     tint = Color.Black  // Color del ícono
                                 )
                                 Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                                 Text(
-                                    "Editar",
+                                    stringResource(id = R.string.edit),
                                     color = Color.Black  // Texto en negro
                                 )
                             }
@@ -327,13 +329,13 @@ fun CustomCardAdmin(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Icon(
                                     imageVector = Icons.Default.Delete,  // Ícono de eliminar
-                                    contentDescription = "Eliminar",
+                                    contentDescription = stringResource(id = R.string.delete),
                                     modifier = Modifier.size(24.dp),
                                     tint = Color.White  // Color del ícono
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))  // Espacio entre el ícono y el texto
                                 Text(
-                                    "Eliminar",
+                                    stringResource(id = R.string.delete),
                                     color = Color.White  // Texto en blanco
                                 )
                             }
@@ -352,8 +354,8 @@ fun CustomCardAdmin(
     if (showDeleteConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirmDialog = false },
-            title = { Text("Confirmar Eliminación") },
-            text = { Text("¿Estás seguro de que deseas eliminar esta actividad?") },
+            title = { Text(stringResource(id = R.string.confirm_deletion_title)) },
+            text = { Text(stringResource(id = R.string.confirm_deletion_message)) },
             confirmButton = {
                 Button(
                     onClick = { showDeleteConfirmDialog = false; showOptionsDialog = true },
@@ -362,13 +364,13 @@ fun CustomCardAdmin(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Check,  // Ícono de edición
-                            contentDescription = "Confirmar",
+                            contentDescription = stringResource(id = R.string.confirm),
                             modifier = Modifier.size(14.dp),
                             tint = Color.White  // Color del ícono
                         )
                         Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                         Text(
-                            "Confirmar",
+                            stringResource(id = R.string.confirm),
                             color = Color.White  // Texto en negro
                         )
                     }
@@ -382,13 +384,13 @@ fun CustomCardAdmin(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Close,  // Ícono de edición
-                            contentDescription = "Cancelar",
+                            contentDescription = stringResource(id = R.string.cancel),
                             modifier = Modifier.size(14.dp),
                             tint = Color.White  // Color del ícono
                         )
                         Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                         Text(
-                            "Cancelar",
+                            stringResource(id = R.string.cancel),
                             color = Color.White  // Texto en negro
                         )
                     }
@@ -400,15 +402,17 @@ fun CustomCardAdmin(
     // Modal de edición
     if (showEditDialog) {
         EditActivityModal(
-            activityNameInitial = "Nombre Existente",
+            activityNameInitial = stringResource(id = R.string.existing_activity_name),
             isActiveInitial = true,
-            participantCountInitial = "15",
-            descriptionInitial = "Descripción de la actividad existente",
-            roomInitial = "Aula 202",
+            participantCountInitial = stringResource(id = R.string.existing_activity_participant_count),
+            descriptionInitial = stringResource(id = R.string.existing_activity_description),
+            roomInitial = stringResource(id = R.string.existing_activity_room),
             dateInitial = Calendar.getInstance().time,
             onDismiss = { showEditDialog = false }
-        )    }
+        )
+    }
 }
+
 
 @Composable
 fun EditActivityModal(
@@ -430,13 +434,13 @@ fun EditActivityModal(
 
     AlertDialog(
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Editar Actividad") },
+        title = { Text(text = stringResource(R.string.edit_activity)) },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = activityName,
                     onValueChange = { activityName = it },
-                    label = { Text("Nombre de la Actividad") },
+                    label = { Text(stringResource(R.string.activity_name_label)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 Row(
@@ -444,7 +448,7 @@ fun EditActivityModal(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("¿Actividad Activa?")
+                    Text(stringResource(R.string.is_active_label))
                     Switch(
                         checked = isActive,
                         onCheckedChange = { isActive = it },
@@ -459,30 +463,30 @@ fun EditActivityModal(
                 OutlinedTextField(
                     value = participantCount,
                     onValueChange = { participantCount = it },
-                    label = { Text("Cantidad de Participantes") },
+                    label = { Text(stringResource(R.string.participant_count_label)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
-                    label = { Text("Descripción") },
+                    label = { Text(stringResource(R.string.description_label)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = room,
                     onValueChange = { room = it },
-                    label = { Text("Salón") },
+                    label = { Text(stringResource(R.string.room_label)) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                 )
                 OutlinedTextField(
                     value = convertMillisToDate(date.time),
                     onValueChange = { /* Solo visualización */ },
-                    label = { Text("Seleccione la fecha") },
+                    label = { Text(stringResource(R.string.select_date_label)) },
                     trailingIcon = {
                         IconButton(onClick = { showDatePicker = !showDatePicker }) {
                             Icon(
                                 imageVector = Icons.Sharp.DateRange,
-                                contentDescription = "Fecha de asignación"
+                                contentDescription = stringResource(R.string.date_picker_icon)
                             )
                         }
                     },
@@ -497,7 +501,7 @@ fun EditActivityModal(
                         onDismiss = { showDatePicker = false }
                     )
                 }
-                Text(text = " * Creación: ${convertMillisToDate(date.time)}")
+                Text(text = stringResource(R.string.created_date, convertMillisToDate(date.time)))
             }
         },
         confirmButton = {
@@ -511,13 +515,13 @@ fun EditActivityModal(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Agregar",
+                        contentDescription = stringResource(R.string.confirm_icon),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Agregar",
+                        stringResource(R.string.add_button),
                         color = Color.White  // Texto en blanco
                     )
                 }
@@ -531,22 +535,20 @@ fun EditActivityModal(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
-                        contentDescription = "Cancelar",
+                        contentDescription = stringResource(R.string.cancel_icon),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Cancelar",
+                        stringResource(R.string.cancel_button),
                         color = Color.White  // Texto en blanco
                     )
                 }
             }
         }
-
     )
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -569,13 +571,13 @@ fun DatePickerModalInput(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Confimar",
+                        contentDescription = stringResource(R.string.confirm_icon),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Confirmar",
+                        stringResource(R.string.confirm_button),
                         color = Color.White  // Texto en blanco
                     )
                 }
@@ -589,19 +591,18 @@ fun DatePickerModalInput(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
-                        contentDescription = "Cancelar",
+                        contentDescription = stringResource(R.string.cancel_icon),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Cancelar",
+                        stringResource(R.string.cancel_button),
                         color = Color.White  // Texto en blanco
                     )
                 }
             }
-        }
-,
+        },
         text = {
             DatePicker(state = datePickerState)
         }
