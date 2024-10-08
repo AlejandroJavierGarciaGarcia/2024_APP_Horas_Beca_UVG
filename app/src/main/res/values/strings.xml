@@ -5,5 +5,18 @@
     <string name="password">Contraseña</string>
     <string name="login">Iniciar sesión</string>
     <string name="horas_beca">HORAS BECA</string>
-
+    <string name="agregar">Agregar</string>
+    <string name="actividad_activa">¿Actividad Activa?</string>
+    <string name="cantidad_participantes">Cantidad de Participantes</string>
+    <string name="descripcion">Descripción</string>
+    <string name="salon">Salón</string>
+    <string name="seleccione_fecha">Seleccione la fecha</string>
+    <string name="crear"> * Creación: %1$s</string> <!-- Usar format para insertar la fecha -->
+    <string name="dialog_title">Agregar Actividad</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="confirmar">Agregar</string>
+    <string name="fecha_asignacion">Fecha de asignación</string>
+    <string name="error_no_participantes">La cantidad de participantes no puede estar vacía.</string>
+    <string name="error_no_nombre">El nombre de la actividad no puede estar vacío.</string>
+    <string name="fecha_error">Selecciona una fecha válida.</string>
 </resources>

@@ -1,8 +1,10 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -11,6 +13,8 @@ import androidx.compose.foundation.layout.size
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.*
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
@@ -32,16 +36,19 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.material3.Text
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Popup
 import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
 import androidx.navigation.NavController
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCardAdmin
 import java.text.SimpleDateFormat
 import java.util.*
-
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdminController(modifier: Modifier = Modifier, navController : NavController ) {
+fun AdminController(modifier: Modifier = Modifier, navController: NavController) {
     var showDialog by remember { mutableStateOf(false) }
+
     Scaffold(
         floatingActionButton = {
             Column {
@@ -52,21 +59,29 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = "Agregar")
                 }
-
-
-            }                    },
-        content = { innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)) {
-                CustomCardAdmin(
-                    title = "Tutorías 5",
-                    location = "CIT - 126",
-                    date = "16 / 06 / 2024",
-                    timeRange = null,
-                    totalHours = "3.5",
-                    backgroundColor = Color.LightGray,
-                    showRating = false,
-                )
-
+            }
+        },
+        content = { // Aquí envolvemos la Column en LazyColumn
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(listOf( // Usamos items para definir las tarjetas
+                    CustomCardData("Tutorías Cálculo 2", "CIT - 503", "16 / 10 / 2024", "4"),
+                    CustomCardData("Staff de la Cueva UVG", "Cueva - UVG", "20 / 10 / 2024", "5"),
+                    CustomCardData("Ensayo de Música", "Salón de Música - CIT", "21 / 10 / 2024", "3"),
+                    CustomCardData("Cuidado de DHIVE", "DHIVE - UVG", "22 / 10 / 2024", "2"),
+                    CustomCardData("Atención a Vida Estudiantil", "Oficina de Vida Estudiantil", "23 / 10 / 2024", "4"),
+                    CustomCardData("Organización de Evento Deportivo", "Campo Deportivo UVG", "25 / 10 / 2024", "6"),
+                    CustomCardData("Taller de Creatividad", "Aula de Arte - CIT", "27 / 10 / 2024", "3.5")
+                )) { card ->
+                    CustomCardAdmin(
+                        title = card.title,
+                        location = card.location,
+                        date = card.date,
+                        timeRange = null,
+                        totalHours = card.totalHours,
+                        backgroundColor = Color.LightGray,
+                        showRating = false
+                    )
+                }
             }
         }
     )
@@ -75,6 +90,9 @@ fun AdminController(modifier: Modifier = Modifier, navController : NavController
         ActivityModal(onDismiss = { showDialog = false })
     }
 }
+
+data class CustomCardData(val title: String, val location: String, val date: String, val totalHours: String)
+
 
 @Composable
 fun ActivityModal(onDismiss: () -> Unit) {
@@ -169,13 +187,13 @@ fun ActivityModal(onDismiss: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Agregar",
+                        contentDescription = stringResource(id = R.string.agregar),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Agregar",
+                        stringResource(id = R.string.agregar),
                         color = Color.White  // Texto en blanco
                     )
                 }
@@ -189,13 +207,13 @@ fun ActivityModal(onDismiss: () -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Close,  // Ícono de cancelar
-                        contentDescription = "Cancelar",
+                        contentDescription = stringResource(id = R.string.cancelar),
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
                     Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
                     Text(
-                        "Cancelar",
+                        stringResource(id = R.string.cancelar),
                         color = Color.White  // Texto en blanco
                     )
                 }

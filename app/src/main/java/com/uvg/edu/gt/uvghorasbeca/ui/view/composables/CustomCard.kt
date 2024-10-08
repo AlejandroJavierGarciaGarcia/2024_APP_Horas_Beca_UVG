@@ -511,7 +511,7 @@ fun EditActivityModal(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = Icons.Default.Check,  // Ícono de confirmar
-                        contentDescription = "Agregar",
+                        contentDescription = "Actualizar",
                         modifier = Modifier.size(14.dp),
                         tint = Color.White  // Color del ícono
                     )
