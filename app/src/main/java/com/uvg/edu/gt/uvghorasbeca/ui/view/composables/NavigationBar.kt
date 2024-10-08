@@ -1,20 +1,21 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
 
-import androidx.compose.material3.*
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.DateRange
@@ -28,47 +29,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.uvg.edu.gt.uvghorasbeca.R
 
-
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Clear
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ThumbUp
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDrawerState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
-import com.uvg.edu.gt.uvghorasbeca.ui.theme.Black
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun TopAppBar(modifier: Modifier = Modifier) {
+fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
     Row(
         modifier = modifier
             .background(color = Color(0xFF27C24C))
@@ -76,10 +61,10 @@ fun TopAppBar(modifier: Modifier = Modifier) {
             .height(56.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /* Acción al hacer clic en el ícono */ }) {
+        IconButton(onClick = onMenuClick) {
             Icon(
                 imageVector = Icons.Filled.Menu,
-                contentDescription = "Menú",
+                contentDescription = stringResource(id = R.string.menu),
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
@@ -93,20 +78,6 @@ fun TopAppBar(modifier: Modifier = Modifier) {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(start = 8.dp)
         )
-        /*Image(
-            painter = painterResource(id = R.drawable.logouvg),
-            contentDescription = "Logo UVG",
-            modifier = Modifier
-                .size(80.dp)
-        )*/
-    }
-    Row (
-        modifier = modifier
-            .background(color = Color(0xFF7DFF9C))
-            .fillMaxWidth()
-            .height(5.dp),
-        verticalAlignment = Alignment.CenterVertically)
-    {
     }
 }
 
@@ -131,7 +102,7 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
         ) {
             Icon(
                 imageVector = Icons.Filled.Info,
-                contentDescription = "Home",
+                contentDescription = stringResource(id = R.string.menu),
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
@@ -146,7 +117,7 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
         ) {
             Icon(
                 imageVector = Icons.Filled.DateRange,
-                contentDescription = "Search",
+                contentDescription = stringResource(id = R.string.menu),
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
@@ -161,7 +132,7 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
         ) {
             Icon(
                 imageVector = Icons.Filled.CheckCircle,
-                contentDescription = "Profile",
+                contentDescription = stringResource(id = R.string.menu),
                 modifier = Modifier.size(40.dp),
                 tint = Color.White
             )
@@ -184,99 +155,93 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
     }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-    // Estado del panel lateral
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet {
-                Text("Drawer Title", modifier = Modifier.padding(16.dp))
-                Divider()
-                NavigationDrawerItem(
-                    label = { Text(text = "Opción 1") },
-                    selected = false,
-                    onClick = { /* Navegar a Opción 1 */ }
-                )
-                NavigationDrawerItem(
-                    label = { Text(text = "Opción 2") },
-                    selected = false,
-                    onClick = { /* Navegar a Opción 2 */ }
-                )
-                // Agrega más elementos según sea necesario
-            }
-        }
-    ) {
-        // Contenido principal de la pantalla
-        Column {
-            TopAppBar(
-                onMenuClick = {
-                    scope.launch {
-                        if (drawerState.isClosed) {
-                            drawerState.open()
-                        } else {
-                            drawerState.close()
-                        }
-                    }
-                }
-            )
-            // Resto del contenido de la pantalla
-            Text("Contenido Principal", modifier = Modifier.padding(16.dp))
-        }
-    }
-}
-
-@Composable
-fun TopAppBar(onMenuClick: () -> Unit, modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .background(color = Color(0xFF27C24C))
-            .fillMaxWidth()
-            .height(56.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { onMenuClick() }) {
-            Icon(
-                imageVector = Icons.Filled.Menu,
-                contentDescription = "Menú",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
-            )
-        }
-
-        Spacer(modifier = Modifier.weight(2f))
-        Text(
-            text = stringResource(id = R.string.logoUVG),
-            color = Color.White,
-            fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(start = 8.dp)
-        )
-    }
-}
-
-
 @Composable
 fun DrawerContent(navController: NavController, onClose: () -> Unit) {
-    // Define your drawer items here
-    Column {
-        Text("Home", modifier = Modifier.clickable {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(0.85f) // Ocupa el 85% del ancho
+            .fillMaxHeight() // Ocupa el 100% de la altura
+            .background(Color(0xFF27C24C)) // Fondo verde claro
+            .padding(16.dp)
+    ) {
+        // Ícono de usuario grande en el centro
+        Box(
+            modifier = Modifier
+                .size(120.dp) // Aumenta el tamaño
+                .padding(16.dp)
+                .background(Color.White, shape = CircleShape)
+                .align(Alignment.CenterHorizontally) // Centra el contenido
+        ) {
+            Image(
+                imageVector = Icons.Default.Person,
+                contentDescription = "Perfil",
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        Text(
+            text = stringResource(id = R.string.usernameExmple),
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier.padding(vertical = 4.dp).align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = stringResource(id = R.string.email),
+            fontSize = 16.sp,
+            color = Color.White,
+            modifier = Modifier.padding(vertical = 2.dp).align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = stringResource(id = R.string.student_id),
+            fontSize = 16.sp,
+            color = Color.White,
+            modifier = Modifier.padding(vertical = 2.dp).align(Alignment.CenterHorizontally)
+        )
+
+        // Barra de progreso
+        Spacer(modifier = Modifier.height(16.dp))
+        LinearProgressIndicator(
+            progress = 0.5f,
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Divisor
+        Divider(color = Color.Gray, thickness = 1.dp)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Enlaces a las pantallas
+        DrawerButton(icon = Icons.Default.Home, label = stringResource(id = R.string.home)) {
             navController.navigate(NavigationState.WelcomeScreen.route)
             onClose()
-        })
-        Text("History", modifier = Modifier.clickable {
+        }
+        DrawerButton(icon = Icons.Default.CheckCircle, label = stringResource(id = R.string.history)) {
             navController.navigate(NavigationState.HistoryScreen.route)
             onClose()
-        })
-        Text("Admin", modifier = Modifier.clickable {
+        }
+        DrawerButton(icon = Icons.Default.Settings, label = stringResource(id = R.string.admin)) {
             navController.navigate(NavigationState.AdminController.route)
             onClose()
-        })
-        // Add other menu items as needed
+        }
+    }
+}
+
+@Composable
+fun DrawerButton(icon: ImageVector, label: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .padding(16.dp)
+            .background(Color.White, shape = MaterialTheme.shapes.small)
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(imageVector = icon, contentDescription = label)
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(text = label, fontSize = 16.sp)
     }
 }

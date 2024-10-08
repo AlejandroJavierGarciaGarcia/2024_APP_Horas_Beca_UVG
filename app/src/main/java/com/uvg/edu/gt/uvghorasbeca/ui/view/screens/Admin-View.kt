@@ -39,7 +39,6 @@ import java.util.*
 @Composable
 fun AdminController(modifier: Modifier = Modifier, navController: NavController) {
     var showDialog by remember { mutableStateOf(false) }
-
     Scaffold(
         floatingActionButton = {
             Column {
@@ -53,7 +52,7 @@ fun AdminController(modifier: Modifier = Modifier, navController: NavController)
             }
         },
         content = { // Aquí envolvemos la Column en LazyColumn
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp)) {
                 items(listOf( // Usamos items para definir las tarjetas
                     CustomCardData("Tutorías Cálculo 2", "CIT - 503", "16 / 10 / 2024", "4"),
                     CustomCardData("Staff de la Cueva UVG", "Cueva - UVG", "20 / 10 / 2024", "5"),
@@ -254,15 +253,15 @@ fun DatePickerModalInput(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Default.Close,  // Ícono de cancelar
+                        imageVector = Icons.Default.Close,
                         contentDescription = stringResource(id = R.string.cancel),
                         modifier = Modifier.size(14.dp),
-                        tint = Color.White  // Color del ícono
+                        tint = Color.White
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Espacio entre el ícono y el texto
+                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         stringResource(id = R.string.cancel),
-                        color = Color.White  // Texto en blanco
+                        color = Color.White
                     )
                 }
             }

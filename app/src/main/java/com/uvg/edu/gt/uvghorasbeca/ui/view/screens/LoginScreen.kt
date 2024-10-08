@@ -164,10 +164,11 @@ fun LoginScreen(navController : NavController) {
                         .padding(top = 22.dp)
                         .height(58.dp),
                     shape = RoundedCornerShape(8.dp),
-                    enabled = true, // Enable button only when both fields are not empty
+                    enabled = isLoginEnabled,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = Color.Black,
+                        disabledContainerColor = Color.Gray
                     )
                 ) {
                     Text(
@@ -186,6 +187,3 @@ fun LoginScreen(navController : NavController) {
         }
     }
 }
-
-
-

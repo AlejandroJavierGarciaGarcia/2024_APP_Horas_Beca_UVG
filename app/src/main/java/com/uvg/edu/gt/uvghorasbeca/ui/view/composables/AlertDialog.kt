@@ -1,11 +1,15 @@
-package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -14,8 +18,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.uvg.edu.gt.uvghorasbeca.R
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlertDialogUser(
     title: String,
@@ -30,12 +35,13 @@ fun AlertDialogUser(
     availableSpots: String
 ) {
     var showDialog by remember { mutableStateOf(false) }
+    var showSuccessDialog by remember { mutableStateOf(false) } // Para el segundo AlertDialog
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { showDialog = true }, // Hacemos toda la Card clickeable
+            .clickable { showDialog = true },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
         shape = RoundedCornerShape(8.dp)
@@ -53,15 +59,17 @@ fun AlertDialogUser(
                 Text(
                     text = title,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.weight(1f) // Deja espacio para el ícono
                 )
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     if (showRating) {
                         Row {
                             repeat(rating) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
-                                    contentDescription = "Star",
+                                    contentDescription = stringResource(id = R.string.star_icon_description),
                                     tint = Color.Yellow,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -70,9 +78,9 @@ fun AlertDialogUser(
                     } else {
                         Icon(
                             imageVector = Icons.Default.Info,
-                            contentDescription = "Info Icon",
+                            contentDescription = stringResource(id = R.string.info_icon_description),
                             tint = Color.Black,
-                            modifier = Modifier.size(20.dp) // Ya no necesitas el clickable aquí
+                            modifier = Modifier.size(34.dp)
                         )
                     }
                 }
@@ -130,9 +138,12 @@ fun AlertDialogUser(
         AlertDialog(
             onDismissRequest = { showDialog = false },
             shape = RoundedCornerShape(32.dp),
-            containerColor = Color.LightGray,
+            containerColor = Color(0xFFE8F5EB),
             title = {
-                Text(text = title)
+                Column {
+                    Text(text = title)
+                    Divider(color = Color.Gray, thickness = 0.8.dp)
+                }
             },
             text = {
                 Column(
@@ -145,10 +156,7 @@ fun AlertDialogUser(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.Top
                     ) {
-                        // Espacio para el título del AlertDialog
-                        Text(text = "", modifier = Modifier.weight(1f))
 
-                        // Mueve el availableSpots a la esquina superior derecha
                         Text(
                             text = availableSpots,
                             fontSize = 15.sp,
@@ -191,42 +199,98 @@ fun AlertDialogUser(
                         color = Color.DarkGray
                     )
                     Spacer(modifier = Modifier.height(18.dp))
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(
-                            onClick = { showDialog = false },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp)
-                        ) {
-                            Text(
-                                text = "Regresar",
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Button(
-                            onClick = { /* Acción de asignar */ },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(48.dp)
-                        ) {
-                            Text(
-                                text = "Asignarse",
-                                color = Color.Black,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDialog = false
+                        showSuccessDialog = true
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF27C24C)) // Verde
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = stringResource(id = R.string.assign_button_text),
+                            modifier = Modifier.size(14.dp),
+                            tint = Color.White
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.assign_button_text),
+                            color = Color.White
+                        )
                     }
                 }
             },
-            confirmButton = {},
-            dismissButton = {}
+            dismissButton = {
+                Button(
+                    onClick = { showDialog = false },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowDown,
+                            contentDescription = stringResource(id = R.string.back_button_text),
+                            modifier = Modifier.size(14.dp),
+                            tint = Color.White
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.back_button_text),
+                            color = Color.White
+                        )
+                    }
+                }
+            }
         )
+    }
+
+    // Segundo AlertDialog para mostrar el mensaje de "Asignación exitosa"
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { showSuccessDialog = false },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(), // Ocupa todo el ancho
+            containerColor = Color(0xFFE8F5EB),
+            title = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = stringResource(id = R.string.success_icon_description),
+                        tint = Color(0xFF4CAF50),
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.dialog_title_success),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF4CAF50)
+                    )
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.dialog_message_success),
+                        fontSize = 16.sp,
+                        color = Color.Black,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+            },
+            confirmButton = {}         )
     }
 }
