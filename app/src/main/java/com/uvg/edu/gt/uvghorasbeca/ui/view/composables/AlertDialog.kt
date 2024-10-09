@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.ui.res.stringResource
 import androidx.compose.material3.*
@@ -69,7 +70,7 @@ fun AlertDialogUser(
                             repeat(rating) {
                                 Icon(
                                     imageVector = Icons.Default.Star,
-                                    contentDescription = stringResource(id = R.string.star_icon_description),
+                                    contentDescription = stringResource(id = R.string.info_icon_description),
                                     tint = Color.Yellow,
                                     modifier = Modifier.size(20.dp)
                                 )
@@ -77,10 +78,10 @@ fun AlertDialogUser(
                         }
                     } else {
                         Icon(
-                            imageVector = Icons.Default.Info,
+                            imageVector = Icons.Default.CheckCircle,
                             contentDescription = stringResource(id = R.string.info_icon_description),
-                            tint = Color.Black,
-                            modifier = Modifier.size(34.dp)
+                            tint = Color(0xFF006400),
+                            modifier = Modifier.size(30.dp)
                         )
                     }
                 }

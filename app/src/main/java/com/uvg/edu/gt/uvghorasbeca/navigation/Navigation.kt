@@ -26,7 +26,6 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
