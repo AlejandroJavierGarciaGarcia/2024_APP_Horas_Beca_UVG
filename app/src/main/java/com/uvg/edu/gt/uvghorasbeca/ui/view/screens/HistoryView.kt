@@ -17,7 +17,7 @@ fun HistoryView(navController : NavController) {
             date = "16 / 06 / 2024",
             timeRange = null,
             totalHours = "3.5",
-            backgroundColor = Color.LightGray,
+            backgroundColor = Color(0xFFe0f1ff),
             showRating = true,
             rating = 5
         )

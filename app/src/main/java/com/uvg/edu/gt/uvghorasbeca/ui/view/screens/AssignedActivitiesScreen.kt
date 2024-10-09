@@ -93,7 +93,7 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
         BasicTextField(
             value = query,
             onValueChange = onQueryChange,
-            textStyle = TextStyle(fontSize = 18.sp),
+            textStyle = TextStyle(fontSize = 20.sp),
             modifier = Modifier
                 .background(Color.LightGray, MaterialTheme.shapes.small)
                 .padding(16.dp)
@@ -104,8 +104,8 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit) {
             contentDescription = stringResource(id = R.string.search)
             ,
             modifier = Modifier
-                .padding(end = 16.dp)
-                .size(30.dp),
+                .padding(end = 15.dp)
+                .size(25.dp),
             tint = Color.Gray
         )
     }

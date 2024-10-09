@@ -159,18 +159,18 @@ fun BottomNavigationBar(modifier: Modifier = Modifier,navController: NavControll
 fun DrawerContent(navController: NavController, onClose: () -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxWidth(0.85f) // Ocupa el 85% del ancho
-            .fillMaxHeight() // Ocupa el 100% de la altura
-            .background(Color(0xFF27C24C)) // Fondo verde claro
+            .fillMaxWidth(0.85f)
+            .fillMaxHeight()
+            .background(Color(0xFF27C24C))
             .padding(16.dp)
     ) {
         // Ícono de usuario grande en el centro
         Box(
             modifier = Modifier
-                .size(120.dp) // Aumenta el tamaño
-                .padding(16.dp)
+                .size(180.dp)
+                .padding(30.dp)
                 .background(Color.White, shape = CircleShape)
-                .align(Alignment.CenterHorizontally) // Centra el contenido
+                .align(Alignment.CenterHorizontally)
         ) {
             Image(
                 imageVector = Icons.Default.Person,
@@ -181,43 +181,38 @@ fun DrawerContent(navController: NavController, onClose: () -> Unit) {
 
         Text(
             text = stringResource(id = R.string.usernameExmple),
-            fontSize = 24.sp,
+            fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier.padding(vertical = 4.dp).align(Alignment.CenterHorizontally)
         )
         Text(
             text = stringResource(id = R.string.email),
             fontSize = 16.sp,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier.padding(vertical = 2.dp).align(Alignment.CenterHorizontally)
         )
         Text(
             text = stringResource(id = R.string.student_id),
             fontSize = 16.sp,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier.padding(vertical = 2.dp).align(Alignment.CenterHorizontally)
         )
 
-        // Barra de progreso
         Spacer(modifier = Modifier.height(16.dp))
         LinearProgressIndicator(
             progress = 0.5f,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            color = Color(0xFF006400) // Verde oscuro (Dark Green)
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Divisor
-        Divider(color = Color.Gray, thickness = 1.dp)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Enlaces a las pantallas
-        DrawerButton(icon = Icons.Default.Home, label = stringResource(id = R.string.home)) {
-            navController.navigate(NavigationState.WelcomeScreen.route)
-            onClose()
-        }
+        Divider(color = Color.Black, thickness = 1.dp)
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         DrawerButton(icon = Icons.Default.CheckCircle, label = stringResource(id = R.string.history)) {
             navController.navigate(NavigationState.HistoryScreen.route)
             onClose()
@@ -226,8 +221,14 @@ fun DrawerContent(navController: NavController, onClose: () -> Unit) {
             navController.navigate(NavigationState.AdminController.route)
             onClose()
         }
+        DrawerButton(icon = Icons.Default.Home, label = stringResource(id = R.string.home)) {
+            navController.navigate(NavigationState.WelcomeScreen.route)
+            onClose()
+        }
     }
 }
+
+
 
 @Composable
 fun DrawerButton(icon: ImageVector, label: String, onClick: () -> Unit) {

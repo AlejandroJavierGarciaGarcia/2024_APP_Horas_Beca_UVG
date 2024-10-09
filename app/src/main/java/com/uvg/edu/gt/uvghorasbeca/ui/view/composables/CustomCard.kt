@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.sharp.DateRange
 import androidx.compose.runtime.getValue
@@ -79,10 +80,10 @@ fun CustomCard(
                         }
                     } else {
                         Icon(
-                            imageVector = Icons.Default.Info,
-                            contentDescription = stringResource(R.string.confirm_icon),
-                            tint = Color.Black,
-                            modifier = Modifier.size(20.dp)
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(id = R.string.info_icon_description),
+                            tint = Color(0xFF006400),
+                            modifier = Modifier.size(30.dp)
                         )
                     }
 
@@ -190,7 +191,7 @@ fun CustomCardAdmin(
                                 Icon(
                                     imageVector = Icons.Default.Star,
                                     contentDescription = stringResource(R.string.start),
-                                    tint = Color.Yellow,
+                                    tint = Color(0xFFD8BC2C),
                                     modifier = Modifier.size(20.dp)
                                 )
                             }
@@ -198,9 +199,9 @@ fun CustomCardAdmin(
                     }
                     IconButton(onClick = { showOptionsDialog = true }) {
                         Icon(
-                            imageVector = Icons.Default.Info,
+                            imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(R.string.confirm_icon),
-                            tint = Color.Black,
+                            tint = Color(0xFF006400),
                             modifier = Modifier.size(30.dp)
                         )
                     }
