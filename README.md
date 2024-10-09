@@ -13,38 +13,33 @@ Esta aplicación está diseñada para facilitar el registro de horas beca de los
 1. ### Login
    Pantalla para que los estudiantes y administradores inicien sesión. Esta pantalla verifica las credenciales antes de permitir el acceso a la aplicación.
 
-   ![imagen_2024-10-08_213447374](https://github.com/user-attachments/assets/ac491e5e-7c02-413d-bf2c-e00875fec00f)
-
+   ![imagen_2024-10-08_214952823](https://github.com/user-attachments/assets/bd1014d5-feca-46a9-8b39-b2723439e8a2)
 
 2. ### Side-bar
    Barra lateral que permite la navegación entre las diferentes secciones de la aplicación. Incluye enlaces al historial de horas, vista de actividades y perfil del usuario.
 
-   ![imagen_2024-10-08_213838103](https://github.com/user-attachments/assets/28a9268c-c160-45bc-aef9-5df8f6e8889a)
-   
+   ![imagen_2024-10-08_215016025](https://github.com/user-attachments/assets/45e40124-bc57-4c2c-80a3-e21da3fba9a3)
+
 3. ### Admin View
    Vista diseñada para que los administradores puedan gestionar usuarios, ver estadísticas y asignar actividades.
 
-   ![imagen_2024-10-08_213806854](https://github.com/user-attachments/assets/5491faf9-6f60-4a19-93ae-cdbac093484f)
+   ![imagen_2024-10-08_215044122](https://github.com/user-attachments/assets/94250c12-a8aa-49d1-bbca-aaebe0fac5f8)
 
-   
 4. ### AssignedActivitiesScreen
    Pantalla donde los estudiantes pueden visualizar las actividades asignadas y registrar sus horas de trabajo.
 
-   ![imagen_2024-10-08_214044356](https://github.com/user-attachments/assets/88a8ce41-85d9-42c1-a3e4-9ad75b8979e2)
-
+   ![imagen_2024-10-08_215146641](https://github.com/user-attachments/assets/6c9c4fac-328d-4f45-969e-85519f2ed5f7)
 
 5. ### History View
    Sección que muestra el historial de actividades y horas trabajadas por el estudiante, permitiendo un seguimiento detallado.
 
-   ![imagen_2024-10-08_214119515](https://github.com/user-attachments/assets/8d84a774-fcf2-467b-afe1-51889e41d13d)
+   ![imagen_2024-10-08_215209568](https://github.com/user-attachments/assets/5302b308-2da5-4002-8281-60ad4c996ed8)
 
-   
 6. ### User Asignation
    Pantalla general de usuario, donde pueden asignarse actividades los estudiantes y gestionar a que actividad de horas beca desean asignarse.
 
-   ![imagen_2024-10-08_214141022](https://github.com/user-attachments/assets/2eea68a1-2fe0-498f-9150-ff50b61d7435)
+   ![imagen_2024-10-08_215241980](https://github.com/user-attachments/assets/eaae152c-aed9-4c35-a7b2-179385b4acf2)
 
-   
 ## Instalación y Configuración
 
 1. Clonar el repositorio:  
