@@ -21,7 +21,7 @@ fun UserView(navController: NavController) {
             date = stringResource(id = R.string.activity_date),
             timeRange = stringResource(id = R.string.activity_time_range), // Random time range
             totalHours = null,
-            backgroundColor = Color.LightGray,
+            backgroundColor = Color(0xFFe0f1ff),
             showRating = false,
             rating = 0,
             additionalInfo = stringResource(id = R.string.activity_info, index + 1),

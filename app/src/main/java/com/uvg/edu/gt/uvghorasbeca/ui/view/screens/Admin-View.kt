@@ -68,7 +68,7 @@ fun AdminController(modifier: Modifier = Modifier, navController: NavController)
                         date = card.date,
                         timeRange = null,
                         totalHours = card.totalHours,
-                        backgroundColor = Color.LightGray,
+                        backgroundColor = Color(0xFFe0f1ff),
                         showRating = false
                     )
                 }
