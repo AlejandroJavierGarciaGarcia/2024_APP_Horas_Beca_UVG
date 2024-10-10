@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
+import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTasksView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTaskDetailsView
@@ -39,7 +40,7 @@ fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
         },
         bottomBar = {
             if (currentScreen != NavigationState.LoginScreen.route) {
-                BottomNavigationBar(navController = navController, isAdmin = isAdmin)
+                SetupBottomNav(navController = navController, isAdmin = isAdmin)
             }
         }
     ) { innerPadding ->

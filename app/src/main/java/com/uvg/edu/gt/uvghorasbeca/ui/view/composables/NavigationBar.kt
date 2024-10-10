@@ -2,12 +2,21 @@ package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
@@ -16,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,14 +41,15 @@ fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
         modifier = modifier
             .background(color = Color(0xFF27C24C)) // Verde UVG
             .fillMaxWidth()
+            .padding(top = 30.dp)
             .height(56.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onMenuClick) {
             Icon(
-                imageVector = Icons.Filled.Menu,
+                painterResource(id = R.drawable.hamburguer_top_menu_icon),
                 contentDescription = "Menu",
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(50.dp),
                 tint = Color.White
             )
         }
@@ -47,88 +58,83 @@ fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
         Text(
             text = "UVG",
             color = Color.White,
-            fontSize = 40.sp,
+            fontSize = 40.sp, // Tamaño de texto ajustado
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(start = 8.dp)
+            modifier = Modifier.padding(end = 16.dp) // Más espacio del borde derecho
         )
     }
 }
 
+data class BottomNavItem(
+    val icon: Int,
+    val route: String,
+    val contentDescription: String
+)
+
 @Composable
-fun BottomNavigationBar(modifier: Modifier = Modifier, navController: NavController, isAdmin: Boolean) {
+fun BottomNavigationBar(
+    navController: NavController,
+    isAdmin: Boolean,
+    items: List<BottomNavItem>
+) {
     val currentRoute = navController.currentBackStackEntryAsState()?.value?.destination?.route
 
-    Row(
+    Box(
         modifier = Modifier
-            .background(color = Color(0xFF27C24C)) // Verde UVG
+            .background(color = Color(0xFFEFEFEF)) // Fondo claro
             .fillMaxWidth()
-            .height(60.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+            .padding(bottom = 10.dp)
+
     ) {
-        // Primer botón: Tareas (disponibles o administrativas)
-        IconButton(
-            onClick = {
-                if (currentRoute != if (isAdmin) "AdminTasksView" else "AvailableTasksView") {
-                    navController.navigate(if (isAdmin) "AdminTasksView" else "AvailableTasksView")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(70.dp)
+                .padding(bottom = 0.dp)
+                .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)), // Esquinas redondeadas
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly // Distribución equitativa entre los íconos
+        ) {
+            items.forEach { item ->
+                IconButton(
+                    onClick = {
+                        if (currentRoute != item.route) {
+                            navController.navigate(item.route)
+                        }
+                    },
+                    modifier = Modifier
+                        .size(56.dp) // Tamaño del botón para mejorar la zona táctil
+                        .align(Alignment.CenterVertically) // Centramos verticalmente
+                ) {
+                    Icon(
+                        painter = painterResource(id = item.icon),
+                        contentDescription = item.contentDescription,
+                        modifier = Modifier.size(46.dp), // Tamaño del ícono
+                        tint = Color.Black
+                    )
                 }
             }
-        ) {
-            Icon(
-                painterResource(id = R.drawable.available_tasks_view_icon),
-                contentDescription = "Tasks",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
-            )
-        }
-
-        // Segundo botón: Horas Pendientes
-        IconButton(
-            onClick = {
-                if (currentRoute != "PendingHoursView") {
-                    navController.navigate("PendingHoursView")
-                }
-            }
-        ) {
-            Icon(
-                painterResource(id = R.drawable.pending_hours_view_icon),
-                contentDescription = "Pending Hours",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
-            )
-        }
-
-        // Tercer botón: Historial de Horas
-        IconButton(
-            onClick = {
-                if (currentRoute != "HoursHistoryView") {
-                    navController.navigate("HoursHistoryView")
-                }
-            }
-        ) {
-            Icon(
-                painterResource(id = R.drawable.hours_history_view_icon),
-                contentDescription = "Hours History",
-                modifier = Modifier.size(40.dp),
-                tint = Color.White
-            )
         }
     }
 }
 
-//@Composable
-//fun DrawerButton(icon: ImageVector, label: String, onClick: () -> Unit) {
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .clickable { onClick() }
-//            .padding(16.dp)
-//            .background(Color.White, shape = MaterialTheme.shapes.small)
-//            .padding(8.dp),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Icon(imageVector = icon, contentDescription = label)
-//        Spacer(modifier = Modifier.width(16.dp))
-//        Text(text = label, fontSize = 16.sp)
-//    }
-//}
+@Composable
+fun SetupBottomNav(navController: NavController, isAdmin: Boolean) {
+    // Generar la lista de ítems según el rol del usuario
+    val items = if (isAdmin) {
+        listOf(
+            BottomNavItem(R.drawable.available_tasks_view_icon, "AdminTasksView", "Admin Tasks"),
+            BottomNavItem(R.drawable.pending_hours_view_icon, "PendingHoursView", "Pending Hours"),
+            BottomNavItem(R.drawable.hours_history_view_icon, "HoursHistoryView", "Hours History")
+        )
+    } else {
+        listOf(
+            BottomNavItem(R.drawable.available_tasks_view_icon, "AvailableTasksView", "Available Tasks"),
+            BottomNavItem(R.drawable.pending_hours_view_icon, "PendingHoursView", "Pending Hours"),
+            BottomNavItem(R.drawable.hours_history_view_icon, "HoursHistoryView", "Hours History")
+        )
+    }
+
+    // Pasamos la lista de ítems a la barra de navegación
+    BottomNavigationBar(navController = navController, isAdmin = isAdmin, items = items)
+}
