@@ -1,91 +1,84 @@
 package com.uvg.edu.gt.uvghorasbeca.navigation
 
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.AssignedActivitiesScreen
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.UserView
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.DrawerContent
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.AdminController
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.HistoryView
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.LoginScreen
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.WelcomeScreen
-import kotlinx.coroutines.launch
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTasksView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTaskDetailsView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.EditTaskView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.AvailableTasksView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.PendingHoursView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.HoursHistoryView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.ProfileProgressView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier) {
+fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
     val navController = rememberNavController()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
-    // Get current back stack entry
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = currentBackStackEntry?.destination?.route ?: NavigationState.WelcomeScreen.route
+    val currentScreen = currentBackStackEntry?.destination?.route ?: NavigationState.LoginScreen.route
 
-    // Envuelve el Scaffold dentro del ModalNavigationDrawer
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            DrawerContent(navController = navController, onClose = {
-                scope.launch { drawerState.close() }
-            })
-        }
-    ) {
-        Scaffold(
-            topBar = {
-                if (currentScreen != NavigationState.WelcomeScreen.route && currentScreen != NavigationState.LoginScreen.route) {
-                    TopAppBar(
-                        modifier = Modifier.statusBarsPadding(),
-                        onMenuClick = {
-                            scope.launch {
-                                drawerState.open() // Abre el Drawer al hacer clic en el ícono del menú
-                            }
-                        }
-                    )
-                }
-            },
-            bottomBar = {
-                if (currentScreen != NavigationState.WelcomeScreen.route && currentScreen != NavigationState.LoginScreen.route) {
-                    BottomNavigationBar(modifier = Modifier.statusBarsPadding(), navController = navController)
-                }
+    Scaffold(
+        topBar = {
+            if (currentScreen != NavigationState.LoginScreen.route) {
+                TopAppBar(
+                    onMenuClick = {
+                        // Aquí defines qué sucede cuando se hace clic en el botón de menú
+                    })
             }
-        ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = NavigationState.WelcomeScreen.route,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable(route = NavigationState.WelcomeScreen.route) {
-                    WelcomeScreen(navController = navController)
-                }
-                composable(route = NavigationState.LoginScreen.route) {
-                    LoginScreen(navController = navController)
-                }
-                composable(route = NavigationState.HistoryScreen.route) {
-                    HistoryView(navController = navController)
-                }
-                composable(route = NavigationState.AdminController.route) {
-                    AdminController(navController = navController)
-                }
-                composable(route = NavigationState.UserController.route) {
-                    UserView(navController = navController)
-                }
-                composable(route = NavigationState.AssignedActivitiesScreen.route) {
-                    AssignedActivitiesScreen(navController = navController)
-                }
+        },
+        bottomBar = {
+            if (currentScreen != NavigationState.LoginScreen.route) {
+                BottomNavigationBar(navController = navController, isAdmin = isAdmin)
+            }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = if (isAdmin) NavigationState.AdminTasks.route else NavigationState.LoginScreen.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            // Pantallas de administradores
+            composable(route = NavigationState.AdminTasks.route) {
+                AdminTasksView(navController = navController)
+            }
+            composable(route = NavigationState.AdminTaskDetails.route) {
+                AdminTaskDetailsView(navController = navController)
+            }
+            composable(route = NavigationState.EditTask.route) {
+                EditTaskView(navController = navController)
+            }
+
+            // Pantallas de usuarios normales
+            composable(route = NavigationState.AvailableTasks.route) {
+                AvailableTasksView(navController = navController)
+            }
+            composable(route = NavigationState.PendingHours.route) {
+                PendingHoursView(navController = navController)
+            }
+            composable(route = NavigationState.HoursHistory.route) {
+                HoursHistoryView(navController = navController)
+            }
+            composable(route = NavigationState.ProfileProgress.route) {
+                ProfileProgressView(navController = navController)
+            }
+            composable(route = NavigationState.TaskDetails.route) {
+                TaskDetailsView(navController = navController)
+            }
+
+            // Pantalla de login
+            composable(route = NavigationState.LoginScreen.route) {
+                LoginView(navController = navController)
             }
         }
     }
