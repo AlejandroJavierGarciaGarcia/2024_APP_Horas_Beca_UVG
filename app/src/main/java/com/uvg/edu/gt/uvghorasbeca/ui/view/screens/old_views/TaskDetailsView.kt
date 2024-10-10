@@ -1,15 +1,11 @@
-
-import androidx.compose.foundation.layout.Column
+package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.R
-import com.uvg.edu.gt.uvghorasbeca.data.AlertDialog
+import AlertDialog
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.PaginatedAlertDialogList
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import kotlin.random.Random
 
 @Composable
 fun UserView(navController: NavController) {
@@ -25,7 +21,8 @@ fun UserView(navController: NavController) {
             showRating = false,
             rating = 0,
             additionalInfo = stringResource(id = R.string.activity_info, index + 1),
-            availableSpots = stringResource(id = R.string.available_spots))
+            availableSpots = stringResource(id = R.string.available_spots)
+        )
     }
 
     PaginatedAlertDialogList(items = items)

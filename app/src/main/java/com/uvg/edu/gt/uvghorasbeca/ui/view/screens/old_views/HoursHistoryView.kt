@@ -1,10 +1,9 @@
-package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
+package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
-import com.uvg.edu.gt.uvghorasbeca.data.CustomCardData
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.CustomCard
+import com.uvg.edu.gt.uvghorasbeca.data.models.CustomCardData
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.PaginatedList
 
 

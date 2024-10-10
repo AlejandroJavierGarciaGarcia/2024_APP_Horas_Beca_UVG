@@ -1,11 +1,10 @@
 package com.uvg.edu.gt.uvghorasbeca.navigation
 
-import AssignedActivitiesScreen
-import UserView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.AssignedActivitiesScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.UserView
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
@@ -20,10 +19,10 @@ import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.DrawerContent
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.AdminController
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.HistoryView
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.LoginScreen
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.WelcomeScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.AdminController
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.HistoryView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.LoginScreen
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views.WelcomeScreen
 import kotlinx.coroutines.launch
 
 @Composable

@@ -1,4 +1,4 @@
-package com.uvg.edu.gt.uvghorasbeca.data
+package com.uvg.edu.gt.uvghorasbeca.data.models
 
 
 data class CustomCardData(

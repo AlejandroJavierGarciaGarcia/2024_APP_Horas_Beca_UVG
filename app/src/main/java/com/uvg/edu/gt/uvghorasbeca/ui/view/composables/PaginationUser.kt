@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.uvg.edu.gt.uvghorasbeca.R
-import com.uvg.edu.gt.uvghorasbeca.data.AlertDialog
+import AlertDialog
 
 @Composable
 fun PaginatedAlertDialogList(

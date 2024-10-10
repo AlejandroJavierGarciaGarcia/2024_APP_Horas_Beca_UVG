@@ -1,4 +1,4 @@
-package com.uvg.edu.gt.uvghorasbeca.ui.view.screens
+package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.old_views
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
