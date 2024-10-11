@@ -46,7 +46,7 @@ fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = if (isAdmin) NavigationState.AdminTasks.route else NavigationState.LoginScreen.route,
+            startDestination = if (isAdmin) NavigationState.AdminTasks.route else NavigationState.AvailableTasks.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             // Pantallas de administradores
@@ -54,10 +54,10 @@ fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
                 AdminTasksView(navController = navController)
             }
             composable(route = NavigationState.AdminTaskDetails.route) {
-                AdminTaskDetailsView(navController = navController)
+                AdminTaskDetailsView(navController = navController, isAdmin = isAdmin)
             }
             composable(route = NavigationState.EditTask.route) {
-                EditTaskView(navController = navController)
+                EditTaskView(navController = navController, isAdmin = isAdmin)
             }
 
             // Pantallas de usuarios normales

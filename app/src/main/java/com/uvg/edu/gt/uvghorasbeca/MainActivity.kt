@@ -6,14 +6,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
 
@@ -28,9 +26,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
-        isLoggedIn = true   // Simulando que el usuario está logueado
-        isAdmin = true      // Simulando que el usuario es admin
+        // logica manual de login y admin por ahora, será reemplazada por backend en el futuro
+        isLoggedIn = true   // simulando que el usuario está logueado
+        isAdmin = false      // simulando que el usuario es admin
 
         setContent {
             UVGHorasBecaTheme {

@@ -4,6 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
 @Composable
-fun EditTaskView(navController: NavController) {
+fun EditTaskView(navController: NavController, isAdmin: Boolean) {
 
 }
