@@ -5,27 +5,26 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.BottomNavigationBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTasksView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTaskDetailsView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTasksView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.EditTaskView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.AvailableTasksView
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.PendingHoursView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.HoursHistoryView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.PendingHoursView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.ProfileProgressView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
-    val navController = rememberNavController()
-
+fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, isAdmin: Boolean) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = currentBackStackEntry?.destination?.route ?: NavigationState.LoginScreen.route
 
@@ -42,12 +41,13 @@ fun AppNavigation(modifier: Modifier = Modifier, isAdmin: Boolean) {
             if (currentScreen != NavigationState.LoginScreen.route) {
                 SetupBottomNav(navController = navController, isAdmin = isAdmin)
             }
-        }
-    ) { innerPadding ->
+        },
+        modifier = modifier.padding()
+    ) {
         NavHost(
             navController = navController,
             startDestination = if (isAdmin) NavigationState.AdminTasks.route else NavigationState.AvailableTasks.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(it)
         ) {
             // Pantallas de administradores
             composable(route = NavigationState.AdminTasks.route) {

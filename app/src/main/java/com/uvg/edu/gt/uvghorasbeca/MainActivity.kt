@@ -4,16 +4,19 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
+
 
 class MainActivity : ComponentActivity() {
 
@@ -24,26 +27,31 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        setContent {
+            val navController: NavHostController = rememberNavController() // Asegurándote de usar NavHostController
+            AppNavigation(navController = navController, isAdmin = false)  // O según sea tu lógica
+        }
 
-        // logica manual de login y admin por ahora, será reemplazada por backend en el futuro
-        isLoggedIn = true   // simulando que el usuario está logueado
-        isAdmin = false      // simulando que el usuario es admin
+        // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
+        isLoggedIn = true   // Simulando que el usuario está logueado
+        isAdmin = false      // Simulando que el usuario es admin
 
         setContent {
             UVGHorasBecaTheme {
+                // Crear una instancia única de NavController
+                val navController = rememberNavController()
+
                 // Configuración del Scaffold para la navegación y el contenido
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     when {
                         isLoggedIn && isAdmin -> {
-                            AdminApp()
+                            AdminApp(navController = navController)  // Pasando el NavController
                         }
                         isLoggedIn && !isAdmin -> {
-                            UserApp()
+                            UserApp(navController = navController)  // Pasando el NavController
                         }
                         else -> {
-                            val navController = rememberNavController()
-                            LoginView(navController = navController)
+                            LoginView(navController = navController) // Vista de Login
                         }
                     }
                 }
@@ -54,28 +62,28 @@ class MainActivity : ComponentActivity() {
     // Navegación y contenido de la app para Administradores
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
-    fun AdminApp(modifier: Modifier = Modifier) {
-        val navController = rememberNavController()
+    fun AdminApp(navController: NavHostController, modifier: Modifier = Modifier) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
-            bottomBar = { SetupBottomNav(navController = navController, isAdmin = isAdmin) }
+            bottomBar = { SetupBottomNav(navController = navController, isAdmin = true) }
         ) {
-            AppNavigation(isAdmin = isAdmin)
+            AppNavigation(navController = navController, isAdmin = true)
         }
     }
 
     // Navegación y contenido de la app para Usuarios normales
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
-    fun UserApp(modifier: Modifier = Modifier) {
-        val navController = rememberNavController()
+    fun UserApp(navController: NavHostController, modifier: Modifier = Modifier) {
         Scaffold(
             modifier = modifier.fillMaxSize(),
-            bottomBar = { SetupBottomNav(navController = navController, isAdmin = isAdmin) }
+            bottomBar = { SetupBottomNav(navController = navController, isAdmin = false) }
         ) {
-            AppNavigation(isAdmin = isAdmin)
+            AppNavigation(navController = navController, isAdmin = false)
         }
     }
 }
+
+
 
 

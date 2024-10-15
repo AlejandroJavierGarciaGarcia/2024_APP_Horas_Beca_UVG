@@ -7,9 +7,14 @@ data class Task(
     val title: String,
     val location: String,
     val date: String,
-    val timeRange: String?,
-    val totalHours: String?,
+    val startTime: String?,
+    val endTime: String?,
+    val totalHoursCompleted: String?,
+    val isRecurring: Boolean = false,
+    val recurrencePattern: String? = null,
     val currentParticipants: Int,
     val maxParticipants: Int,
-    val backgroundColor: Color
+//    val backgroundColor: Color,
+    val rating: Int = 0,
+    val remainingHours: Long? = null
 )

@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.uvg.edu.gt.uvghorasbeca.R
+import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 
 @Composable
 fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
@@ -77,7 +79,8 @@ fun BottomNavigationBar(
     isAdmin: Boolean,
     items: List<BottomNavItem>
 ) {
-    val currentRoute = navController.currentBackStackEntryAsState()?.value?.destination?.route
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
 
     Box(
         modifier = Modifier
@@ -98,8 +101,14 @@ fun BottomNavigationBar(
             items.forEach { item ->
                 IconButton(
                     onClick = {
-                        if (currentRoute != item.route) {
-                            navController.navigate(item.route)
+                        if (currentRoute != item.route && item.route != null) {
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         }
                     },
                     modifier = Modifier
@@ -123,15 +132,15 @@ fun SetupBottomNav(navController: NavController, isAdmin: Boolean) {
     // Generar la lista de ítems según el rol del usuario
     val items = if (isAdmin) {
         listOf(
-            BottomNavItem(R.drawable.available_tasks_view_icon, "AdminTasksView", "Admin Tasks"),
-            BottomNavItem(R.drawable.pending_hours_view_icon, "PendingHoursView", "Pending Hours"),
-            BottomNavItem(R.drawable.hours_history_view_icon, "HoursHistoryView", "Hours History")
+            BottomNavItem(R.drawable.available_tasks_view_icon, NavigationState.AdminTasks.route, "Admin Tasks"),
+            BottomNavItem(R.drawable.pending_hours_view_icon, NavigationState.PendingHours.route, "Pending Hours"),
+            BottomNavItem(R.drawable.hours_history_view_icon, NavigationState.HoursHistory.route, "Hours History")
         )
     } else {
         listOf(
-            BottomNavItem(R.drawable.available_tasks_view_icon, "AvailableTasksView", "Available Tasks"),
-            BottomNavItem(R.drawable.pending_hours_view_icon, "PendingHoursView", "Pending Hours"),
-            BottomNavItem(R.drawable.hours_history_view_icon, "HoursHistoryView", "Hours History")
+            BottomNavItem(R.drawable.available_tasks_view_icon, NavigationState.AvailableTasks.route, "Available Tasks"),
+            BottomNavItem(R.drawable.pending_hours_view_icon, NavigationState.PendingHours.route, "Pending Hours"),
+            BottomNavItem(R.drawable.hours_history_view_icon, NavigationState.HoursHistory.route, "Hours History")
         )
     }
 
