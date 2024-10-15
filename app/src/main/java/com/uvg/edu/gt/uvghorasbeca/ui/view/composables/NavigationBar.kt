@@ -5,20 +5,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -41,9 +32,9 @@ import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
     Row(
         modifier = modifier
-            .background(color = Color(0xFF27C24C)) // Verde UVG
+            .background(color = Color(0xFF27C24C))
             .fillMaxWidth()
-            .padding(top = 30.dp)
+            .padding(top = 10.dp)
             .height(56.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -60,9 +51,9 @@ fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
         Text(
             text = "UVG",
             color = Color.White,
-            fontSize = 40.sp, // Tamaño de texto ajustado
+            fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(end = 16.dp) // Más espacio del borde derecho
+            modifier = Modifier.padding(end = 16.dp)
         )
     }
 }
@@ -84,7 +75,7 @@ fun BottomNavigationBar(
 
     Box(
         modifier = Modifier
-            .background(color = Color(0xFFEFEFEF)) // Fondo claro
+            .background(color = Color(0xFFEFEFEF))
             .fillMaxWidth()
             .padding(bottom = 10.dp)
 
@@ -113,12 +104,12 @@ fun BottomNavigationBar(
                     },
                     modifier = Modifier
                         .size(56.dp) // Tamaño del botón para mejorar la zona táctil
-                        .align(Alignment.CenterVertically) // Centramos verticalmente
+                        .align(Alignment.CenterVertically)
                 ) {
                     Icon(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.contentDescription,
-                        modifier = Modifier.size(46.dp), // Tamaño del ícono
+                        modifier = Modifier.size(46.dp),
                         tint = Color.Black
                     )
                 }

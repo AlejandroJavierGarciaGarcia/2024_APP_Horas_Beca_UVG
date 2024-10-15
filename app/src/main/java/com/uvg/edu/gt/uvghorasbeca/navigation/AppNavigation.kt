@@ -5,7 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -20,8 +20,6 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.PendingHoursView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.ProfileProgressView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, isAdmin: Boolean) {
@@ -42,7 +40,6 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                 SetupBottomNav(navController = navController, isAdmin = isAdmin)
             }
         },
-        modifier = modifier.padding()
     ) {
         NavHost(
             navController = navController,

@@ -68,6 +68,8 @@ dependencies {
 
     // Navigation runtime
     implementation("androidx.navigation:navigation-runtime-ktx:2.6.0")
+    implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.espresso.core)
 
     // Test dependencies
     testImplementation("junit:junit:4.13.2")

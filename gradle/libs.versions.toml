@@ -11,6 +11,8 @@ composeBom = "2024.04.01"
 navigationCompose = "2.8.2"
 
 navigationRuntimeKtx = "2.8.2"
+constraintlayoutCompose = "1.0.1"
+espressoCoreVersion = "3.5.1"
 
 
 [libraries]
@@ -31,6 +33,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutCompose" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCoreVersion" }
 
 
 [plugins]

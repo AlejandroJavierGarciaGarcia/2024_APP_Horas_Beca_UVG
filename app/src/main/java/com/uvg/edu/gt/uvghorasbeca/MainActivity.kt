@@ -28,12 +28,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController: NavHostController = rememberNavController() // Asegurándote de usar NavHostController
-            AppNavigation(navController = navController, isAdmin = false)  // O según sea tu lógica
+            val navController: NavHostController = rememberNavController()
+            AppNavigation(navController = navController, isAdmin = isAdmin)
         }
 
         // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
-        isLoggedIn = true   // Simulando que el usuario está logueado
+        isLoggedIn = false   // Simulando que el usuario está logueado
         isAdmin = false      // Simulando que el usuario es admin
 
         setContent {

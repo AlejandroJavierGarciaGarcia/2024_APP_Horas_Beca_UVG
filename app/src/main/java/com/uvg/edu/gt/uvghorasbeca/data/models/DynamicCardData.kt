@@ -9,7 +9,7 @@ data class Task(
     val date: String,
     val startTime: String?,
     val endTime: String?,
-    val totalHoursCompleted: String?,
+    val totalHoursCompleted: Float?,
     val isRecurring: Boolean = false,
     val recurrencePattern: String? = null,
     val currentParticipants: Int,
