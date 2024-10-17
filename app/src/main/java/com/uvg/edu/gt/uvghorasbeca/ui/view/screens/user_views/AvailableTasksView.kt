@@ -44,7 +44,7 @@ fun AvailableTasksView(navController: NavController) {
                 totalHoursCompleted = null,
                 isRecurring = false,
                 recurrencePattern = null,
-                currentParticipants = 6,
+                currentParticipants = 4,
                 maxParticipants = 7,
                 rating = 3,
                 remainingHours = 12

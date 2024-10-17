@@ -53,8 +53,8 @@ fun PendingHoursView(navController: NavController) {
             Task(
                 title = "Staff de Delvas",
                 location = "CIT - 336",
-                date = "15/10/2024",
-                startTime = "07:00",
+                date = "16/10/2024",
+                startTime = "05:00",
                 endTime = "14:00",
                 totalHoursCompleted = null,
                 isRecurring = false,

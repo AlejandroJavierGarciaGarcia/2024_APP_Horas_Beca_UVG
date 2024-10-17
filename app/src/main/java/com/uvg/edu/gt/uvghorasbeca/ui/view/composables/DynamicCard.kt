@@ -26,6 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.R
 
 // Clase de datos para la tarea
@@ -223,7 +224,7 @@ fun RemainingTimeColor(remainingHours: Long?): Color {
         remainingHours != null && remainingHours <= 6 -> Color(0xFFFFCDD2)  // Rojo claro
         remainingHours != null && remainingHours <= 24 -> Color(0xFFFFF9C4)  // Amarillo claro
         remainingHours != null && remainingHours > 24 -> Color(0xFFC8E6C9)  // Verde claro
-        else -> Color.LightGray  // Color por defecto si no hay tiempo restante
+        else -> CustomColors.PrimaryGrayLight // Color por defecto si no hay tiempo restante
     }
 }
 

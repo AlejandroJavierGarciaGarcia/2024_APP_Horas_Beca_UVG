@@ -59,7 +59,7 @@ fun HoursHistoryView(navController: NavController) {
                 recurrencePattern = "Semanal",
                 currentParticipants = 0,
                 maxParticipants = 1,
-                rating = 4,
+                rating = 2,
                 remainingHours = 43
             )
         )

@@ -8,14 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavHostController
 
 
 class MainActivity : ComponentActivity() {
@@ -33,7 +31,7 @@ class MainActivity : ComponentActivity() {
         }
 
         // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
-        isLoggedIn = false   // Simulando que el usuario está logueado
+        isLoggedIn = true   // Simulando que el usuario está logueado
         isAdmin = false      // Simulando que el usuario es admin
 
         setContent {
