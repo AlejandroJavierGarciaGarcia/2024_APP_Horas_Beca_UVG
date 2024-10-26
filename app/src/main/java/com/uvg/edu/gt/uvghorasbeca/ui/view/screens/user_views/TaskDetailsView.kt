@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -59,12 +60,17 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = task.title,
-                        fontSize = 20.sp,
-                        color = Color.Black
-                    )
-
+                    Box(
+                        modifier = Modifier.weight(1f)  // Limita el espacio que el título puede ocupar
+                    ) {
+                        Text(
+                            text = task.title,
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            maxLines = 1,  // Limita el texto a una sola línea
+                            overflow = TextOverflow.Ellipsis  // Muestra "..." si el texto es demasiado largo
+                        )
+                    }
                     SemaphoreIndicator(task.currentParticipants, task.maxParticipants)
                 }
 

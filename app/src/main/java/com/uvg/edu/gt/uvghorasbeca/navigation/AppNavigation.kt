@@ -53,8 +53,20 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             composable(route = NavigationState.AdminTasks.route) {
                 AdminTasksView(navController = navController)
             }
-            composable(route = NavigationState.AdminTaskDetails.route) {
-                AdminTaskDetailsView(navController = navController, isAdmin = isAdmin)
+            composable(
+                route = NavigationState.AdminTaskDetails.route + "/{taskId}",
+                arguments = listOf(navArgument("taskId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val taskId = backStackEntry.arguments?.getInt("taskId")
+                val task = taskId?.let { MockDataRepository.getTaskById(it) }  // Obtener la tarea del repositorio
+
+                task?.let {
+                    AdminTaskDetailsView(
+                        navController = navController,
+                        task = it,
+                        onDismiss = { navController.popBackStack() }
+                    )
+                }
             }
             composable(route = NavigationState.EditTask.route) {
                 EditTaskView(navController = navController, isAdmin = isAdmin)

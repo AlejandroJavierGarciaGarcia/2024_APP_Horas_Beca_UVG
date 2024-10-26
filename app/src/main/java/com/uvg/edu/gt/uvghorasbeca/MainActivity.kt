@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
         isLoggedIn = true   // Simulando que el usuario está logueado
-        isAdmin = false      // Simulando que el usuario es admin
+        isAdmin = true      // Simulando que el usuario es admin
 
         setContent {
             UVGHorasBecaTheme {

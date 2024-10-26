@@ -100,7 +100,7 @@ fun AdminTasksView(navController: NavController) {
             if (selectedTask != null) {
                 Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f))) {
                     selectedTask?.let {
-                        TaskDetailsView(
+                        AdminTaskDetailsView(
                             navController = navController,  // Asegúrate de pasar navController
                             task = it,
                             onDismiss = { selectedTask = null }
