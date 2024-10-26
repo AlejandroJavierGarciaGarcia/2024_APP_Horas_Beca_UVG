@@ -44,7 +44,8 @@ data class Task(
     val maxParticipants: Int,
     val backgroundColor: Color,
     val rating: Int = 0,
-    val remainingHours: Long? = null
+    val remainingHours: Long? = null,
+    val info: String? = null
 )
 
 @Composable

@@ -51,6 +51,13 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Mostrar información adicional si está disponible
+            task.info?.let {
+                Text(text = "Información adicional:", style = MaterialTheme.typography.bodyLarge)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = it, style = MaterialTheme.typography.bodyMedium)
+            }
+
             // Si es recurrente, mostramos esa información
             if (task.isRecurring) {
                 Text(text = "Recurrente: ${task.recurrencePattern ?: "Patrón no especificado"}")
