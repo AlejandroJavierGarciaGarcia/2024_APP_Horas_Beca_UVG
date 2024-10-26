@@ -6,9 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
+import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTaskDetailsView
@@ -70,8 +73,20 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
             composable(route = NavigationState.ProfileProgress.route) {
                 ProfileProgressView(navController = navController)
             }
-            composable(route = NavigationState.TaskDetails.route) {
-                TaskDetailsView(navController = navController)
+            composable(
+                route = NavigationState.TaskDetails.route + "/{taskId}",
+                arguments = listOf(navArgument("taskId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val taskId = backStackEntry.arguments?.getInt("taskId")
+                val task = taskId?.let { MockDataRepository.getTaskById(it) }  // Obtener la tarea del repositorio
+
+                task?.let {
+                    TaskDetailsView(
+                        navController = navController,
+                        task = it,
+                        onDismiss = { navController.popBackStack() }
+                    )
+                }
             }
 
             // Pantalla de login

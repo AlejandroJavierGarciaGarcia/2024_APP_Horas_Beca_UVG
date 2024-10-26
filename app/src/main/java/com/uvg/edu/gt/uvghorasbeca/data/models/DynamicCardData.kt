@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 
 
 data class Task(
+    val id: Int,
     val title: String,
     val location: String,
     val date: String,

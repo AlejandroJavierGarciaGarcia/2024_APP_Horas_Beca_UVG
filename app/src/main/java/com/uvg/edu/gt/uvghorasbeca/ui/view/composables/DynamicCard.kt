@@ -31,6 +31,7 @@ import com.uvg.edu.gt.uvghorasbeca.R
 
 // Clase de datos para la tarea
 data class Task(
+    val id: Int,
     val title: String,
     val location: String,
     val date: String,
@@ -48,6 +49,7 @@ data class Task(
 
 @Composable
 fun CustomCard(
+    id: Int,
     title: String,
     location: String,
     date: String,
@@ -63,6 +65,7 @@ fun CustomCard(
     rating: Int = 0,
     showRemainingInfo: Boolean = false,
     remainingHours: Long? = null,
+    onClick: (Int) -> Unit
 ) {
     // Usar RemainingTimeInfo solo si se quiere mostrar la información de horas restantes
     val dynamicBackgroundColor = if (showRemainingInfo) {
@@ -75,7 +78,7 @@ fun CustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { /* Acción del clic */ }
+            .clickable { onClick(id) }
             .shadow(4.dp, RoundedCornerShape(8.dp)),
         colors = CardDefaults.cardColors(containerColor = dynamicBackgroundColor),
         shape = RoundedCornerShape(8.dp)

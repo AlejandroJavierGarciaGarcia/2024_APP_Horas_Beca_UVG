@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
+import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,38 +46,12 @@ fun calculateRemainingHours(taskDate: String, taskStartTime: String?): Long {
 fun PendingHoursView(navController: NavController) {
     var isLoading by remember { mutableStateOf(true) }
     var tasks by remember { mutableStateOf(emptyList<Task>()) }
+    var selectedTask by remember { mutableStateOf<Task?>(null) }
 
     // Simulando una solicitud a backend
     LaunchedEffect(Unit) {
         delay(2000)  // Simula una espera de 2 segundos
-        tasks = listOf(  // Datos simulados
-            Task(
-                title = "Staff de Delvas",
-                location = "CIT - 336",
-                date = "16/10/2024",
-                startTime = "05:00",
-                endTime = "14:00",
-                totalHoursCompleted = null,
-                isRecurring = false,
-                recurrencePattern = null,
-                currentParticipants = 6,
-                maxParticipants = 7,
-                rating = 3
-            ),
-            Task(
-                title = "Auxiliatura",
-                location = "Departamento de Computación",
-                date = "16/10/2024",
-                startTime = "13:00",
-                endTime = "14:00",
-                totalHoursCompleted = null,
-                isRecurring = true,
-                recurrencePattern = "Semanal",
-                currentParticipants = 0,
-                maxParticipants = 1,
-                rating = 2
-            )
-        )
+        tasks = MockDataRepository.getAllTasks()  // Obtener los datos del repositorio
         isLoading = false
     }
 
@@ -102,6 +77,7 @@ fun PendingHoursView(navController: NavController) {
             ) {
                 items(sortedTasks) { task ->
                     CustomCard(
+                        id = task.id,
                         title = task.title,
                         location = task.location,
                         date = task.date,
@@ -116,7 +92,11 @@ fun PendingHoursView(navController: NavController) {
                         showStars = false,
                         rating = task.rating,
                         showRemainingInfo = true,
-                        remainingHours = calculateRemainingHours(task.date, task.startTime)
+                        remainingHours = calculateRemainingHours(task.date, task.startTime),
+                        onClick = {
+//                            taskId ->
+//                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
+                        }
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }

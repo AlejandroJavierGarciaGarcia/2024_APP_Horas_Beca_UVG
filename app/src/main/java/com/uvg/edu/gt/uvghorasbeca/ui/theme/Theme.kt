@@ -32,7 +32,7 @@ val DarkColorPalette = darkColorScheme(
 )
 
 @Composable
-fun AppTheme(
+fun UVGHorasBecaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(), // Detecta el tema del sistema automáticamente
     content: @Composable () -> Unit
 ) {

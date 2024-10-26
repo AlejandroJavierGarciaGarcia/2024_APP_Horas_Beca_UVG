@@ -2,6 +2,7 @@ package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views
 
 import CustomCard
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
+import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -34,40 +37,12 @@ import kotlinx.coroutines.delay
 fun AdminTasksView(navController: NavController) {
     var isLoading by remember { mutableStateOf(true) }
     var tasks by remember { mutableStateOf(emptyList<Task>()) }
+    var selectedTask by remember { mutableStateOf<Task?>(null) }
 
     // Simulando una solicitud a backend
     LaunchedEffect(Unit) {
         delay(2000)  // Simula una espera de 2 segundos
-        tasks = listOf(  // Datos simulados
-            Task(
-                title = "Staff de Delvas",
-                location = "CIT - 336",
-                date = "27/06/2024",
-                startTime = "13:00",
-                endTime = "14:00",
-                totalHoursCompleted = null,
-                isRecurring = false,
-                recurrencePattern = null,
-                currentParticipants = 6,
-                maxParticipants = 7,
-                rating = 4,
-                remainingHours = 3
-            ),
-            Task(
-                title = "Auxiliatura",
-                location = "Departamento de Computación",
-                date = "Recurrente",
-                startTime = null,
-                endTime = null,
-                totalHoursCompleted = null,
-                isRecurring = true,
-                recurrencePattern = "Semanal",
-                currentParticipants = 1,
-                maxParticipants = 2,
-                rating = 5,
-                remainingHours = 3
-            )
-        )
+        tasks = MockDataRepository.getAllTasks()  // Obtener los datos del repositorio
         isLoading = false
     }
 
@@ -98,6 +73,7 @@ fun AdminTasksView(navController: NavController) {
             ) {
                 items(tasks) { task ->
                     CustomCard(
+                        id = task.id,
                         title = task.title,
                         location = task.location,
                         date = task.date,
@@ -112,9 +88,24 @@ fun AdminTasksView(navController: NavController) {
                         showStars = false,
                         rating = task.rating,
                         showRemainingInfo = false,
-                        remainingHours = task.remainingHours
+                        remainingHours = task.remainingHours,
+                        onClick = { taskId ->
+                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
+                        }
                     )
                     Spacer(modifier = Modifier.height(8.dp))
+                }
+            }
+            // Mostrar los detalles si hay una tarea seleccionada
+            if (selectedTask != null) {
+                Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f))) {
+                    selectedTask?.let {
+                        TaskDetailsView(
+                            navController = navController,  // Asegúrate de pasar navController
+                            task = it,
+                            onDismiss = { selectedTask = null }
+                        )
+                    }
                 }
             }
         }
