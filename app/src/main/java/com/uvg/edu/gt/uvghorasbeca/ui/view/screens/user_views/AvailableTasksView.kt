@@ -24,8 +24,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
-import kotlinx.coroutines.delay
 import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
+import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

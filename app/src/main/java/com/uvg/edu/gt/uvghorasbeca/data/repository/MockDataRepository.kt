@@ -56,7 +56,7 @@ object MockDataRepository {
         ),
         Task(
             id = 4,
-            title = "Capacitación Primeros Auxilios",
+            title = "Capacitación",
             location = "Aula Magna",
             date = "01/11/2024",
             startTime = "10:00",
