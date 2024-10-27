@@ -35,6 +35,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +48,7 @@ fun LoginView(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF00A33D)),
+            .background(CustomColors.PrimaryGreen),
         contentAlignment = Alignment.TopCenter
     ) {
         Column(
@@ -66,7 +67,7 @@ fun LoginView(navController: NavController) {
                     .width(200.dp)
                     .padding(bottom = 32.dp),
                 contentScale = ContentScale.Fit,
-                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(Color.White)
+                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(CustomColors.White)
             )
 
             // Campo de texto para el usuario
@@ -79,8 +80,8 @@ fun LoginView(navController: NavController) {
                     .padding(vertical = 8.dp),
                 singleLine = true,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Gray,
+                    focusedBorderColor = CustomColors.PrimaryGrayDark,
+                    unfocusedBorderColor = CustomColors.PrimaryGrayLight,
                     containerColor = Color(0xFFE0E0E0)
                 )
             )
@@ -103,8 +104,8 @@ fun LoginView(navController: NavController) {
                     }
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color.Black,
-                    unfocusedBorderColor = Color.Gray,
+                    focusedBorderColor = CustomColors.PrimaryGrayDark,
+                    unfocusedBorderColor = CustomColors.PrimaryGrayLight,
                     containerColor = Color(0xFFE0E0E0)
                 )
             )
@@ -122,8 +123,8 @@ fun LoginView(navController: NavController) {
                     .padding(top = 16.dp)
                     .height(50.dp), // Ajustar la altura del botón
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black, // Fondo negro
-                    contentColor = Color.White // Texto blanco
+                    containerColor = CustomColors.Black, // Fondo negro
+                    contentColor = CustomColors.White // Texto blanco
                 )
             ) {
                 Text(text = "Iniciar sesión", fontSize = 16.sp)

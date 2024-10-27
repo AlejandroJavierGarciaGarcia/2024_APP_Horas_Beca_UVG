@@ -72,7 +72,7 @@ fun CustomCard(
     val dynamicBackgroundColor = if (showRemainingInfo) {
         RemainingTimeColor(remainingHours = remainingHours)
     } else {
-        Color.LightGray
+        CustomColors.PrimaryGrayLight
     }
 
     Card(
@@ -118,7 +118,7 @@ fun CustomCard(
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-            Divider(color = Color.Gray, thickness = 1.dp)
+            Divider(color = CustomColors.SeparatorOpacity70, thickness = 1.dp)
             Spacer(modifier = Modifier.height(8.dp))
 
             // Mostrar horas de inicio y fin
@@ -173,9 +173,9 @@ fun SemaphoreIndicator(currentParticipants: Int, maxParticipants: Int) {
 
     // Definir los colores según el porcentaje de cupo
     val colors = when {
-        fillRatio <= 0.33f -> listOf(Color(0xFF00C853), Color(0xFFB0BEC5), Color(0xFFB0BEC5))  // Verde
-        fillRatio <= 0.66f -> listOf(Color(0xFFFFC107), Color(0xFFFFC107), Color(0xFFB0BEC5))  // Amarillo
-        else -> listOf(Color(0xFFFF5252), Color(0xFFFF5252), Color(0xFFFF5252))  // Rojo
+        fillRatio <= 0.33f -> listOf(CustomColors.GreenLight, CustomColors.GrayLight, CustomColors.GrayLight) // Verde
+        fillRatio <= 0.66f -> listOf(CustomColors.YellowLight, CustomColors.YellowLight, CustomColors.GrayLight)  // Amarillo
+        else -> listOf(CustomColors.RedLight, CustomColors.RedLight, CustomColors.RedLight)  // Rojo
     }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -210,7 +210,7 @@ fun RatingStars(rating: Int, modifier: Modifier = Modifier) {
     ) {
         // Lista de estrellas (llenas y vacías) ordenadas de derecha a izquierda
         for (i in 1..5) {
-            val starColor = if (i <= rating) Color(0xFFFFD700) else Color(0xFFB0BEC5)  // Amarillo o gris
+            val starColor = if (i <= rating) CustomColors.YellowForStars else CustomColors.GrayLight  // Amarillo o gris
             Icon(
                 painterResource(id = R.drawable.grade_star_icon_2),
                 contentDescription = null,
@@ -225,9 +225,9 @@ fun RatingStars(rating: Int, modifier: Modifier = Modifier) {
 fun RemainingTimeColor(remainingHours: Long?): Color {
     // Determinar el color de fondo según las horas restantes
     return when {
-        remainingHours != null && remainingHours <= 6 -> Color(0xFFFFCDD2)  // Rojo claro
-        remainingHours != null && remainingHours <= 24 -> Color(0xFFFFF9C4)  // Amarillo claro
-        remainingHours != null && remainingHours > 24 -> Color(0xFFC8E6C9)  // Verde claro
+        remainingHours != null && remainingHours <= 6 -> CustomColors.RedCard  // Rojo claro
+        remainingHours != null && remainingHours <= 24 -> CustomColors.YellowCard  // Amarillo claro
+        remainingHours != null && remainingHours > 24 -> CustomColors.GreenCard  // Verde claro
         else -> CustomColors.PrimaryGrayLight // Color por defecto si no hay tiempo restante
     }
 }
@@ -257,7 +257,7 @@ fun RemainingTimeInfo(
             Text(
                 text = remainingTimeText,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black,
+                color = CustomColors.Black,
                 fontSize = 14.sp
             )
         }

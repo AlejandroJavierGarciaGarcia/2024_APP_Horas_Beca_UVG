@@ -18,13 +18,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 
@@ -32,9 +32,10 @@ import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
     Row(
         modifier = modifier
-            .background(color = Color(0xFF27C24C))
+            .background(CustomColors.PrimaryGreen)
             .fillMaxWidth()
             .padding(top = 10.dp)
+
             .height(56.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -43,14 +44,14 @@ fun TopAppBar(modifier: Modifier = Modifier, onMenuClick: () -> Unit) {
                 painterResource(id = R.drawable.hamburguer_top_menu_icon),
                 contentDescription = "Menu",
                 modifier = Modifier.size(50.dp),
-                tint = Color.White
+                tint = CustomColors.White
             )
         }
 
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = "UVG",
-            color = Color.White,
+            color = CustomColors.White,
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(end = 16.dp)
@@ -75,7 +76,7 @@ fun BottomNavigationBar(
 
     Box(
         modifier = Modifier
-            .background(color = Color(0xFFEFEFEF))
+            .background(CustomColors.PrimaryGrayLight)
             .fillMaxWidth()
 //            .padding(bottom = 10.dp)
 
@@ -110,7 +111,7 @@ fun BottomNavigationBar(
                         painter = painterResource(id = item.icon),
                         contentDescription = item.contentDescription,
                         modifier = Modifier.size(46.dp),
-                        tint = Color.Black
+                        tint = CustomColors.Black
                     )
                 }
             }

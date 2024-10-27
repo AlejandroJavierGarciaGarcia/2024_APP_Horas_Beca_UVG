@@ -2,10 +2,8 @@ package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -26,12 +24,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import java.util.Calendar
 import java.util.Random
@@ -216,10 +214,10 @@ fun AddTaskScreen(
         ) {
             Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                colors = ButtonDefaults.buttonColors(CustomColors.RedButton),
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Cancelar", color = Color.White)
+                Text("Cancelar", color = CustomColors.White)
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -244,10 +242,10 @@ fun AddTaskScreen(
                     )
                     onSubmit(task)
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
+                colors = ButtonDefaults.buttonColors(CustomColors.PrimaryGreen),
                 modifier = Modifier.weight(1f)
             ) {
-                Text(if (initialTask != null) "Actualizar" else "Agregar", color = Color.White)
+                Text(if (initialTask != null) "Actualizar" else "Agregar", color = CustomColors.White)
             }
         }
     }

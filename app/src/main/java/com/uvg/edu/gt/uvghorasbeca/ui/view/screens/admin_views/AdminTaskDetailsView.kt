@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 
@@ -38,7 +39,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.5f))
+            .background(CustomColors.GrayOpacity60)
             .clickable(onClick = onDismiss),  // Cierra el modal al hacer clic fuera de la tarjeta
         contentAlignment = Alignment.Center
     ) {
@@ -47,7 +48,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                 .fillMaxWidth(0.9f)
                 .padding(8.dp)
                 .clickable(enabled = false) {},  // Desactiva clics dentro de la tarjeta
-            colors = CardDefaults.cardColors(containerColor = Color.LightGray),
+            colors = CardDefaults.cardColors(containerColor = CustomColors.PrimaryGrayLight),
             shape = RoundedCornerShape(8.dp)
         ) {
             Column(
@@ -67,7 +68,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                         Text(
                             text = task.title,
                             fontSize = 20.sp,
-                            color = Color.Black,
+                            color = CustomColors.Black,
                             maxLines = 1,  // Limita el texto a una sola línea
                             overflow = TextOverflow.Ellipsis  // Muestra "..." si el texto es demasiado largo
                         )
@@ -78,16 +79,16 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                     // Botón de editar
                     Button(
                         onClick = { navController.navigate(NavigationState.EditTask.route + "/${task.id}") },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA726))
+                        colors = ButtonDefaults.buttonColors(containerColor = CustomColors.OrangeButton)
                     ) {
-                        Text("Editar", color = Color.White)
+                        Text("Editar", color = CustomColors.White)
                     }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Línea divisoria
-                Divider(color = Color.Gray, thickness = 1.dp)
+                Divider(color = CustomColors.SeparatorOpacity70, thickness = 1.dp)
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Lugar, recurrencia, fecha y hora
@@ -99,7 +100,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                         Text(
                             text = task.location,
                             fontSize = 16.sp,
-                            color = Color.DarkGray
+                            color = CustomColors.Black
                         )
 
                         if (task.isRecurring && task.recurrencePattern != null) {
@@ -111,9 +112,9 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                         }
                     }
                     Column(horizontalAlignment = Alignment.End) {
-                        Text(text = task.date, fontSize = 14.sp, color = Color.DarkGray)
+                        Text(text = task.date, fontSize = 14.sp, color = CustomColors.Black)
                         task.startTime?.let {
-                            Text(text = "$it - ${task.endTime}", fontSize = 14.sp, color = Color.DarkGray)
+                            Text(text = "$it - ${task.endTime}", fontSize = 14.sp, color = CustomColors.Black)
                         }
                     }
                 }
@@ -126,13 +127,13 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                     Text(
                         text = "Información adicional:",
                         fontSize = 14.sp,
-                        color = Color.Black,
+                        color = CustomColors.Black,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     Text(
                         text = it,
                         fontSize = 14.sp,
-                        color = Color.DarkGray,
+                        color = CustomColors.Black,
                         textAlign = TextAlign.Justify
                     )
                 }
@@ -146,16 +147,16 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                 ) {
                     Button(
                         onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)  // color de fondo
+                        colors = ButtonDefaults.buttonColors(containerColor = CustomColors.GrayButton)
                     ) {
-                        Text("Regresar", color = Color.White)  // color del texto
+                        Text("Regresar", color = Color.White)
                     }
 
                     Button(
                         onClick = { /* lógica para asignarse a la tarea */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00C853))  // color de fondo
+                        colors = ButtonDefaults.buttonColors(containerColor = CustomColors.PrimaryGreen)
                     ) {
-                        Text("Asignarse", color = Color.White)  // color del texto
+                        Text("Asignarse", color = CustomColors.White)
                     }
                 }
             }
@@ -169,16 +170,16 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
 fun SemaphoreIndicator(currentParticipants: Int, maxParticipants: Int) {
     val fillRatio = currentParticipants.toFloat() / maxParticipants.toFloat()
     val colors = when {
-        fillRatio <= 0.33f -> listOf(Color(0xFF00C853), Color(0xFFB0BEC5), Color(0xFFB0BEC5))
-        fillRatio <= 0.66f -> listOf(Color(0xFFFFC107), Color(0xFFFFC107), Color(0xFFB0BEC5))
-        else -> listOf(Color(0xFFFF5252), Color(0xFFFF5252), Color(0xFFFF5252))
+        fillRatio <= 0.33f -> listOf(CustomColors.GreenLight, CustomColors.GrayLight, CustomColors.GrayLight)
+        fillRatio <= 0.66f -> listOf(CustomColors.YellowLight, CustomColors.YellowLight, CustomColors.GrayLight)
+        else -> listOf(CustomColors.RedLight, CustomColors.RedLight, CustomColors.RedLight)
     }
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
             text = "$currentParticipants/$maxParticipants",
             fontSize = 14.sp,
-            color = Color.Black
+            color = CustomColors.Black
         )
         Spacer(modifier = Modifier.width(6.dp))
         colors.forEach { color ->

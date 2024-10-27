@@ -9,10 +9,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -32,7 +31,6 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.PendingHoursView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.ProfileProgressView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
 import kotlinx.coroutines.launch
-import androidx.compose.ui.zIndex
 
 
 @Composable

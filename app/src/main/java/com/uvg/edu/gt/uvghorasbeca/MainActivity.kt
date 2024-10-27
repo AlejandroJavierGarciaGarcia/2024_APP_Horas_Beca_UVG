@@ -12,7 +12,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
-import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
 
 

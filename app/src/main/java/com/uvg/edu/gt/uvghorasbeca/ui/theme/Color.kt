@@ -21,13 +21,13 @@ object CustomColors {
     val SeparatorOpacity70 = Color(0xB3A5A5A5) // 70% opacity
 
     // Card Colors
-    val RedCard = Color(0xFFFFA3A3)
-    val YellowCard = Color(0xFFFFF59D)
-    val GreenCard = Color(0xFF7DFF9C)
+    val RedCard = Color(0xFFFFCDD2)
+    val YellowCard = Color(0xFFFFF9C4)
+    val GreenCard = Color(0xFFC8E6C9)
     val BlueCard = Color(0xFF7DAFFF)
 
     // Status Colors
-    val YellowForStars = Color(0xFFD8C2C2)
+    val YellowForStars = Color(0xFFFFD700)
     val GreenLight = Color(0xFF00C853)
     val YellowLight = Color(0xFFFFC107)
     val RedLight = Color(0xFFFF5252)

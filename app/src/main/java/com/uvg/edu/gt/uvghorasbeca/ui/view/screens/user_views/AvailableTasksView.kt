@@ -20,9 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
 import kotlinx.coroutines.delay
@@ -85,7 +85,7 @@ fun AvailableTasksView(navController: NavController) {
             }
             // Mostrar los detalles si hay una tarea seleccionada
             if (selectedTask != null) {
-                Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f))) {
+                Box(modifier = Modifier.fillMaxSize().background(CustomColors.GrayOpacity60)) {
                     selectedTask?.let {
                         TaskDetailsView(
                             navController = navController,  // Asegúrate de pasar navController

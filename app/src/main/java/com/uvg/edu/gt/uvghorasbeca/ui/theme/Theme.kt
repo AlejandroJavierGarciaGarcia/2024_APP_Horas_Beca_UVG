@@ -9,7 +9,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import com.example.app.ui.theme.CustomColors
-import com.example.app.ui.theme.*
 
 val CustomShapes = Shapes(
     small = RoundedCornerShape(4.dp),
