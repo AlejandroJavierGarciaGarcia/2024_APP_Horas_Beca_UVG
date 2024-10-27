@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
+import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.TaskDetailsView
 import kotlinx.coroutines.delay
 
@@ -49,7 +50,7 @@ fun AdminTasksView(navController: NavController) {
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* Acción de agregar */ },
+                onClick = { navController.navigate(NavigationState.AddTask.route) },
 //                backgroundColor = Color.Green
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar Tarea")

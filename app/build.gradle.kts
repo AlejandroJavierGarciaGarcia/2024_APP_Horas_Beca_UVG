@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.uvg.edu.gt.uvghorasbeca"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -51,7 +51,6 @@ android {
 }
 
 dependencies {
-
     // Core Android dependencies
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")

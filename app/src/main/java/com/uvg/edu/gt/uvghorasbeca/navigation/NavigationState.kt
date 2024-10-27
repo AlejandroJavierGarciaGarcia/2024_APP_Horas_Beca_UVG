@@ -13,7 +13,8 @@ sealed class NavigationState(val route: String) {
     object TaskDetails : NavigationState("task_details")                // Usuario
     object AdminTaskDetails : NavigationState("admin_task_details")     // Admin
 
-    // Ruta para editar convocatorias (solo Admin)
+    // Rutas para agregar y editar convocatorias (solo Admin)
+    object AddTask : NavigationState("add_task")
     object EditTask : NavigationState("edit_task")
 
     // Rutas para horas pendientes e historial de horas beca

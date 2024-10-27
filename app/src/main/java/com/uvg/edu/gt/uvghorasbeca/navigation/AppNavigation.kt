@@ -14,9 +14,9 @@ import androidx.navigation.navArgument
 import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.SetupBottomNav
 import com.uvg.edu.gt.uvghorasbeca.ui.view.composables.TopAppBar
+import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AddTaskScreen
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTaskDetailsView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.AdminTasksView
-import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views.EditTaskView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.AvailableTasksView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.HoursHistoryView
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
@@ -68,9 +68,39 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
                     )
                 }
             }
-            composable(route = NavigationState.EditTask.route) {
-                EditTaskView(navController = navController, isAdmin = isAdmin)
+
+            //Modal del formulario para agregar y editar una tarea
+            composable(route = NavigationState.AddTask.route) {
+                AddTaskScreen(
+                    navController = navController,
+                    onDismiss = { navController.popBackStack() },
+                    onSubmit = { task ->
+                        MockDataRepository.addTask(task)  // Agregar la nueva tarea al repositorio
+                        navController.popBackStack()
+                    }
+                )
             }
+
+            composable(
+                route = NavigationState.EditTask.route + "/{taskId}",
+                arguments = listOf(navArgument("taskId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val taskId = backStackEntry.arguments?.getInt("taskId")
+                val task = taskId?.let { MockDataRepository.getTaskById(it) }
+
+                task?.let {
+                    AddTaskScreen(
+                        navController = navController,
+                        onDismiss = { navController.popBackStack() },
+                        onSubmit = { updatedTask ->
+                            MockDataRepository.updateTask(updatedTask)  // Actualizar la tarea en el repositorio
+                            navController.popBackStack()
+                        },
+                        initialTask = it  // Pasar los datos de la tarea actual para edición
+                    )
+                }
+            }
+
 
             // Pantallas de usuarios normales
             composable(route = NavigationState.AvailableTasks.route) {

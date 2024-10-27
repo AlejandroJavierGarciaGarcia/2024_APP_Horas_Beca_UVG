@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
+import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 
 @Composable
 fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit) {
@@ -76,7 +77,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
 
                     // Botón de editar
                     Button(
-                        onClick = { /* lógica para editar la tarea */ },
+                        onClick = { navController.navigate(NavigationState.EditTask.route + "/${task.id}") },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA726))
                     ) {
                         Text("Editar", color = Color.White)
