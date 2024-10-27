@@ -77,14 +77,14 @@ fun BottomNavigationBar(
         modifier = Modifier
             .background(color = Color(0xFFEFEFEF))
             .fillMaxWidth()
-            .padding(bottom = 10.dp)
+//            .padding(bottom = 10.dp)
 
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(70.dp)
-                .padding(bottom = 0.dp)
+//                .padding(bottom = 0.dp)
                 .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)), // Esquinas redondeadas
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly // Distribución equitativa entre los íconos

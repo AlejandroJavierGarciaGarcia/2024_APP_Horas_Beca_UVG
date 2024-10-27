@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
         // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
         isLoggedIn = true   // Simulando que el usuario está logueado
-        isAdmin = true      // Simulando que el usuario es admin
+        isAdmin = false      // Simulando que el usuario es admin
 
         setContent {
             UVGHorasBecaTheme {
@@ -58,27 +58,15 @@ class MainActivity : ComponentActivity() {
     }
 
     // Navegación y contenido de la app para Administradores
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun AdminApp(navController: NavHostController, modifier: Modifier = Modifier) {
-        Scaffold(
-            modifier = modifier.fillMaxSize(),
-            bottomBar = { SetupBottomNav(navController = navController, isAdmin = true) }
-        ) {
-            AppNavigation(navController = navController, isAdmin = true)
-        }
+        AppNavigation(navController = navController, isAdmin = true)
     }
 
     // Navegación y contenido de la app para Usuarios normales
-    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     @Composable
     fun UserApp(navController: NavHostController, modifier: Modifier = Modifier) {
-        Scaffold(
-            modifier = modifier.fillMaxSize(),
-            bottomBar = { SetupBottomNav(navController = navController, isAdmin = false) }
-        ) {
-            AppNavigation(navController = navController, isAdmin = false)
-        }
+        AppNavigation(navController = navController, isAdmin = false)
     }
 }
 
