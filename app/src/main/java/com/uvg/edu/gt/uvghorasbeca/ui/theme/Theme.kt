@@ -1,58 +1,50 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.example.app.ui.theme.CustomColors
 
-private val DarkColorScheme = darkColorScheme(
-    primary = NotImportantColor,
-    secondary = GrayOpacity,
-    tertiary = White
+val CustomShapes = Shapes(
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(8.dp),
+    large = RoundedCornerShape(16.dp)
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Green,
-    secondary = Slider,
-    tertiary = Separator
+val LightColorPalette = lightColorScheme(
+    primary = CustomColors.PrimaryGreen,        // No cambia entre temas
+    background = CustomColors.White,       // Fondo para tema claro
+    surface = CustomColors.PrimaryGrayLight,    // Gris para componentes en tema claro
+    onBackground = CustomColors.Black  // Texto en tema claro
+)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+val DarkColorPalette = darkColorScheme(
+    primary = CustomColors.PrimaryGreen,        // No cambia entre temas
+    background = CustomColors.Black,        // Fondo para tema oscuro
+    surface = CustomColors.PrimaryGrayDark,     // Gris para componentes en tema oscuro
+    onBackground = CustomColors.Black  // Texto en tema oscuro
 )
 
 @Composable
 fun UVGHorasBecaTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = false,
+    darkTheme: Boolean = isSystemInDarkTheme(), // Detecta el tema del sistema automáticamente
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colors = if (darkTheme) {
+        DarkColorPalette
+    } else {
+        LightColorPalette
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colors,
         typography = Typography,
+        shapes = CustomShapes,
         content = content
     )
 }
