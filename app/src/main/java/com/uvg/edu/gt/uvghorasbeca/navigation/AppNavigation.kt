@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, isAdmin: Boolean) {
+fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifier, isAdmin: Boolean, isLoggedIn: Boolean) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -44,12 +44,14 @@ fun AppNavigation(navController: NavHostController, modifier: Modifier = Modifie
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .zIndex(1f)
-            ) {
-                ProfileProgressView(navController = navController) // Muestra el drawer de perfil
+            if (isLoggedIn) { // Solo muestra la sidebar cuando está logueado
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .zIndex(1f)
+                ) {
+                    ProfileProgressView(navController = navController) // Muestra el drawer de perfil
+                }
             }
         }
     ) {
