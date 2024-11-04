@@ -13,7 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
-
+import com.uvg.edu.gt.uvghorasbeca.data.repository.MockUserRepository
 
 class MainActivity : ComponentActivity() {
 
@@ -24,15 +24,14 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            val navController: NavHostController = rememberNavController()
-            AppNavigation(navController = navController, isAdmin = isAdmin)
-        }
 
-        // Lógica manual de login y admin por ahora, será reemplazada por backend en el futuro
-        isLoggedIn = true   // Simulando que el usuario está logueado
-        isAdmin = false      // Simulando que el usuario es admin
+        // Carga el estado de sesión y usuario actual
+        val userRepository = MockUserRepository(this)
+        userRepository.loadUserData()
+        isLoggedIn = userRepository.isLoggedIn
+        isAdmin = userRepository.isAdmin
 
+        // Configuración del contenido principal
         setContent {
             UVGHorasBecaTheme {
                 // Crear una instancia única de NavController
@@ -59,16 +58,12 @@ class MainActivity : ComponentActivity() {
     // Navegación y contenido de la app para Administradores
     @Composable
     fun AdminApp(navController: NavHostController, modifier: Modifier = Modifier) {
-        AppNavigation(navController = navController, isAdmin = true)
+        AppNavigation(navController = navController, isAdmin = true, isLoggedIn = isLoggedIn)
     }
 
     // Navegación y contenido de la app para Usuarios normales
     @Composable
     fun UserApp(navController: NavHostController, modifier: Modifier = Modifier) {
-        AppNavigation(navController = navController, isAdmin = false)
+        AppNavigation(navController = navController, isAdmin = false, isLoggedIn = isLoggedIn)
     }
 }
-
-
-
-
