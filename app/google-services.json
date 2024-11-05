@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1031810081859",
+    "project_id": "horasbecauvg-16a1f",
+    "storage_bucket": "horasbecauvg-16a1f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031810081859:android:d75e15302e5764b2cda0f6",
+        "android_client_info": {
+          "package_name": "com.uvg.edu.gt.uvghorasbeca"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNJAnNM705zPGC5hvUYwmtjgnEbIUzz84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
