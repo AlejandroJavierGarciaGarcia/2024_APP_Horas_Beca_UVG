@@ -1,6 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.data.repository
 
-import Task
+import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import kotlinx.coroutines.flow.Flow
 
 interface TaskDataRepository {

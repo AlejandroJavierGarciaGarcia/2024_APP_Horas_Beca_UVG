@@ -2,6 +2,7 @@ package com.uvg.edu.gt.uvghorasbeca
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 import com.uvg.edu.gt.uvghorasbeca.navigation.AppNavigation
 import com.uvg.edu.gt.uvghorasbeca.ui.theme.UVGHorasBecaTheme
 import com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views.LoginView
@@ -31,6 +33,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
+        FirebaseFirestore.getInstance().collection("TaskData").get()
+            .addOnSuccessListener { snapshot ->
+                Log.d("FirestoreTest", "Fetched documents: ${snapshot.documents}")
+            }
+            .addOnFailureListener { e ->
+                Log.e("FirestoreTest", "Error fetching documents", e)
+            }
         setContent {
             UVGHorasBecaTheme {
                 // Create a single NavController instance
@@ -74,7 +83,7 @@ class MainActivity : ComponentActivity() {
     ) {
         AppNavigation(
             navController = navController,
-            isAdmin = false,
+            isAdmin = true,
             isLoggedIn = true,
             authViewModel = authViewModel,
             taskViewModel = taskViewModel

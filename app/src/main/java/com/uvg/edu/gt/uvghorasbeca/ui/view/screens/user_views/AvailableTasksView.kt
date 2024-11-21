@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 import kotlinx.coroutines.flow.collectLatest
 

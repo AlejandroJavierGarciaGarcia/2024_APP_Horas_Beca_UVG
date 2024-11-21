@@ -1,8 +1,9 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels
 
+import android.util.Log
+import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import com.uvg.edu.gt.uvghorasbeca.data.repository.FirebaseTaskDataRepository
 import com.uvg.edu.gt.uvghorasbeca.data.repository.TaskDataRepository
 import kotlinx.coroutines.flow.MutableStateFlow

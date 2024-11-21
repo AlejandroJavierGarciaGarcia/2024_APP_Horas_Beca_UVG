@@ -1,3 +1,5 @@
+package com.uvg.edu.gt.uvghorasbeca.data.models
+
 data class Task(
     var id: Int = 0,
     var title: String = "",
@@ -14,6 +16,5 @@ data class Task(
     var remainingHours: Long? = null,
     var info: String? = null
 ) {
-    // Default no-argument constructor for Firestore
     constructor() : this(0, "", "", "", null, null, null, false, null, 0, 0, 0, null, null)
 }

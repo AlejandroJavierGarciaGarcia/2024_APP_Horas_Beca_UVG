@@ -1,9 +1,9 @@
 package com.uvg.edu.gt.uvghorasbeca.data.repository
 
-import Task
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
+import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -19,6 +19,7 @@ class FirebaseTaskDataRepository : TaskDataRepository {
     }
 
     override suspend fun getAllTasks(): Flow<List<Task>> = callbackFlow {
+        Log.d(TAG, "Listening for task updates.")
         val listener = tasksCollection.addSnapshotListener { snapshot, error ->
             if (error != null) {
                 Log.e(TAG, "Error fetching tasks: ${error.message}", error)
@@ -35,6 +36,7 @@ class FirebaseTaskDataRepository : TaskDataRepository {
                         null
                     }
                 }
+                Log.d(TAG, "Fetched ${tasks.size} tasks successfully.")
                 trySend(tasks).isSuccess
             } else {
                 Log.w(TAG, "No tasks found.")
@@ -42,16 +44,22 @@ class FirebaseTaskDataRepository : TaskDataRepository {
             }
         }
 
-        awaitClose { listener.remove() }
+        awaitClose {
+            Log.d(TAG, "Task updates listener removed.")
+            listener.remove()
+        }
     }
-
-
-
 
     override suspend fun getTaskById(taskId: String): Task? {
         return try {
             Log.d(TAG, "Fetching task with ID: $taskId")
-            tasksCollection.document(taskId).get().await().toObject<Task>()?.copy(id = 1)
+            val task = tasksCollection.document(taskId).get().await().toObject<Task>()?.apply { id = 1 }
+            if (task != null) {
+                Log.d(TAG, "Task fetched successfully: ${task.title}")
+            } else {
+                Log.w(TAG, "Task with ID $taskId not found.")
+            }
+            task
         } catch (e: Exception) {
             Log.e(TAG, "Error fetching task by ID: $taskId", e)
             null

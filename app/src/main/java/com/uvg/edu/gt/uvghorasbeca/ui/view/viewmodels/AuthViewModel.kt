@@ -93,13 +93,13 @@ class AuthViewModel : ViewModel() {
             password = "password123",
             completedHours = 40,
             pendingHours = 10,
-            isAdmin = false
+            isAdmin = true
         )
         _userDetails.postValue(userDetails)
     }
 
     fun isAdmin(): Boolean {
-        return _userDetails.value?.isAdmin ?: false
+        return _userDetails.value?.isAdmin ?: true
     }
 }
 

@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.admin_views
 
+import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable
@@ -30,9 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import java.util.Calendar
-import java.util.Random
 
 @Composable
 fun AddTaskScreen(
@@ -224,23 +223,6 @@ fun AddTaskScreen(
 
             Button(
                 onClick = {
-                    val task = Task(
-                        id = initialTask?.id ?: Random().nextInt(1000).toString(),
-                        title = title,
-                        location = location,
-                        date = date,
-                        startTime = startTime,
-                        endTime = endTime,
-                        totalHoursCompleted = null,
-                        isRecurring = isRecurring,
-                        recurrencePattern = if (isRecurring) recurrencePattern else null,
-                        currentParticipants = 0,
-                        maxParticipants = maxParticipants.toIntOrNull() ?: 0,
-                        rating = 0,
-                        remainingHours = 0,
-                        info = info
-                    )
-                    onSubmit(task)
                 },
                 colors = ButtonDefaults.buttonColors(CustomColors.PrimaryGreen),
                 modifier = Modifier.weight(1f)

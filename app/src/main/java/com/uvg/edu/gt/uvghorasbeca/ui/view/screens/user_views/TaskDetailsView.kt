@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views
 
+import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 
 @Composable
 fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit) {

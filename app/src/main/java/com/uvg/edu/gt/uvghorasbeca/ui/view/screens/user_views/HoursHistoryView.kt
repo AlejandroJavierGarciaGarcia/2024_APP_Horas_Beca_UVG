@@ -13,6 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,28 +22,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
-import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HoursHistoryView(navController: NavController) {
-    var isLoading by remember { mutableStateOf(true) }
-    var tasks by remember { mutableStateOf(emptyList<Task>()) }
-    var selectedTask by remember { mutableStateOf<Task?>(null) }
+fun HoursHistoryView(
+    navController: NavController,
+    taskDataViewModel: TaskDataViewModel
+) {
+    // Observe tasks and selectedTask state from the ViewModel
+    val tasks by taskDataViewModel.tasks.collectAsState(initial = emptyList())
+    val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
-    // Simulando una solicitud a backend
-    LaunchedEffect(Unit) {
-        delay(2000)  // Simula una espera de 2 segundos
-        tasks = MockDataRepository.getAllTasks()  // Obtener los datos del repositorio
-        isLoading = false
-    }
+    // Determine loading state
+    val isLoading = tasks.isEmpty()
 
-    Scaffold(
-    ) {
+    Scaffold {
         if (isLoading) {
-            // Mostrar indicador de carga mientras se obtienen los datos
+            // Show loading indicator while fetching data
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -50,7 +48,7 @@ fun HoursHistoryView(navController: NavController) {
                 CircularProgressIndicator()
             }
         } else {
-            // Mostrar la lista de tareas completadas con la opción de calificación
+            // Display the list of completed tasks with the option for rating
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -67,21 +65,25 @@ fun HoursHistoryView(navController: NavController) {
                         totalHoursCompleted = task.totalHoursCompleted,
                         isRecurring = task.isRecurring,
                         recurrencePattern = task.recurrencePattern,
-                        showSemaphore = false, // No mostrar el semáforo
+                        showSemaphore = false, // Do not show the semaphore
                         currentParticipants = task.currentParticipants,
                         maxParticipants = task.maxParticipants,
-                        showStars = true,  // Mostrar las estrellas
+                        showStars = true,  // Show stars for rating
                         rating = task.rating,
-                        showRemainingInfo = false, // No mostrar información de horas restantes
+                        showRemainingInfo = false, // Do not show remaining hours info
                         remainingHours = task.remainingHours,
-                        onClick = {
-//                            taskId ->
-//                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
-                        }
+                        onClick = { taskDataViewModel.selectTask(task) } // Update selected task in ViewModel
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
+
+            // Handle task selection if needed
+            if (selectedTask != null) {
+                // Placeholder for task details or any additional action
+                // E.g., TaskDetailsView(navController, selectedTask)
+            }
         }
     }
 }
+
