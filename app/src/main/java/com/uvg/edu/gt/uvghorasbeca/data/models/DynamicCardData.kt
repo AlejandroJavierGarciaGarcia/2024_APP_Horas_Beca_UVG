@@ -1,20 +1,19 @@
-package com.uvg.edu.gt.uvghorasbeca.data.models
-
 data class Task(
-    val id: Int,
-    val title: String,
-    val location: String,
-    val date: String,
-    val startTime: String?,
-    val endTime: String?,
-    val totalHoursCompleted: Float? = null,
-    val isRecurring: Boolean = false,
-    val recurrencePattern: String? = null,
-    val currentParticipants: Int = 0,
-    val maxParticipants: Int,
-//    val backgroundColor: Color,
-    val rating: Int = 0,
-    val remainingHours: Long? = null,
-    val info: String? = null
-)
-
+    var id: Int = 0,
+    var title: String = "",
+    var location: String = "",
+    var date: String = "",
+    var startTime: String? = null,
+    var endTime: String? = null,
+    var totalHoursCompleted: Float? = null,
+    var isRecurring: Boolean = false,
+    var recurrencePattern: String? = null,
+    var currentParticipants: Int = 0,
+    var maxParticipants: Int = 0,
+    var rating: Int = 0,
+    var remainingHours: Long? = null,
+    var info: String? = null
+) {
+    // Default no-argument constructor for Firestore
+    constructor() : this(0, "", "", "", null, null, null, false, null, 0, 0, 0, null, null)
+}

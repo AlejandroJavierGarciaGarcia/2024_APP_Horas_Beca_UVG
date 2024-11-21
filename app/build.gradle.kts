@@ -1,7 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services") version "4.4.2" apply false
+    id("com.google.gms.google-services") version "4.4.2"
     //id("com.google.gms.google-services")
 }
 
@@ -72,6 +72,8 @@ dependencies {
     implementation(libs.androidx.constraintlayout.compose)
     implementation(libs.espresso.core)
     implementation(libs.androidx.ui.test.android)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.runtime.livedata)
 
     // Test dependencies
     testImplementation("junit:junit:4.13.2")

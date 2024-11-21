@@ -73,7 +73,7 @@ fun AdminTasksView(navController: NavController) {
             ) {
                 items(tasks) { task ->
                     CustomCard(
-                        id = task.id,
+                        id = task.id.toInt(),
                         title = task.title,
                         location = task.location,
                         date = task.date,
@@ -90,7 +90,7 @@ fun AdminTasksView(navController: NavController) {
                         showRemainingInfo = false,
                         remainingHours = task.remainingHours,
                         onClick = { taskId ->
-                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
+                            selectedTask = tasks.find { it.id == taskId.toString() } // Lógica al pulsar
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))

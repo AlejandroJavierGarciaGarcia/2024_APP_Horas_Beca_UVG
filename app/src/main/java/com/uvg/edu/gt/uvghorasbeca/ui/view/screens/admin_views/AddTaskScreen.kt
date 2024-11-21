@@ -225,7 +225,7 @@ fun AddTaskScreen(
             Button(
                 onClick = {
                     val task = Task(
-                        id = initialTask?.id ?: Random().nextInt(1000),
+                        id = initialTask?.id ?: Random().nextInt(1000).toString(),
                         title = title,
                         location = location,
                         date = date,

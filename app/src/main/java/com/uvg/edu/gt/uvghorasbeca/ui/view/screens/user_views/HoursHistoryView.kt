@@ -58,7 +58,7 @@ fun HoursHistoryView(navController: NavController) {
             ) {
                 items(tasks) { task ->
                     CustomCard(
-                        id = task.id,
+                        id = task.id.toInt(),
                         title = task.title,
                         location = task.location,
                         date = task.date,

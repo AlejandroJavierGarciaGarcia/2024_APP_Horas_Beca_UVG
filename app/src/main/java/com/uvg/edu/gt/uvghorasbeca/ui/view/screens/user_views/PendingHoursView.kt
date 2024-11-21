@@ -88,7 +88,7 @@ fun PendingHoursView(navController: NavController) {
             ) {
                 items(sortedTasks) { task ->
                     CustomCard(
-                        id = task.id,
+                        id = task.id.toInt(),
                         title = task.title,
                         location = task.location,
                         date = task.date,

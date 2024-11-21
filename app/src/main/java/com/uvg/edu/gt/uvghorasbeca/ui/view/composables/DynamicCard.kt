@@ -29,24 +29,6 @@ import androidx.compose.ui.unit.sp
 import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.R
 
-// Clase de datos para la tarea
-data class Task(
-    val id: Int,
-    val title: String,
-    val location: String,
-    val date: String,
-    val startTime: String?,
-    val endTime: String?,
-    val totalHoursCompleted: Boolean?,
-    val isRecurring: Boolean = false,
-    val recurrencePattern: String? = null,
-    val currentParticipants: Int,
-    val maxParticipants: Int,
-    val backgroundColor: Color,
-    val rating: Int = 0,
-    val remainingHours: Long? = null,
-    val info: String? = null
-)
 
 @Composable
 fun CustomCard(
