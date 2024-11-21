@@ -54,7 +54,7 @@ fun PendingHoursView(
     taskDataViewModel: TaskDataViewModel
 ) {
     // Observe tasks and loading state from the ViewModel
-    val tasks by taskDataViewModel.tasks.collectAsState(initial = emptyList())
+    val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
     val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
     // Determine loading state
@@ -81,7 +81,7 @@ fun PendingHoursView(
             ) {
                 items(sortedTasks) { task ->
                     CustomCard(
-                        id = task.id.toInt(),
+                        id = task.id,
                         title = task.title,
                         location = task.location,
                         date = task.date,

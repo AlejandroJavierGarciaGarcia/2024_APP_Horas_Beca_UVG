@@ -29,10 +29,9 @@ import androidx.compose.ui.unit.sp
 import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.R
 
-
 @Composable
 fun CustomCard(
-    id: Int,
+    id: String, // Updated to String
     title: String,
     location: String,
     date: String,
@@ -48,9 +47,8 @@ fun CustomCard(
     rating: Int = 0,
     showRemainingInfo: Boolean = false,
     remainingHours: Long? = null,
-    onClick: (Int) -> Unit
+    onClick: (String) -> Unit // Updated to pass String ID
 ) {
-    // Usar RemainingTimeInfo solo si se quiere mostrar la información de horas restantes
     val dynamicBackgroundColor = if (showRemainingInfo) {
         RemainingTimeColor(remainingHours = remainingHours)
     } else {
@@ -61,7 +59,7 @@ fun CustomCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onClick(id) }
+            .clickable { onClick(id) } // Pass String ID to the callback
             .shadow(4.dp, RoundedCornerShape(8.dp)),
         colors = CardDefaults.cardColors(containerColor = dynamicBackgroundColor),
         shape = RoundedCornerShape(8.dp)
@@ -71,7 +69,6 @@ fun CustomCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // Parte superior con título, semáforo o estrellas, o bien horas restantes
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -83,17 +80,14 @@ fun CustomCard(
                     fontWeight = FontWeight.Bold
                 )
 
-                // Mostrar el semáforo si está activado
                 if (showSemaphore) {
                     SemaphoreIndicator(currentParticipants, maxParticipants)
                 }
 
-                // Mostrar las estrellas si está activado
                 if (showStars) {
                     RatingStars(rating)
                 }
 
-                // Mostrar las horas restantes si está activado
                 if (showRemainingInfo) {
                     RemainingTimeInfo(remainingHours = remainingHours)
                 }
@@ -103,12 +97,10 @@ fun CustomCard(
             Divider(color = CustomColors.SeparatorOpacity70, thickness = 1.dp)
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Mostrar horas de inicio y fin
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Columna izquierda: Lugar y texto de recurrencia
                 Column {
                     Text(
                         text = location,
@@ -124,7 +116,7 @@ fun CustomCard(
                         )
                     }
                 }
-                // Columna derecha: Fecha, hora y horas completadas (si hay estrellas)
+
                 Column(
                     horizontalAlignment = Alignment.End
                 ) {
@@ -133,7 +125,6 @@ fun CustomCard(
                         Text(text = "$startTime - $endTime", fontSize = 14.sp)
                     }
                     if (showStars) {
-                        // Mostrar horas totales completadas en el historial
                         totalHoursCompleted?.let {
                             Text(
                                 text = "Horas completadas: $it",
@@ -147,6 +138,7 @@ fun CustomCard(
         }
     }
 }
+
 
 // Semáforo para mostrar el cupo de la actividad
 @Composable

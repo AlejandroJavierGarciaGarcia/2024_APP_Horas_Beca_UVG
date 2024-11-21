@@ -96,8 +96,8 @@ fun AppNavigation(
                         arguments = listOf(navArgument("taskId") { type = NavType.StringType })
                     ) { backStackEntry ->
                         val taskId = backStackEntry.arguments?.getString("taskId")
-                        val task = taskViewModel.tasks.value.find {
-                            it.id == (taskId?.toInt() ?: 0)
+                        val task = taskViewModel.allTasks.value.find {
+                            it.id == (taskId)
                         }
                         task?.let {
                             AdminTaskDetailsView(
@@ -136,8 +136,8 @@ fun AppNavigation(
                         arguments = listOf(navArgument("taskId") { type = NavType.StringType })
                     ) { backStackEntry ->
                         val taskId = backStackEntry.arguments?.getString("taskId")
-                        val task = taskViewModel.tasks.value.find {
-                            it.id == (taskId?.toInt() ?: 0)
+                        val task = taskViewModel.allTasks.value.find {
+                            it.id == (taskId)
                         }
                         task?.let {
                             TaskDetailsView(

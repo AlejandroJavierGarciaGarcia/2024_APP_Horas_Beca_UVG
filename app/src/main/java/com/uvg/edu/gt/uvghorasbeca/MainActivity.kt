@@ -27,7 +27,7 @@ class MainActivity : ComponentActivity() {
 
     // Initialize ViewModels
     private val authViewModel: AuthViewModel = AuthViewModel()
-    private val taskViewModel: TaskDataViewModel = TaskDataViewModel()
+    private val taskViewModel: TaskDataViewModel = TaskDataViewModel(authViewModel)
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -34,7 +34,7 @@ fun AdminTasksView(
     taskDataViewModel: TaskDataViewModel
 ) {
     // Observe tasks and selectedTask state from the ViewModel
-    val tasks by taskDataViewModel.tasks.collectAsState(initial = emptyList())
+    val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
     val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
     // Determine loading state

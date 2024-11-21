@@ -16,16 +16,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
-import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AvailableTasksView(
     navController: NavController,
-    taskViewModel: TaskDataViewModel = viewModel()
+    taskViewModel: TaskDataViewModel = viewModel(),
 ) {
-    val tasks by taskViewModel.tasks.collectAsState(initial = emptyList())
+    val tasks by taskViewModel.availableTasks.collectAsState(initial = emptyList())
     val selectedTask by taskViewModel.selectedTask.collectAsState()
+
+    // Ensure tasks are refreshed when this view is displayed
+    LaunchedEffect(Unit) {
+        taskViewModel.fetchAvailableTasks() // Fetch tasks filtered for the current user
+    }
 
     Scaffold {
         if (tasks.isEmpty()) {
@@ -43,7 +47,7 @@ fun AvailableTasksView(
             ) {
                 items(tasks) { task ->
                     CustomCard(
-                        id = task.id.toInt(),
+                        id = task.id,
                         title = task.title,
                         location = task.location,
                         date = task.date,
@@ -80,3 +84,4 @@ fun AvailableTasksView(
         }
     }
 }
+

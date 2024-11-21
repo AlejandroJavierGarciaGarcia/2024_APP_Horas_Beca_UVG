@@ -12,18 +12,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
-import kotlinx.coroutines.delay
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -32,7 +27,7 @@ fun HoursHistoryView(
     taskDataViewModel: TaskDataViewModel
 ) {
     // Observe tasks and selectedTask state from the ViewModel
-    val tasks by taskDataViewModel.tasks.collectAsState(initial = emptyList())
+    val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
     val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
     // Determine loading state
@@ -56,7 +51,7 @@ fun HoursHistoryView(
             ) {
                 items(tasks) { task ->
                     CustomCard(
-                        id = task.id.toInt(),
+                        id = task.id,
                         title = task.title,
                         location = task.location,
                         date = task.date,

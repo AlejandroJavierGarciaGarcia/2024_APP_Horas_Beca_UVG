@@ -20,6 +20,7 @@ class AuthViewModel : ViewModel() {
     private val authRepository: UserDataRepository = FirebaseUserDataRepository()
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private val tasks = emptyList<String>()
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
@@ -131,6 +132,9 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    fun getAssignedActivities(): List<String> {
+        return _userDetails.value?.assignedActivities ?: emptyList()
+    }
 
 
 
