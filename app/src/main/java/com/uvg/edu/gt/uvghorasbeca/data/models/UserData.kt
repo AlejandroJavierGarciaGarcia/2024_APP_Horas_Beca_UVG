@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.data.models
 
+// Datos del usuario
 data class UserData(
     val id: String = "",
     val email: String = "",
@@ -9,7 +10,6 @@ data class UserData(
     val assignedActivities: List<String> = emptyList(),
     val publishedActivities: List<String> = emptyList()
 ) {
-    // Explicit getter for Firestore compatibility
     fun getIsAdmin(): Boolean {
         return isAdmin
     }

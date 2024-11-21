@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.data.models
 
+// Datos de los tasks
 data class Task(
     var id: String = "",
     var title: String = "",

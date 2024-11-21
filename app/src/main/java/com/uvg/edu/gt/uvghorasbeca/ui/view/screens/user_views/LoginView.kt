@@ -54,7 +54,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
     var passwordVisible by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    // Observe the AuthState
+
     val authState by authViewModel.authState.observeAsState()
 
     Box(
@@ -70,7 +70,6 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 .padding(top = 180.dp)
                 .fillMaxWidth()
         ) {
-            // Logo UVG
             Image(
                 painter = painterResource(id = R.drawable.uvg_logo),
                 contentDescription = "Logo UVG",
@@ -158,13 +157,11 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
         }
     }
 
-    // Handle UI updates based on AuthState
     when (authState) {
         is AuthState.Loading -> {
             Toast.makeText(context, "Cargando...", Toast.LENGTH_SHORT).show()
         }
         is AuthState.Authenticated -> {
-            // Navigate to the next screen or MainActivity
             val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
             (context as Activity).finish()
@@ -177,10 +174,10 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             ).show()
         }
         is AuthState.Unauthenticated -> {
-            // Stay on this screen (optional: add unauthenticated message)
+            // Quedarse en pantalla, aqui puede salir algun mensaje o algo
         }
         else -> {
-            // Handle other states or do nothing
+            // Etc.
         }
     }
 }

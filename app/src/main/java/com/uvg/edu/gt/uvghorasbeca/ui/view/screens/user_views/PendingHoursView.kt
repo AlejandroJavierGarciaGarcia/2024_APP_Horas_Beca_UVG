@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -53,27 +54,16 @@ fun PendingHoursView(
     navController: NavController,
     taskDataViewModel: TaskDataViewModel
 ) {
-    // Observe tasks and loading state from the ViewModel
-    val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
+    val tasks by taskDataViewModel.assignedTasks.collectAsState(initial = emptyList())
     val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
-    // Determine loading state
-    val isLoading = tasks.isEmpty()
+    LaunchedEffect(Unit) {
+        taskDataViewModel.fetchAssignedTasks()
+    }
 
     Scaffold {
-        if (isLoading) {
-            // Show loading indicator
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            // Sort tasks by remaining hours
             val sortedTasks = tasks.sortedBy { calculateRemainingHours(it.date, it.startTime) }
 
-            // Display tasks in a list
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -98,7 +88,7 @@ fun PendingHoursView(
                         showRemainingInfo = true,
                         remainingHours = calculateRemainingHours(task.date, task.startTime),
                         onClick = {
-                            taskDataViewModel.selectTask(task) // Update selected task
+                            taskDataViewModel.selectTask(task)
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -106,5 +96,4 @@ fun PendingHoursView(
             }
         }
     }
-}
 

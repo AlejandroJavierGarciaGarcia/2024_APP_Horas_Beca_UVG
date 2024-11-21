@@ -15,12 +15,14 @@ import kotlinx.coroutines.launch
 
 import kotlinx.coroutines.tasks.await
 
+/**
+ * ViewModel encargado de autenticacion e informacion del usuario
+ */
 class AuthViewModel : ViewModel() {
 
     private val authRepository: UserDataRepository = FirebaseUserDataRepository()
     private val firestore = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
-    private val tasks = emptyList<String>()
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
@@ -32,6 +34,7 @@ class AuthViewModel : ViewModel() {
         checkAuthStatus()
     }
 
+    // Verificacion de estado de autenticacion
     private fun checkAuthStatus() {
         viewModelScope.launch {
             val isLoggedIn = authRepository.isLoggedIn()
@@ -44,12 +47,14 @@ class AuthViewModel : ViewModel() {
         }
     }
 
+    // Funcion de login
     fun login(email: String, password: String) {
         if (email.isEmpty() || password.isEmpty()) {
-            _authState.value = AuthState.Error("Email or password can't be empty")
+            _authState.value = AuthState.Error("Correo o contraseña vacíos")
             return
         }
 
+        // Auth -> loading mientras se procesa el login
         _authState.value = AuthState.Loading
         viewModelScope.launch {
             try {
@@ -58,47 +63,52 @@ class AuthViewModel : ViewModel() {
                     loadUserDetails()
                     _authState.postValue(AuthState.Authenticated)
                 } else {
-                    _authState.postValue(AuthState.Error(result.exceptionOrNull()?.message ?: "Login failed"))
+                    _authState.postValue(AuthState.Error(result.exceptionOrNull()?.message ?: "Error en el login"))
                 }
             } catch (e: Exception) {
-                _authState.postValue(AuthState.Error("An unexpected error occurred: ${e.message}"))
+                _authState.postValue(AuthState.Error("Error: ${e.message}"))
             }
             loadUserDetails()
         }
     }
 
+    // Funcion de registro
     fun signup(email: String, password: String) {
         if (email.isEmpty() || password.isEmpty()) {
-            _authState.value = AuthState.Error("Email or password can't be empty")
+            _authState.value = AuthState.Error("Correo o contraseña vacíos")
             return
         }
 
+        // Auth -> loading mientras se procesa el signup
         _authState.value = AuthState.Loading
         viewModelScope.launch {
             val result = authRepository.signup(email, password)
             if (result.isSuccess) {
-                // Create user entry in Firestore after signup
+                // Crea instancia de usuario en Firestore
                 createUserEntryInFirestore()
                 loadUserDetails()
                 _authState.value = AuthState.Authenticated
             } else {
-                _authState.value = AuthState.Error(result.exceptionOrNull()?.message ?: "Sign-up failed")
+                _authState.value = AuthState.Error(result.exceptionOrNull()?.message ?: "Error en el registro")
             }
         }
     }
 
+    // Funcion de logout
     fun logout() {
         viewModelScope.launch {
             authRepository.logout()
-            _userDetails.value = null // Clear user details
+            _userDetails.value = null
             _authState.value = AuthState.Unauthenticated
         }
     }
 
+    // Funcion para cargar detalles de un usuario a FireStore
     private suspend fun loadUserDetails() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             try {
+                // Si existe un documento correspondiente al UID en FireStore
                 val userDocument = firestore.collection("Users").document(currentUser.uid)
                     .get(com.google.firebase.firestore.Source.SERVER).await()
 
@@ -106,38 +116,31 @@ class AuthViewModel : ViewModel() {
                     // Log raw data
                     Log.d("AuthViewModel", "Raw Firestore data: ${userDocument.data}")
 
+                    // Se serializan los datos
                     val userDetails = userDocument.toObject(UserData::class.java)
                     if (userDetails != null) {
                         _userDetails.postValue(userDetails)
-
-                        // Log user admin status
-                        Log.d("AuthViewModel", "Deserialized user data: $userDetails")
-                        if (userDetails.isAdmin) {
-                            Log.d("AuthViewModel", "User is an admin.")
-                        } else {
-                            Log.d("AuthViewModel", "User is not an admin.")
-                        }
                     } else {
-                        Log.d("AuthViewModel", "User data could not be deserialized.")
+                        Log.d("AuthViewModel", "Error serializando datos del usuario")
                     }
                 } else {
-                    Log.w("AuthViewModel", "User document not found.")
+                    Log.w("AuthViewModel", "Informacion de Usuario no Existente")
                     _userDetails.postValue(null)
                 }
             } catch (e: Exception) {
-                Log.e("AuthViewModel", "Failed to load user details: ${e.message}", e)
+                Log.e("AuthViewModel", "Error cargando detalles de usuario: ${e.message}", e)
             }
         } else {
-            Log.d("AuthViewModel", "No user is currently logged in.")
+            Log.d("AuthViewModel", "Se intentaron actualizar los datos sin login")
         }
     }
 
+    // Retorna actividades asignadas de un usuario
     fun getAssignedActivities(): List<String> {
         return _userDetails.value?.assignedActivities ?: emptyList()
     }
 
-
-
+    // Crea el entry del usuario en FireStore
     private suspend fun createUserEntryInFirestore() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
@@ -153,18 +156,18 @@ class AuthViewModel : ViewModel() {
             try {
                 firestore.collection("Users").document(currentUser.uid).set(newUser).await()
             } catch (e: Exception) {
-                _authState.postValue(AuthState.Error("Failed to create user entry in Firestore: ${e.message}"))
+                _authState.postValue(AuthState.Error("No se pudo crear un nuevo usuario en Firestore: ${e.message}"))
             }
         }
     }
 
+    // Admin -> True, No Admin -> False
     fun isAdmin(): Boolean {
         return _userDetails.value?.isAdmin ?: false
     }
 }
 
-
-
+// Estados de autenticacion
 sealed class AuthState {
     object Authenticated : AuthState()
     object Unauthenticated : AuthState()

@@ -18,6 +18,7 @@ class FirebaseUserDataRepository : UserDataRepository {
         private const val TAG = "FirebaseUserDataRepo"
     }
 
+    // Funcion de login
     override suspend fun login(email: String, password: String): Result<Unit> {
         return try {
             Log.d(TAG, "Attempting login for email: $email")
@@ -35,6 +36,7 @@ class FirebaseUserDataRepository : UserDataRepository {
         }
     }
 
+    // Funcion de signup
     override suspend fun signup(email: String, password: String): Result<Unit> {
         return try {
             Log.d(TAG, "Attempting signup for email: $email")
@@ -42,8 +44,9 @@ class FirebaseUserDataRepository : UserDataRepository {
             val user = result.user
             if (user != null) {
                 Log.d(TAG, "Signup successful. UID: ${user.uid}")
+                // Crea datos del usuario en firestore y los carga en el app
                 writeUserToFirestore(user.uid, email)
-                loadUserData(user.uid) // Populate cached user data
+                loadUserData(user.uid)
             }
             Result.success(Unit)
         } catch (e: Exception) {
@@ -52,6 +55,7 @@ class FirebaseUserDataRepository : UserDataRepository {
         }
     }
 
+    // Funcion de logout
     override fun logout() {
         Log.d(TAG, "Logging out user.")
         cachedUserData = null
@@ -77,6 +81,7 @@ class FirebaseUserDataRepository : UserDataRepository {
     }
 
     override suspend fun getUserHours(): Pair<Int, Int> {
+        // Primero busca si hay valores cached, si no va a la DB
         cachedUserData?.let {
             return it.completedHours to it.pendingHours
         }
@@ -96,23 +101,11 @@ class FirebaseUserDataRepository : UserDataRepository {
         return cachedUserData?.email ?: auth.currentUser?.email?.substringBefore("@") ?: ""
     }
 
-    suspend fun getUserData(): UserData? {
-        if (cachedUserData == null) {
-            val uid = auth.currentUser?.uid ?: return null
-            loadUserData(uid)
-        }
-        return cachedUserData
-    }
-
-    /**
-     * Writes user data to Firestore.
-     */
+    // Crea un nuevo usuario en Firestore
     private suspend fun writeUserToFirestore(uid: String, email: String) {
         try {
-            Log.d(TAG, "Checking if user exists in Firestore. UID: $uid")
             val userDocument = usersCollection.document(uid).get().await()
             if (!userDocument.exists()) {
-                Log.d(TAG, "User not found. Creating new document.")
                 val userData = mapOf(
                     "id" to uid,
                     "email" to email,
@@ -123,28 +116,23 @@ class FirebaseUserDataRepository : UserDataRepository {
                     "publishedActivities" to emptyList<String>()
                 )
                 usersCollection.document(uid).set(userData).await()
-                Log.d(TAG, "User document created successfully.")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to write user data: ${e.message}", e)
+            Log.e(TAG, "Error creando usuario: ${e.message}", e)
         }
     }
 
-    /**
-     * Loads user data from Firestore and caches it.
-     */
+
     private suspend fun loadUserData(uid: String) {
         try {
-            Log.d(TAG, "Loading user data for UID: $uid")
             val userDocument = usersCollection.document(uid).get().await()
             if (userDocument.exists()) {
                 cachedUserData = userDocument.toObject<UserData>()
-                Log.d(TAG, "User data loaded: $cachedUserData")
             } else {
-                Log.w(TAG, "User data not found for UID: $uid")
+                Log.w(TAG, "No hay registro para ID: $uid")
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to load user data: ${e.message}", e)
+            Log.e(TAG, "No se pudo cargar la informacion del usuario: ${e.message}", e)
         }
     }
 }

@@ -42,11 +42,9 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 fun ProfileProgressView(navController: NavController, authViewModel: AuthViewModel) {
     val context = LocalContext.current
 
-    // Observe user details and authentication state from the AuthViewModel
     val authState by authViewModel.authState.observeAsState()
     val userDetails by authViewModel.userDetails.observeAsState()
 
-    // Placeholder values for user progress
     val userName = userDetails?.email as? String ?: "Usuario"
     val hoursCompleted = userDetails?.completedHours as? Int ?: 0
     val hoursRemaining = userDetails?.pendingHours as? Int ?: 0
@@ -61,12 +59,10 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // First section: User icon, name, progress bar, and text
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
-            // User icon and name
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = R.drawable.user_icon),
@@ -84,7 +80,6 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Progress bar and hour texts
             LinearProgressIndicator(
                 progress = progress,
                 modifier = Modifier
@@ -111,22 +106,18 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
             }
         }
 
-        // Second section: Empty spacer
         Spacer(modifier = Modifier.weight(1f))
 
-        // Third section: Bottom options
         Column(modifier = Modifier.fillMaxWidth()) {
             OptionRow(icon = R.drawable.help_icon, text = "Ayuda")
             OptionRow(icon = R.drawable.group_icon, text = "Cambiar usuario")
 
-            // Logout option
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(vertical = 4.dp)
                     .clickable {
-                        authViewModel.logout() // Log out the user
-                        // Restart the activity to reflect the logged-out state
+                        authViewModel.logout()
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
                         (context as Activity).finish()

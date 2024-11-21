@@ -12,12 +12,13 @@ import kotlinx.coroutines.tasks.await
 class FirebaseTaskDataRepository : TaskDataRepository {
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val tasksCollection = firestore.collection("TaskData") // Collection name
+    private val tasksCollection = firestore.collection("TaskData")
 
     companion object {
         private const val TAG = "FirebaseTaskRepository"
     }
 
+    // Retorna todos los tasks + un listener para actualizarse en caso que haya cambios
     override suspend fun getAllTasks(): Flow<List<Task>> = callbackFlow {
         Log.d(TAG, "Listening for task updates.")
         val listener = tasksCollection.addSnapshotListener { snapshot, error ->
@@ -27,11 +28,13 @@ class FirebaseTaskDataRepository : TaskDataRepository {
                 return@addSnapshotListener
             }
 
+            // Aqui setea el ID al ID del documento en FireStore, esto fue temporal y lo voy
+            // a quitar despues.
             if (snapshot != null && !snapshot.isEmpty) {
                 val tasks = snapshot.documents.mapNotNull { document ->
                     try {
                         document.toObject<Task>()?.apply {
-                            id = document.id // Assign Firestore's document ID to Task.id
+                            id = document.id
                         }
                     } catch (e: Exception) {
                         Log.e(TAG, "Error parsing task document: ${document.id}", e)
@@ -52,16 +55,11 @@ class FirebaseTaskDataRepository : TaskDataRepository {
         }
     }
 
+    // Retorna task por ID
     override suspend fun getTaskById(taskId: String): Task? {
         return try {
-            Log.d(TAG, "Fetching task with ID: $taskId")
             val task = tasksCollection.document(taskId).get().await().toObject<Task>()?.apply {
-                id = taskId // Assign the Firestore document ID
-            }
-            if (task != null) {
-                Log.d(TAG, "Task fetched successfully: ${task.title}")
-            } else {
-                Log.w(TAG, "Task with ID $taskId not found.")
+                id = taskId
             }
             task
         } catch (e: Exception) {
@@ -71,38 +69,18 @@ class FirebaseTaskDataRepository : TaskDataRepository {
     }
 
     suspend fun addTask(task: Task): Boolean {
-        return try {
-            Log.d(TAG, "Adding new task: ${task.title}")
-            val documentReference = tasksCollection.add(task).await()
-            Log.d(TAG, "Task added successfully with ID: ${documentReference.id}")
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "Error adding task: ${task.title}", e)
-            false
-        }
+        // Falta la logica
+        return true
     }
 
     suspend fun updateTask(taskId: String, updates: Map<String, Any>): Boolean {
-        return try {
-            Log.d(TAG, "Updating task with ID: $taskId")
-            tasksCollection.document(taskId).update(updates).await()
-            Log.d(TAG, "Task updated successfully.")
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "Error updating task with ID: $taskId", e)
-            false
-        }
+        // Falta la logica, se puede buscar con ID igual que una de las funciones
+        // de antes y modificar los parametros CREO
+        return true
     }
 
     suspend fun deleteTask(taskId: String): Boolean {
-        return try {
-            Log.d(TAG, "Deleting task with ID: $taskId")
-            tasksCollection.document(taskId).delete().await()
-            Log.d(TAG, "Task deleted successfully.")
-            true
-        } catch (e: Exception) {
-            Log.e(TAG, "Error deleting task with ID: $taskId", e)
-            false
-        }
+        // Falta la logica, igual se puede buscar por ID pero no estoy seguro.
+        return true
     }
 }

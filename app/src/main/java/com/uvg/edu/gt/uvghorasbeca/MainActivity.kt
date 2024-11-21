@@ -25,7 +25,7 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
 class MainActivity : ComponentActivity() {
 
-    // Initialize ViewModels
+    // Inicializacion ViewModels
     private val authViewModel: AuthViewModel = AuthViewModel()
     private val taskViewModel: TaskDataViewModel = TaskDataViewModel(authViewModel)
 
@@ -35,13 +35,9 @@ class MainActivity : ComponentActivity() {
         FirebaseApp.initializeApp(this)
         setContent {
             UVGHorasBecaTheme {
-                // NavController instance
                 val navController = rememberNavController()
-
-                // authState as state
                 val authState by authViewModel.authState.observeAsState(AuthState.Loading)
 
-                // Main scaffold for navigation and content
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     when (authState) {
                         // Autenticado -> UserApp -> Navigation

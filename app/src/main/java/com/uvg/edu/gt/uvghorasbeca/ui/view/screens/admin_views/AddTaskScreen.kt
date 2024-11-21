@@ -51,7 +51,6 @@ fun AddTaskScreen(
     var recurrencePattern by remember { mutableStateOf(initialTask?.recurrencePattern ?: "") }
     var info by remember { mutableStateOf(initialTask?.info ?: "") }
 
-    // DatePicker Dialog
     val calendar = Calendar.getInstance()
     val datePickerDialog = DatePickerDialog(
         context,
@@ -63,7 +62,6 @@ fun AddTaskScreen(
         calendar.get(Calendar.DAY_OF_MONTH)
     )
 
-    // TimePicker Dialog for Start Time
     val timePickerDialogStart = TimePickerDialog(
         context,
         { _, hourOfDay, minute ->
@@ -74,7 +72,6 @@ fun AddTaskScreen(
         true
     )
 
-    // TimePicker Dialog for End Time
     val timePickerDialogEnd = TimePickerDialog(
         context,
         { _, hourOfDay, minute ->

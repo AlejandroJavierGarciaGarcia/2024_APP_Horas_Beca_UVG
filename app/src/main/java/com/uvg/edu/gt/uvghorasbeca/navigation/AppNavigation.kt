@@ -112,13 +112,11 @@ fun AppNavigation(
                             navController = navController,
                             onDismiss = { navController.popBackStack() },
                             onSubmit = {
-                                // Submit logic for adding tasks via ViewModel
                                 navController.popBackStack()
                             }
                         )
                     }
 
-                    // User Screens
                     composable(route = NavigationState.AvailableTasks.route) {
                         AvailableTasksView(navController = navController, taskViewModel = taskViewModel)
                     }
@@ -148,7 +146,6 @@ fun AppNavigation(
                         }
                     }
 
-                    // Login Screen
                     composable(route = NavigationState.LoginScreen.route) {
                         LoginView(navController = navController, authViewModel = authViewModel)
                     }

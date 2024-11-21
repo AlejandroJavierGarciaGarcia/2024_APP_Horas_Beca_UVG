@@ -26,12 +26,13 @@ fun AvailableTasksView(
     val tasks by taskViewModel.availableTasks.collectAsState(initial = emptyList())
     val selectedTask by taskViewModel.selectedTask.collectAsState()
 
-    // Ensure tasks are refreshed when this view is displayed
+    // Refresh de tasks cuando carga el view
     LaunchedEffect(Unit) {
-        taskViewModel.fetchAvailableTasks() // Fetch tasks filtered for the current user
+        taskViewModel.fetchAvailableTasks()
     }
 
     Scaffold {
+        // Esto hay que quitarlo, se queda en un loop si uno no tiene tasks asignados
         if (tasks.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -84,4 +85,3 @@ fun AvailableTasksView(
         }
     }
 }
-

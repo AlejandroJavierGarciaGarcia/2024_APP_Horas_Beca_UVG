@@ -2,7 +2,7 @@ package com.uvg.edu.gt.uvghorasbeca.data.repository
 
 interface UserDataRepository {
     suspend fun login(email: String, password: String): Result<Unit>
-    suspend fun signup(email: String, password: String): Result<Unit> // Added signup
+    suspend fun signup(email: String, password: String): Result<Unit>
     fun logout()
     fun isLoggedIn(): Boolean
     suspend fun isAdmin(): Boolean

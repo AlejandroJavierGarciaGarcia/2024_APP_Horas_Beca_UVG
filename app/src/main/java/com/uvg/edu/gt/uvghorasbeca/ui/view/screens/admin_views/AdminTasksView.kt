@@ -17,6 +17,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -33,12 +34,13 @@ fun AdminTasksView(
     navController: NavController,
     taskDataViewModel: TaskDataViewModel
 ) {
-    // Observe tasks and selectedTask state from the ViewModel
     val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
     val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
-    // Determine loading state
-    val isLoading = tasks.isEmpty()
+    // Refresh de tasks cuando carga el view
+    LaunchedEffect(Unit) {
+        taskDataViewModel.fetchAllTasks()
+    }
 
     Scaffold(
         floatingActionButton = {
@@ -49,16 +51,6 @@ fun AdminTasksView(
             }
         }
     ) {
-        if (isLoading) {
-            // Show loading indicator while fetching data
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            // Display the list of tasks
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -106,7 +98,6 @@ fun AdminTasksView(
             }
         }
     }
-}
 
 
 
