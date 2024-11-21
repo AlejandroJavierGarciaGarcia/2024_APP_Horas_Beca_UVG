@@ -19,6 +19,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,21 +34,22 @@ import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.MainActivity
 import com.uvg.edu.gt.uvghorasbeca.R
-import com.uvg.edu.gt.uvghorasbeca.data.repository.MockUserRepository
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 
 
 @Composable
-fun ProfileProgressView(navController: NavController) {
+fun ProfileProgressView(navController: NavController, authViewModel: AuthViewModel) {
     val context = LocalContext.current
-    val userRepository = MockUserRepository(context)
 
-//    var userName by remember { mutableStateOf(userRepository.getUsername()) }
-    val userName = userRepository.getUsername()
-    val (hoursCompleted, hoursRemaining) = userRepository.getUserHours()
+    val authState by authViewModel.authState.observeAsState()
+    val userDetails by authViewModel.userDetails.observeAsState()
+
+    val userName = userDetails?.email as? String ?: "Usuario"
+    val hoursCompleted = userDetails?.completedHours as? Int ?: 0
+    val hoursRemaining = userDetails?.pendingHours as? Int ?: 0
     val totalHours = hoursCompleted + hoursRemaining
     val progress = if (totalHours > 0) hoursCompleted.toFloat() / totalHours else 0f
-
 
     Column(
         modifier = Modifier
@@ -57,12 +59,10 @@ fun ProfileProgressView(navController: NavController) {
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        // Primera sección: icono de usuario, nombre, barra de progreso y textos
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
-            // Icono de usuario y nombre
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = R.drawable.user_icon),
@@ -80,7 +80,6 @@ fun ProfileProgressView(navController: NavController) {
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Barra de progreso y textos de horas
             LinearProgressIndicator(
                 progress = progress,
                 modifier = Modifier
@@ -94,29 +93,34 @@ fun ProfileProgressView(navController: NavController) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "$hoursCompleted horas acumuladas", color = CustomColors.Black, fontSize = 12.sp)
-                Text(text = "$hoursRemaining horas restantes", color = CustomColors.Black, fontSize = 12.sp)
+                Text(
+                    text = "$hoursCompleted horas acumuladas",
+                    color = CustomColors.Black,
+                    fontSize = 12.sp
+                )
+                Text(
+                    text = "$hoursRemaining horas restantes",
+                    color = CustomColors.Black,
+                    fontSize = 12.sp
+                )
             }
         }
 
-        // Segunda sección: espacio vacío en el medio
         Spacer(modifier = Modifier.weight(1f))
 
-        // Tercera sección: opciones inferiores alineadas verticalmente
         Column(modifier = Modifier.fillMaxWidth()) {
             OptionRow(icon = R.drawable.help_icon, text = "Ayuda")
             OptionRow(icon = R.drawable.group_icon, text = "Cambiar usuario")
-            //OptionRow(icon = R.drawable.logout_icon, text = "Cerrar sesión")
+
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .padding(vertical = 4.dp)
                     .clickable {
-                        userRepository.logout()  // Cierra la sesión
-                        // Recarga MainActivity para actualizar el estado de navegación
+                        authViewModel.logout()
                         val intent = Intent(context, MainActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish() // Finaliza la actividad actual para evitar volver atrás
+                        (context as Activity).finish()
                     }
             ) {
                 Icon(
@@ -128,7 +132,6 @@ fun ProfileProgressView(navController: NavController) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Cerrar sesión", color = CustomColors.Black, fontSize = 16.sp)
             }
-
         }
     }
 }
@@ -137,7 +140,7 @@ fun ProfileProgressView(navController: NavController) {
 fun OptionRow(icon: Int, text: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(vertical = 4.dp) // Ajuste de espaciado vertical
+        modifier = Modifier.padding(vertical = 4.dp)
     ) {
         Icon(
             painter = painterResource(id = icon),
@@ -146,6 +149,7 @@ fun OptionRow(icon: Int, text: String) {
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
-        Text(text = text, color = CustomColors.Black, fontSize = 16.sp) // Aumenta el tamaño del texto
+        Text(text = text, color = CustomColors.Black, fontSize = 16.sp)
     }
 }
+

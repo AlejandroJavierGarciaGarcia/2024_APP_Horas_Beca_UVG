@@ -1,5 +1,5 @@
-package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
-
+//package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
+//
 //import androidx.compose.foundation.layout.Arrangement
 //import androidx.compose.foundation.layout.Column
 //import androidx.compose.foundation.layout.Row
@@ -25,7 +25,6 @@ package com.uvg.edu.gt.uvghorasbeca.ui.view.composables
 //fun PaginatedList(
 //    items: List<CustomCardData>,
 //    itemsPerPage: Int = 10
-//
 //) {
 //    var currentPage by remember { mutableStateOf(0) }
 //    val totalPages = (items.size + itemsPerPage - 1) / itemsPerPage

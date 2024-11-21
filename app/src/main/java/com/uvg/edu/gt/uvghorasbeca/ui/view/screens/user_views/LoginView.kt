@@ -24,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,16 +43,19 @@ import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
 import com.uvg.edu.gt.uvghorasbeca.MainActivity
 import com.uvg.edu.gt.uvghorasbeca.R
-import com.uvg.edu.gt.uvghorasbeca.data.repository.MockUserRepository
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthState
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginView(navController: NavController) {
+fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     val context = LocalContext.current
-    val userRepository = MockUserRepository(context)
+
+
+    val authState by authViewModel.authState.observeAsState()
 
     Box(
         modifier = Modifier
@@ -64,9 +68,8 @@ fun LoginView(navController: NavController) {
             verticalArrangement = Arrangement.Top,
             modifier = Modifier
                 .padding(top = 180.dp)
-            .fillMaxWidth()
+                .fillMaxWidth()
         ) {
-            // Logo UVG
             Image(
                 painter = painterResource(id = R.drawable.uvg_logo),
                 contentDescription = "Logo UVG",
@@ -78,7 +81,7 @@ fun LoginView(navController: NavController) {
                 colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(CustomColors.White)
             )
 
-            // Campo de texto para el usuario
+            // Email input
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -94,7 +97,7 @@ fun LoginView(navController: NavController) {
                 )
             )
 
-            // Campo de texto para la contraseña
+            // Password input
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -118,18 +121,10 @@ fun LoginView(navController: NavController) {
                 )
             )
 
-            // Botón de inicio de sesión
+            // Login button
             Button(
                 onClick = {
-                    if (userRepository.login(email, password)) {
-                        // Recarga MainActivity para que se muestre la pantalla correcta
-                        val intent = Intent(context, MainActivity::class.java)
-                        context.startActivity(intent)
-                        (context as Activity).finish() // Cierra la pantalla de Login para evitar volver atrás
-                    } else {
-                        // Mostrar mensaje de error si falla
-                        Toast.makeText(context, "Inicio de sesión fallido. Verifica tus credenciales.", Toast.LENGTH_SHORT).show()
-                    }
+                    authViewModel.login(email, password)
                 },
                 modifier = Modifier
                     .width(200.dp)
@@ -143,6 +138,48 @@ fun LoginView(navController: NavController) {
                 Text(text = "Iniciar sesión", fontSize = 16.sp)
             }
 
+            // Register button
+            Button(
+                onClick = {
+                    authViewModel.signup(email, password)
+                },
+                modifier = Modifier
+                    .width(200.dp)
+                    .padding(top = 16.dp)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = CustomColors.Black,
+                    contentColor = CustomColors.White
+                )
+            ) {
+                Text(text = "Registrarse", fontSize = 16.sp)
+            }
+        }
+    }
+
+    when (authState) {
+        is AuthState.Loading -> {
+            Toast.makeText(context, "Cargando...", Toast.LENGTH_SHORT).show()
+        }
+        is AuthState.Authenticated -> {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent)
+            (context as Activity).finish()
+        }
+        is AuthState.Error -> {
+            Toast.makeText(
+                context,
+                (authState as AuthState.Error).message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        is AuthState.Unauthenticated -> {
+            // Quedarse en pantalla, aqui puede salir algun mensaje o algo
+        }
+        else -> {
+            // Etc.
         }
     }
 }
+
+

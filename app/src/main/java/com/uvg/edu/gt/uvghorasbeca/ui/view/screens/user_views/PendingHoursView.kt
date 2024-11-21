@@ -13,17 +13,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
-import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
-import kotlinx.coroutines.delay
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -54,33 +50,20 @@ fun calculateRemainingHours(taskDate: String, taskStartTime: String?): Long {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun PendingHoursView(navController: NavController) {
-    var isLoading by remember { mutableStateOf(true) }
-    var tasks by remember { mutableStateOf(emptyList<Task>()) }
-    var selectedTask by remember { mutableStateOf<Task?>(null) }
+fun PendingHoursView(
+    navController: NavController,
+    taskDataViewModel: TaskDataViewModel
+) {
+    val tasks by taskDataViewModel.assignedTasks.collectAsState(initial = emptyList())
+    val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
-    // Simulando una solicitud a backend
     LaunchedEffect(Unit) {
-        delay(2000)  // Simula una espera de 2 segundos
-        tasks = MockDataRepository.getAllTasks()  // Obtener los datos del repositorio
-        isLoading = false
+        taskDataViewModel.fetchAssignedTasks()
     }
 
-    Scaffold(
-    ) {
-        if (isLoading) {
-            // Mostrar indicador de carga mientras se obtienen los datos
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            // Ordenar las tareas por horas restantes
+    Scaffold {
             val sortedTasks = tasks.sortedBy { calculateRemainingHours(it.date, it.startTime) }
 
-            // Mostrar la lista de tareas una vez que los datos están cargados
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -105,8 +88,7 @@ fun PendingHoursView(navController: NavController) {
                         showRemainingInfo = true,
                         remainingHours = calculateRemainingHours(task.date, task.startTime),
                         onClick = {
-//                            taskId ->
-//                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
+                            taskDataViewModel.selectTask(task)
                         }
                     )
                     Spacer(modifier = Modifier.height(8.dp))
@@ -114,4 +96,4 @@ fun PendingHoursView(navController: NavController) {
             }
         }
     }
-}
+

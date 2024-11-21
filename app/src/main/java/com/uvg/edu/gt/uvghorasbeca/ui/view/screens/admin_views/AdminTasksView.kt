@@ -18,54 +18,39 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
-import com.uvg.edu.gt.uvghorasbeca.data.models.Task
-import com.uvg.edu.gt.uvghorasbeca.data.repository.MockDataRepository
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
-import kotlinx.coroutines.delay
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AdminTasksView(navController: NavController) {
-    var isLoading by remember { mutableStateOf(true) }
-    var tasks by remember { mutableStateOf(emptyList<Task>()) }
-    var selectedTask by remember { mutableStateOf<Task?>(null) }
+fun AdminTasksView(
+    navController: NavController,
+    taskDataViewModel: TaskDataViewModel
+) {
+    val tasks by taskDataViewModel.allTasks.collectAsState(initial = emptyList())
+    val selectedTask by taskDataViewModel.selectedTask.collectAsState(initial = null)
 
-    // Simulando una solicitud a backend
+    // Refresh de tasks cuando carga el view
     LaunchedEffect(Unit) {
-        delay(2000)  // Simula una espera de 2 segundos
-        tasks = MockDataRepository.getAllTasks()  // Obtener los datos del repositorio
-        isLoading = false
+        taskDataViewModel.fetchAllTasks()
     }
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(NavigationState.AddTask.route) },
-//                backgroundColor = Color.Green
+                onClick = { navController.navigate(NavigationState.AddTask.route) }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar Tarea")
             }
         }
     ) {
-        if (isLoading) {
-            // Mostrar indicador de carga mientras se obtienen los datos
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        } else {
-            // Mostrar la lista de tareas una vez que los datos están cargados
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -89,27 +74,30 @@ fun AdminTasksView(navController: NavController) {
                         rating = task.rating,
                         showRemainingInfo = false,
                         remainingHours = task.remainingHours,
-                        onClick = { taskId ->
-                            selectedTask = tasks.find { it.id == taskId } // Lógica al pulsar
-                        }
+                        onClick = { taskDataViewModel.selectTask(task) } // Update selected task in ViewModel
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                 }
             }
-            // Mostrar los detalles si hay una tarea seleccionada
+
+            // Show task details if a task is selected
             if (selectedTask != null) {
-                Box(modifier = Modifier.fillMaxSize().background(CustomColors.GrayOpacity60)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(CustomColors.GrayOpacity60)
+                ) {
                     selectedTask?.let {
                         AdminTaskDetailsView(
-                            navController = navController,  // Asegúrate de pasar navController
+                            navController = navController,
                             task = it,
-                            onDismiss = { selectedTask = null }
+                            onDismiss = { taskDataViewModel.selectTask(null) } // Clear selected task
                         )
                     }
                 }
             }
         }
     }
-}
+
 
 
