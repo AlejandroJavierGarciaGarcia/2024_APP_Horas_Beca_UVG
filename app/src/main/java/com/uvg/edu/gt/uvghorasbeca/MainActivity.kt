@@ -33,24 +33,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        FirebaseFirestore.getInstance().collection("TaskData").get()
-            .addOnSuccessListener { snapshot ->
-                Log.d("FirestoreTest", "Fetched documents: ${snapshot.documents}")
-            }
-            .addOnFailureListener { e ->
-                Log.e("FirestoreTest", "Error fetching documents", e)
-            }
         setContent {
             UVGHorasBecaTheme {
-                // Create a single NavController instance
+                // NavController instance
                 val navController = rememberNavController()
 
-                // Observe authentication state from AuthViewModel using observeAsState
+                // authState as state
                 val authState by authViewModel.authState.observeAsState(AuthState.Loading)
 
                 // Main scaffold for navigation and content
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                     when (authState) {
+                        // Autenticado -> UserApp -> Navigation
                         is AuthState.Authenticated -> {
                             UserApp(
                                 navController = navController,
@@ -58,12 +52,15 @@ class MainActivity : ComponentActivity() {
                                 taskViewModel = taskViewModel
                             )
                         }
+                        // Sin autenticar -> Login
                         is AuthState.Unauthenticated -> {
                             LoginView(navController = navController, authViewModel = authViewModel)
                         }
+                        // Cargando -> Pantalla de Carga
                         is AuthState.Loading -> {
-                            // Add a simple loading composable or keep this empty
+                            // Agregar pantalla de carga aqui
                         }
+                        // Error / Sin autenticar -> Login
                         is AuthState.Error -> {
                             LoginView(navController = navController, authViewModel = authViewModel)
                         }
@@ -73,7 +70,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    // User-specific navigation and content
+    // Navegacion dependiente del usuario
     @Composable
     fun UserApp(
         navController: NavHostController,
@@ -83,7 +80,7 @@ class MainActivity : ComponentActivity() {
     ) {
         AppNavigation(
             navController = navController,
-            isAdmin = true,
+            isAdmin = authViewModel.isAdmin(),
             isLoggedIn = true,
             authViewModel = authViewModel,
             taskViewModel = taskViewModel

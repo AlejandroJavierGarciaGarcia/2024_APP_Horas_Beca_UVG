@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -61,6 +62,7 @@ class AuthViewModel : ViewModel() {
             } catch (e: Exception) {
                 _authState.postValue(AuthState.Error("An unexpected error occurred: ${e.message}"))
             }
+            loadUserDetails()
         }
     }
 
@@ -96,22 +98,41 @@ class AuthViewModel : ViewModel() {
         val currentUser = auth.currentUser
         if (currentUser != null) {
             try {
-                val userDocument = firestore.collection("Users").document(currentUser.uid).get().await()
+                val userDocument = firestore.collection("Users").document(currentUser.uid)
+                    .get(com.google.firebase.firestore.Source.SERVER).await()
+
                 if (userDocument.exists()) {
+                    // Log raw data
+                    Log.d("AuthViewModel", "Raw Firestore data: ${userDocument.data}")
+
                     val userDetails = userDocument.toObject(UserData::class.java)
-                    _userDetails.postValue(userDetails)
+                    if (userDetails != null) {
+                        _userDetails.postValue(userDetails)
+
+                        // Log user admin status
+                        Log.d("AuthViewModel", "Deserialized user data: $userDetails")
+                        if (userDetails.isAdmin) {
+                            Log.d("AuthViewModel", "User is an admin.")
+                        } else {
+                            Log.d("AuthViewModel", "User is not an admin.")
+                        }
+                    } else {
+                        Log.d("AuthViewModel", "User data could not be deserialized.")
+                    }
                 } else {
-                    // Handle case where user document does not exist
+                    Log.w("AuthViewModel", "User document not found.")
                     _userDetails.postValue(null)
-                    _authState.postValue(AuthState.Error("User data not found."))
                 }
             } catch (e: Exception) {
-                _authState.postValue(AuthState.Error("Failed to load user details: ${e.message}"))
+                Log.e("AuthViewModel", "Failed to load user details: ${e.message}", e)
             }
         } else {
-            _authState.postValue(AuthState.Unauthenticated)
+            Log.d("AuthViewModel", "No user is currently logged in.")
         }
     }
+
+
+
 
     private suspend fun createUserEntryInFirestore() {
         val currentUser = auth.currentUser
