@@ -4,20 +4,25 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.uvg.edu.gt.uvghorasbeca.data.models.UserData
 import com.uvg.edu.gt.uvghorasbeca.data.repository.FirebaseUserDataRepository
 import com.uvg.edu.gt.uvghorasbeca.data.repository.UserDataRepository
 import kotlinx.coroutines.launch
 
+
+import kotlinx.coroutines.tasks.await
+
 class AuthViewModel : ViewModel() {
 
-    // Instantiating FirebaseUserDataRepository directly
     private val authRepository: UserDataRepository = FirebaseUserDataRepository()
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     private val _authState = MutableLiveData<AuthState>()
     val authState: LiveData<AuthState> = _authState
 
-    // LiveData to hold user details
     private val _userDetails = MutableLiveData<UserData?>()
     val userDetails: LiveData<UserData?> = _userDetails
 
@@ -25,11 +30,11 @@ class AuthViewModel : ViewModel() {
         checkAuthStatus()
     }
 
-    fun checkAuthStatus() {
+    private fun checkAuthStatus() {
         viewModelScope.launch {
             val isLoggedIn = authRepository.isLoggedIn()
             _authState.value = if (isLoggedIn) {
-                loadUserDetails() // Load user details if authenticated
+                loadUserDetails()
                 AuthState.Authenticated
             } else {
                 AuthState.Unauthenticated
@@ -69,6 +74,8 @@ class AuthViewModel : ViewModel() {
         viewModelScope.launch {
             val result = authRepository.signup(email, password)
             if (result.isSuccess) {
+                // Create user entry in Firestore after signup
+                createUserEntryInFirestore()
                 loadUserDetails()
                 _authState.value = AuthState.Authenticated
             } else {
@@ -86,22 +93,51 @@ class AuthViewModel : ViewModel() {
     }
 
     private suspend fun loadUserDetails() {
-        // Simulating data fetching, replace with actual repository calls to fetch user details
-        val userDetails = UserData(
-            id = "12345",
-            email = "mockuser@uvg.edu.gt",
-            password = "password123",
-            completedHours = 40,
-            pendingHours = 10,
-            isAdmin = true
-        )
-        _userDetails.postValue(userDetails)
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            try {
+                val userDocument = firestore.collection("Users").document(currentUser.uid).get().await()
+                if (userDocument.exists()) {
+                    val userDetails = userDocument.toObject(UserData::class.java)
+                    _userDetails.postValue(userDetails)
+                } else {
+                    // Handle case where user document does not exist
+                    _userDetails.postValue(null)
+                    _authState.postValue(AuthState.Error("User data not found."))
+                }
+            } catch (e: Exception) {
+                _authState.postValue(AuthState.Error("Failed to load user details: ${e.message}"))
+            }
+        } else {
+            _authState.postValue(AuthState.Unauthenticated)
+        }
+    }
+
+    private suspend fun createUserEntryInFirestore() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val newUser = UserData(
+                id = currentUser.uid,
+                email = currentUser.email ?: "",
+                completedHours = 0,
+                pendingHours = 0,
+                isAdmin = false,
+                assignedActivities = emptyList(),
+                publishedActivities = emptyList()
+            )
+            try {
+                firestore.collection("Users").document(currentUser.uid).set(newUser).await()
+            } catch (e: Exception) {
+                _authState.postValue(AuthState.Error("Failed to create user entry in Firestore: ${e.message}"))
+            }
+        }
     }
 
     fun isAdmin(): Boolean {
-        return _userDetails.value?.isAdmin ?: true
+        return _userDetails.value?.isAdmin ?: false
     }
 }
+
 
 
 sealed class AuthState {

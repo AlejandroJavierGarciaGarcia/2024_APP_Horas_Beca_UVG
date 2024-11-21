@@ -1,10 +1,13 @@
 package com.uvg.edu.gt.uvghorasbeca.data.models
 
 data class UserData(
-    val id: String,
-    val email: String,
-    val password: String,
-    val completedHours: Int,
-    val pendingHours: Int,
-    val isAdmin: Boolean
-)
+    var id: String = "",
+    var email: String = "",
+    var completedHours: Int = 0,
+    var pendingHours: Int = 0,
+    var isAdmin: Boolean = false,
+    var assignedActivities: List<String> = emptyList(),
+    var publishedActivities: List<String> = emptyList()
+) {
+
+}
