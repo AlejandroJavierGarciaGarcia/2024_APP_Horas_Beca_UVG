@@ -107,4 +107,13 @@
     <string name="home">Cerrar Sesión</string>
     <string name="history">Historial</string>
     <string name="admin">Asignación</string>
+    <string name="horas_becaTitle">Horas Beca</string>
+    <string name="usuario_Login">Usuario</string>
+    <string name="password_Login">Contraseña</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="login_subtitle">Iniciar sesión</string>
+    <string name="change_mode_register">¿Ya tienes una cuenta? Inicia sesión</string>
+    <string name="change_mode_login">¿Aún no tienes una cuenta? Regístrate</string>
+    <string name="loading">Cargando...</string>
 </resources>
