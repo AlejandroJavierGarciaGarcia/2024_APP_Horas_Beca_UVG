@@ -22,6 +22,10 @@
     <string name="error_no_participantes">La cantidad de participantes no puede estar vacía.</string>
     <string name="error_no_nombre">El nombre de la actividad no puede estar vacío.</string>
     <string name="fecha_error">Selecciona una fecha válida.</string>
+    <string name="recurrence_pattern_text">Recurrente: %1$s</string>
+    <string name="hours_completed_text">%1$d horas acumuladas</string>
+    <string name="hours_remaining_text">%1$d horas restantes</string>
+    <string name="recurrence_label">Recurrente: %1$s</string>
 
     <!-- Labels -->
     <string name="edit_activity">Editar Actividad</string>
@@ -107,4 +111,42 @@
     <string name="home">Cerrar Sesión</string>
     <string name="history">Historial</string>
     <string name="admin">Asignación</string>
+    <string name="horas_becaTitle">Horas Beca</string>
+    <string name="usuario_Login">Usuario</string>
+    <string name="password_Login">Contraseña</string>
+    <string name="toggle_password_visibility">Toggle password visibility</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="login_subtitle">Iniciar sesión</string>
+    <string name="change_mode_register">¿Ya tienes una cuenta? Inicia sesión</string>
+    <string name="change_mode_login">¿Aún no tienes una cuenta? Regístrate</string>
+    <string name="loading">Cargando...</string>
+
+    <!-- Title and Button Labels -->
+    <string name="add_task_title">Agregar Actividad</string>
+    <string name="edit_task_title">Editar Actividad</string>
+    <string name="add_task_button">Agregar</string>
+    <string name="update_task_button">Actualizar</string>
+
+    <!-- Input Field Labels -->
+    <string name="task_name_label">Agrega un Nombre</string>
+    <string name="max_participants_label">Cupo máximo</string>
+    <string name="start_time_label">Hora de inicio</string>
+    <string name="end_time_label">Hora de fin</string>
+    <string name="recurring_label">¿Actividad recurrente?</string>
+    <string name="recurrence_pattern_label">Patrón de recurrencia</string>
+    <string name="additional_info_label">Coloca más información importante</string>
+
+    <!-- Recurrence Info -->
+    <string name="recurrence_description">Si la actividad es recurrente, ingresa el patrón.</string>
+    <string name="info_adicional">Información adicional:</string>
+    <string name="Asing">Asignarse</string>
+    <string name="Return">Regresar</string>
+    <string name="log_out">Cerrar sesión</string>
+    <string name="help">Ayuda</string>
+    <string name="user">Usuario</string>
+    <string name="user_icon">User Icon</string>
+    <string name="asignarse">Asignarse</string>
+    <string name="tarea_asignada_con_xito">Tarea asignada con éxito</string>
+    <string name="regresar">Regresar</string>
+    <string name="informaci_n_adicional">Información adicional:</string>
 </resources>

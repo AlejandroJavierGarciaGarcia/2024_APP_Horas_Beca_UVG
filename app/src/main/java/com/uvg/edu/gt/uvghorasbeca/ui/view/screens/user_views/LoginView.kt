@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -85,7 +86,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Horas Beca",
+                text = stringResource(R.string.horas_becaTitle),
                 fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = Color.White,
@@ -97,7 +98,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Usuario") },
+                label = { Text(stringResource(R.string.usuario_Login)) },
                 modifier = Modifier
                     .width(280.dp)
                     .padding(vertical = 12.dp),
@@ -115,7 +116,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Contraseña") },
+                label = { Text(stringResource(R.string.password_Login)) },
                 modifier = Modifier
                     .width(280.dp)
                     .padding(vertical = 12.dp),
@@ -125,7 +126,10 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 trailingIcon = {
                     val icon = if (passwordVisible) R.drawable.eye_off_icon else R.drawable.eye_icon
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(painter = painterResource(id = icon), contentDescription = "Toggle password visibility")
+                        Icon(painter = painterResource(id = icon), contentDescription = stringResource(
+                            R.string.toggle_password_visibility
+                        )
+                        )
                     }
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -141,9 +145,9 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             Button(
                 onClick = {
                     if (isRegisterMode) {
-                        authViewModel.signup(email, password) // Acción de registro
+                        authViewModel.signup(email, password)
                     } else {
-                        authViewModel.login(email, password) // Acción de inicio de sesión
+                        authViewModel.login(email, password)
                     }
                 },
                 modifier = Modifier
@@ -156,14 +160,18 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 )
             ) {
                 Text(
-                    text = if (isRegisterMode) "Registrarse" else "Iniciar sesión",
+                    text = if (isRegisterMode) stringResource(R.string.registrarse) else stringResource(
+                        R.string.login_subtitle
+                    ),
                     fontSize = 18.sp
                 )
             }
 
             // Texto alternativo para cambiar entre modos
             Text(
-                text = if (isRegisterMode) "¿Ya tienes una cuenta? Inicia sesión" else "¿Aún no tienes una cuenta? Regístrate",
+                text = if (isRegisterMode) stringResource(R.string.change_mode_register) else stringResource(
+                    R.string.change_mode_login
+                ),
                 color = Color.White,
                 modifier = Modifier
                     .padding(top = 16.dp)
@@ -179,7 +187,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
     // Manejo del estado de autenticación
     when (authState) {
         is AuthState.Loading -> {
-            Toast.makeText(context, "Cargando...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, stringResource(R.string.loading), Toast.LENGTH_SHORT).show()
         }
         is AuthState.Authenticated -> {
             val intent = Intent(context, MainActivity::class.java)

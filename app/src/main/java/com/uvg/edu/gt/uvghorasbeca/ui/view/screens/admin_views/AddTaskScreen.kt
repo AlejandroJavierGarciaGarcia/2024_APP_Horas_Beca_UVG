@@ -26,13 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.R
 import java.util.Calendar
-
 @Composable
 fun AddTaskScreen(
     navController: NavController,
@@ -89,7 +90,7 @@ fun AddTaskScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = if (initialTask != null) "Editar Actividad" else "Agregar Actividad",
+            text = if (initialTask != null) stringResource(id = R.string.edit_task_title) else stringResource(id = R.string.add_task_title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -99,7 +100,7 @@ fun AddTaskScreen(
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
-            label = { Text("Agrega un Nombre") },
+            label = { Text(stringResource(id = R.string.task_name_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
@@ -110,7 +111,7 @@ fun AddTaskScreen(
             OutlinedTextField(
                 value = maxParticipants,
                 onValueChange = { if (it.all { char -> char.isDigit() }) maxParticipants = it },
-                label = { Text("Cupo máximo") },
+                label = { Text(stringResource(id = R.string.max_participants_label)) },
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 4.dp)
@@ -120,7 +121,7 @@ fun AddTaskScreen(
             OutlinedTextField(
                 value = date,
                 onValueChange = { date = it },
-                label = { Text("Fecha") },
+                label = { Text(stringResource(id = R.string.date_label)) },
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp)
@@ -134,7 +135,7 @@ fun AddTaskScreen(
             OutlinedTextField(
                 value = startTime,
                 onValueChange = { startTime = it },
-                label = { Text("Hora de inicio") },
+                label = { Text(stringResource(id = R.string.start_time_label)) },
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 4.dp)
@@ -146,12 +147,11 @@ fun AddTaskScreen(
             OutlinedTextField(
                 value = endTime,
                 onValueChange = { endTime = it },
-                label = { Text("Hora de fin") },
+                label = { Text(stringResource(id = R.string.end_time_label)) },
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp)
                     .clickable { timePickerDialogEnd.show() },
-//                readOnly = true
             )
         }
 
@@ -159,7 +159,7 @@ fun AddTaskScreen(
         OutlinedTextField(
             value = location,
             onValueChange = { location = it },
-            label = { Text("Lugar") },
+            label = { Text(stringResource(id = R.string.location_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
@@ -172,7 +172,7 @@ fun AddTaskScreen(
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
         ) {
-            Text("¿Actividad recurrente?", modifier = Modifier.weight(1f))
+            Text(stringResource(id = R.string.recurring_label), modifier = Modifier.weight(1f))
             Switch(
                 checked = isRecurring,
                 onCheckedChange = { isRecurring = it }
@@ -184,7 +184,7 @@ fun AddTaskScreen(
             OutlinedTextField(
                 value = recurrencePattern,
                 onValueChange = { recurrencePattern = it },
-                label = { Text("Patrón de recurrencia") },
+                label = { Text(stringResource(id = R.string.recurrence_pattern_label)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
@@ -195,7 +195,7 @@ fun AddTaskScreen(
         OutlinedTextField(
             value = info,
             onValueChange = { info = it },
-            label = { Text("Coloca más información importante") },
+            label = { Text(stringResource(id = R.string.additional_info_label)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 4.dp)
@@ -213,7 +213,7 @@ fun AddTaskScreen(
                 colors = ButtonDefaults.buttonColors(CustomColors.RedButton),
                 modifier = Modifier.weight(1f)
             ) {
-                Text("Cancelar", color = CustomColors.White)
+                Text(stringResource(id = R.string.cancel_button), color = CustomColors.White)
             }
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -224,13 +224,9 @@ fun AddTaskScreen(
                 colors = ButtonDefaults.buttonColors(CustomColors.PrimaryGreen),
                 modifier = Modifier.weight(1f)
             ) {
-                Text(if (initialTask != null) "Actualizar" else "Agregar", color = CustomColors.White)
+                Text(if (initialTask != null) stringResource(id = R.string.update_task_button) else stringResource(id = R.string.add_task_button), color = CustomColors.White)
             }
         }
     }
 }
-
-
-
-
 

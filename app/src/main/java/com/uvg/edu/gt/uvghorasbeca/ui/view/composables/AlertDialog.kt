@@ -270,7 +270,7 @@ fun AlertDialogUser(
             onDismissRequest = { showSuccessDialog = false },
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxWidth(), // Ocupa todo el ancho
+                .fillMaxWidth(),
             containerColor = Color(0xFFE8F5EB),
             title = {
                 Row(
