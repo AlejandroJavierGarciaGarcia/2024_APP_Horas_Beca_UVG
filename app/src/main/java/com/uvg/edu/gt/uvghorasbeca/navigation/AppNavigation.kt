@@ -34,7 +34,6 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 import kotlinx.coroutines.launch
 
-
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun AppNavigation(
