@@ -38,7 +38,7 @@ import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
 @Composable
-fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit, authViewModel: AuthViewModel, taskDataViewModel: TaskDataViewModel? = null) {
+fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit, authViewModel: AuthViewModel, taskDataViewModel: TaskDataViewModel) {
     val context = LocalContext.current //
     Box(
         modifier = Modifier
@@ -153,7 +153,8 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                                 taskId = task.id,
                                 onSuccess = {
                                     Toast.makeText(context, "Tarea asignada con éxito", Toast.LENGTH_SHORT).show()
-
+                                    taskDataViewModel.fetchAvailableTasks()
+                                    taskDataViewModel.fetchAssignedTasks()
                                     onDismiss()
                                 },
                                 onError = { errorMessage ->

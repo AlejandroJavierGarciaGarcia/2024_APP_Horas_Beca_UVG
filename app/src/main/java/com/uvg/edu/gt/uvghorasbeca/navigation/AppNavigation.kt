@@ -142,7 +142,8 @@ fun AppNavigation(
                                 navController = navController,
                                 task = it,
                                 onDismiss = { navController.popBackStack() },
-                                authViewModel = TODO()
+                                authViewModel = authViewModel,
+                                taskDataViewModel = taskViewModel
                             )
                         }
                     }

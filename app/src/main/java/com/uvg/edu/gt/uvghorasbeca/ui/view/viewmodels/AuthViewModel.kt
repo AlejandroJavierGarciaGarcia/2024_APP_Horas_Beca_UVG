@@ -136,7 +136,8 @@ class AuthViewModel : ViewModel() {
     }
 
     // Retorna actividades asignadas de un usuario
-    fun getAssignedActivities(): List<String> {
+    suspend fun getAssignedActivities(): List<String> {
+        loadUserDetails()
         return _userDetails.value?.assignedActivities ?: emptyList()
     }
 
