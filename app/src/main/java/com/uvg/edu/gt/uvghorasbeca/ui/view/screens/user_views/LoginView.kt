@@ -5,6 +5,7 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -52,8 +55,8 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+    var isRegisterMode by remember { mutableStateOf(false) } // Nuevo estado para alternar entre modos
     val context = LocalContext.current
-
 
     val authState by authViewModel.authState.observeAsState()
 
@@ -63,6 +66,17 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             .background(CustomColors.PrimaryGreen),
         contentAlignment = Alignment.TopCenter
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.uvg),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(CustomColors.PrimaryGreen.copy(alpha = 0.8f))
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top,
@@ -70,41 +84,41 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 .padding(top = 180.dp)
                 .fillMaxWidth()
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.uvg_logo),
-                contentDescription = "Logo UVG",
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(200.dp)
-                    .padding(bottom = 32.dp),
-                contentScale = ContentScale.Fit,
-                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(CustomColors.White)
+            Text(
+                text = "Horas Beca",
+                fontSize = 40.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = Color.White,
+                fontFamily = FontFamily.SansSerif,
+                modifier = Modifier.padding(bottom = 20.dp)
             )
 
-            // Email input
+            // Campo de Usuario
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Usuario") },
                 modifier = Modifier
                     .width(280.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 12.dp),
                 singleLine = true,
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = CustomColors.PrimaryGrayDark,
                     unfocusedBorderColor = CustomColors.PrimaryGrayLight,
-                    containerColor = Color(0xFFE0E0E0)
+                    containerColor = Color(0xFFE0E0E0),
+                    focusedLabelColor = Color.White,
+
                 )
             )
 
-            // Password input
+            // Campo de Contraseña
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Contraseña") },
                 modifier = Modifier
                     .width(280.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 12.dp),
                 singleLine = true,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -117,46 +131,52 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = CustomColors.PrimaryGrayDark,
                     unfocusedBorderColor = CustomColors.PrimaryGrayLight,
-                    containerColor = Color(0xFFE0E0E0)
-                )
+                    containerColor = Color(0xFFE0E0E0),
+                    focusedLabelColor = Color.White,
+
+                    )
             )
 
-            // Login button
+            // Botón único que cambia de función
             Button(
                 onClick = {
-                    authViewModel.login(email, password)
+                    if (isRegisterMode) {
+                        authViewModel.signup(email, password) // Acción de registro
+                    } else {
+                        authViewModel.login(email, password) // Acción de inicio de sesión
+                    }
                 },
                 modifier = Modifier
-                    .width(200.dp)
-                    .padding(top = 16.dp)
+                    .width(210.dp)
+                    .padding(top = 20.dp)
                     .height(50.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = CustomColors.Black,
                     contentColor = CustomColors.White
                 )
             ) {
-                Text(text = "Iniciar sesión", fontSize = 16.sp)
+                Text(
+                    text = if (isRegisterMode) "Registrarse" else "Iniciar sesión",
+                    fontSize = 18.sp
+                )
             }
 
-            // Register button
-            Button(
-                onClick = {
-                    authViewModel.signup(email, password)
-                },
+            // Texto alternativo para cambiar entre modos
+            Text(
+                text = if (isRegisterMode) "¿Ya tienes una cuenta? Inicia sesión" else "¿Aún no tienes una cuenta? Regístrate",
+                color = Color.White,
                 modifier = Modifier
-                    .width(200.dp)
                     .padding(top = 16.dp)
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = CustomColors.Black,
-                    contentColor = CustomColors.White
-                )
-            ) {
-                Text(text = "Registrarse", fontSize = 16.sp)
-            }
+                    .clickable {
+                        isRegisterMode = !isRegisterMode // Cambia el modo
+                    },
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 
+    // Manejo del estado de autenticación
     when (authState) {
         is AuthState.Loading -> {
             Toast.makeText(context, "Cargando...", Toast.LENGTH_SHORT).show()
@@ -174,12 +194,10 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
             ).show()
         }
         is AuthState.Unauthenticated -> {
-            // Quedarse en pantalla, aqui puede salir algun mensaje o algo
+            // Quedarse en pantalla, aquí puede salir algún mensaje o algo
         }
         else -> {
-            // Etc.
+            // Otros estados
         }
     }
 }
-
-
