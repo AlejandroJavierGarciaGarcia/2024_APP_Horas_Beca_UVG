@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -24,6 +25,7 @@ fun AvailableTasksView(
     taskViewModel: TaskDataViewModel = viewModel(),
 ) {
     val tasks by taskViewModel.availableTasks.collectAsState(initial = emptyList())
+    val authViewModel: AuthViewModel = AuthViewModel()
     val selectedTask by taskViewModel.selectedTask.collectAsState()
 
     // Refresh de tasks cuando carga el view
@@ -78,7 +80,9 @@ fun AvailableTasksView(
                     TaskDetailsView(
                         navController = navController,
                         task = selectedTask!!,
-                        onDismiss = { taskViewModel.selectTask(null) }
+                        onDismiss = { taskViewModel.selectTask(null) },
+                        authViewModel = authViewModel,
+                        taskDataViewModel = taskViewModel
                     )
                 }
             }
