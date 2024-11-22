@@ -56,7 +56,7 @@ fun LoginView(navController: NavController, authViewModel: AuthViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
-    var isRegisterMode by remember { mutableStateOf(false) } // Nuevo estado para alternar entre modos
+    var isRegisterMode by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     val authState by authViewModel.authState.observeAsState()

@@ -22,9 +22,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
@@ -45,9 +47,10 @@ fun AdminTasksView(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(NavigationState.AddTask.route) }
+                onClick = { navController.navigate(NavigationState.AddTask.route) },
+                containerColor = CustomColors.PrimaryGreen
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Agregar Tarea")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.agregar_tarea))
             }
         }
     ) {
