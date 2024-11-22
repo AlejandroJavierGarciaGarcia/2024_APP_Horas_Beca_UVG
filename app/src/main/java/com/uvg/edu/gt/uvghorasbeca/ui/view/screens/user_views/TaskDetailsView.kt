@@ -28,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
 import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
@@ -120,7 +122,7 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                 task.info?.let {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Información adicional:",
+                        text = stringResource(R.string.informaci_n_adicional),
                         fontSize = 14.sp,
                         color = CustomColors.Black,
                         modifier = Modifier.padding(bottom = 4.dp)
@@ -144,7 +146,7 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(containerColor = CustomColors.GrayButton)  // color de fondo
                     ) {
-                        Text("Regresar", color = CustomColors.White)  // color del texto
+                        Text(stringResource(R.string.regresar), color = CustomColors.White)  // color del texto
                     }
 
                     Button(
@@ -152,7 +154,8 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                             authViewModel.assignTaskToUser(
                                 taskId = task.id,
                                 onSuccess = {
-                                    Toast.makeText(context, "Tarea asignada con éxito", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,
+                                        context.getString(R.string.tarea_asignada_con_xito), Toast.LENGTH_SHORT).show()
                                     taskDataViewModel.fetchAvailableTasks()
                                     taskDataViewModel.fetchAssignedTasks()
                                     onDismiss()
@@ -164,7 +167,7 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = CustomColors.PrimaryGreen)  // color de fondo
                     ) {
-                        Text("Asignarse", color = CustomColors.White)  // color del texto
+                        Text(stringResource(R.string.asignarse), color = CustomColors.White)  // color del texto
                     }
                 }
             }

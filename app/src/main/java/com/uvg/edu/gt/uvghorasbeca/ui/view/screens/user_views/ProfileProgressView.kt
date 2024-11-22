@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,7 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
     val authState by authViewModel.authState.observeAsState()
     val userDetails by authViewModel.userDetails.observeAsState()
 
-    val userName = userDetails?.email as? String ?: "Usuario"
+    val userName = userDetails?.email as? String ?: stringResource(R.string.user)
     val hoursCompleted = userDetails?.completedHours as? Int ?: 0
     val hoursRemaining = userDetails?.pendingHours as? Int ?: 0
     val totalHours = hoursCompleted + hoursRemaining
@@ -66,7 +67,7 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
                     painter = painterResource(id = R.drawable.user_icon),
-                    contentDescription = "User Icon",
+                    contentDescription = stringResource(R.string.user_icon),
                     modifier = Modifier.size(50.dp),
                     tint = CustomColors.Black
                 )
@@ -94,12 +95,13 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "$hoursCompleted horas acumuladas",
+                    text = stringResource(id = R.string.hours_completed_text, hoursCompleted),
                     color = CustomColors.Black,
                     fontSize = 12.sp
                 )
+
                 Text(
-                    text = "$hoursRemaining horas restantes",
+                    text = stringResource(id = R.string.hours_remaining_text, hoursRemaining),
                     color = CustomColors.Black,
                     fontSize = 12.sp
                 )
@@ -109,8 +111,8 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
         Spacer(modifier = Modifier.weight(1f))
 
         Column(modifier = Modifier.fillMaxWidth()) {
-            OptionRow(icon = R.drawable.help_icon, text = "Ayuda")
-            OptionRow(icon = R.drawable.group_icon, text = "Cambiar usuario")
+            OptionRow(icon = R.drawable.help_icon, text = stringResource(R.string.help))
+            //OptionRow(icon = R.drawable.group_icon, text = "Cambiar usuario")
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -125,12 +127,12 @@ fun ProfileProgressView(navController: NavController, authViewModel: AuthViewMod
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.logout_icon),
-                    contentDescription = "Cerrar sesión",
+                    contentDescription = stringResource(R.string.log_out),
                     tint = CustomColors.Black,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Cerrar sesión", color = CustomColors.Black, fontSize = 16.sp)
+                Text(text = stringResource(R.string.log_out), color = CustomColors.Black, fontSize = 16.sp)
             }
         }
     }

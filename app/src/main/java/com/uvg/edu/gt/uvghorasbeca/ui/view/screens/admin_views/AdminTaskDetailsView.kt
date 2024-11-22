@@ -26,12 +26,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.R
 import com.uvg.edu.gt.uvghorasbeca.navigation.NavigationState
 
 @Composable
@@ -125,7 +127,7 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                 task.info?.let {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Información adicional:",
+                        text = stringResource(R.string.info_adicional),
                         fontSize = 14.sp,
                         color = CustomColors.Black,
                         modifier = Modifier.padding(bottom = 4.dp)
@@ -149,14 +151,14 @@ fun AdminTaskDetailsView(navController: NavController, task: Task, onDismiss: ()
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(containerColor = CustomColors.GrayButton)
                     ) {
-                        Text("Regresar", color = Color.White)
+                        Text(stringResource(R.string.Return), color = Color.White)
                     }
 
                     Button(
                         onClick = { /* lógica para asignarse a la tarea */ },
                         colors = ButtonDefaults.buttonColors(containerColor = CustomColors.PrimaryGreen)
                     ) {
-                        Text("Asignarse", color = CustomColors.White)
+                        Text(stringResource(R.string.Asing), color = CustomColors.White)
                     }
                 }
             }
