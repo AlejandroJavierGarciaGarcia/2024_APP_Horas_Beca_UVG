@@ -135,4 +135,33 @@ class FirebaseUserDataRepository : UserDataRepository {
             Log.e(TAG, "No se pudo cargar la informacion del usuario: ${e.message}", e)
         }
     }
+
+    override suspend fun AssignmentTask(taskId: String) {
+        try {
+            // Obtiene el UID del usuario logueado
+            val uid = auth.currentUser?.uid ?: return
+
+            // Obtiene el documento del usuario desde Firestore
+            val userDocument = usersCollection.document(uid).get().await()
+
+            if (userDocument.exists()) {
+                // Obtiene las actividades asignadas como una lista mutable
+                val assignedActivities = (userDocument.get("assignedActivities") as? MutableList<String>) ?: mutableListOf()
+
+                // Verifica si la tarea ya está asignada
+                if (!assignedActivities.contains(taskId)) {
+                    assignedActivities.add(taskId) // Agrega la tarea al array
+                    usersCollection.document(uid).update("assignedActivities", assignedActivities).await()
+                    Log.d(TAG, "Tarea $taskId asignada exitosamente al usuario $uid.")
+                } else {
+                    Log.d(TAG, "La tarea $taskId ya estaba asignada al usuario $uid.")
+                }
+            } else {
+                Log.e(TAG, "El documento del usuario $uid no existe.")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error asignando tarea: ${e.message}", e)
+        }
+    }
+
 }

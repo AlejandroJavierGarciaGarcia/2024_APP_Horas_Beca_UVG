@@ -8,4 +8,5 @@ interface UserDataRepository {
     suspend fun isAdmin(): Boolean
     suspend fun getUserHours(): Pair<Int, Int>
     fun getUsername(): String
+    suspend fun AssignmentTask(taskId: String)
 }

@@ -165,6 +165,29 @@ class AuthViewModel : ViewModel() {
     fun isAdmin(): Boolean {
         return _userDetails.value?.isAdmin ?: false
     }
+
+    // Nueva función para asignar una tarea a un usuario
+    fun assignTaskToUser(taskId: String, onSuccess: () -> Unit, onError: (String) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val currentUser = auth.currentUser
+                if (currentUser != null) {
+                    // Llama a la función del repositorio para asignar la tarea
+                    (authRepository as FirebaseUserDataRepository).AssignmentTask(taskId)
+                    // Actualiza los datos locales del usuario si es necesario
+                    loadUserDetails()
+
+                    onSuccess() // Notifica que la operación fue exitosa
+                } else {
+                    onError("No se ha iniciado sesión.")
+                }
+            } catch (e: Exception) {
+                Log.e("AuthViewModel", "Error asignando tarea: ${e.message}", e)
+                onError("Error asignando tarea: ${e.message}")
+            }
+        }
+    }
+
 }
 
 // Estados de autenticacion

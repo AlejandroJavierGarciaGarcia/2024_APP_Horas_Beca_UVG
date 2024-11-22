@@ -1,5 +1,6 @@
 package com.uvg.edu.gt.uvghorasbeca.ui.view.screens.user_views
 
+import android.widget.Toast
 import com.uvg.edu.gt.uvghorasbeca.data.models.Task
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,15 +27,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.app.ui.theme.CustomColors
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodel.AuthViewModel
+import com.uvg.edu.gt.uvghorasbeca.ui.view.viewmodels.TaskDataViewModel
 
 @Composable
-fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit) {
+fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> Unit, authViewModel: AuthViewModel, taskDataViewModel: TaskDataViewModel? = null) {
+    val context = LocalContext.current //
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -143,7 +148,19 @@ fun TaskDetailsView(navController: NavController, task: Task, onDismiss: () -> U
                     }
 
                     Button(
-                        onClick = { /* lógica para asignarse a la tarea */ },
+                        onClick = {
+                            authViewModel.assignTaskToUser(
+                                taskId = task.id,
+                                onSuccess = {
+                                    Toast.makeText(context, "Tarea asignada con éxito", Toast.LENGTH_SHORT).show()
+
+                                    onDismiss()
+                                },
+                                onError = { errorMessage ->
+                                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = CustomColors.PrimaryGreen)  // color de fondo
                     ) {
                         Text("Asignarse", color = CustomColors.White)  // color del texto
